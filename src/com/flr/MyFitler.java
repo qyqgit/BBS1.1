@@ -43,12 +43,12 @@ public class MyFitler implements Filter {
 		// TODO Auto-generated method stub
 		// place your code here
 		
-		HttpServletRequest req = (HttpServletRequest)request;  
+        HttpServletRequest req = (HttpServletRequest)request;  
           
         HttpSession session = req.getSession();
         
         User user = (User)session.getAttribute("user");
-		MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
+        MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
         if(session.getAttribute("conn") == null) {
         	Connection conn = Database.getConn();
         	if(conn!=null) {
