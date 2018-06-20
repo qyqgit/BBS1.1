@@ -10,10 +10,187 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-06-19 12:03:45
+Date: 2018-06-20 15:24:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for log
+-- ----------------------------
+DROP TABLE IF EXISTS `log`;
+CREATE TABLE `log` (
+  `id` int(11) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `userId` int(11) unsigned zerofill DEFAULT NULL,
+  `url` varchar(511) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`),
+  CONSTRAINT `log_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1158 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of log
+-- ----------------------------
+INSERT INTO `log` VALUES ('00000001000', '2018-06-20 14:55:05', '1', null, '1');
+INSERT INTO `log` VALUES ('00000001001', '2018-06-20 14:55:13', '0:0:0:0:0:0:0:1', null, '/Test1/index');
+INSERT INTO `log` VALUES ('00000001002', '2018-06-20 14:55:24', '0:0:0:0:0:0:0:1', null, '/Test1/Login.jsp');
+INSERT INTO `log` VALUES ('00000001003', '2018-06-20 14:55:24', '0:0:0:0:0:0:0:1', null, '/Test1/GetPassCode.jpg');
+INSERT INTO `log` VALUES ('00000001004', '2018-06-20 14:55:33', '0:0:0:0:0:0:0:1', null, '/Test1/login');
+INSERT INTO `log` VALUES ('00000001005', '2018-06-20 14:55:33', '0:0:0:0:0:0:0:1', '00000001078', '/Test1/index');
+INSERT INTO `log` VALUES ('00000001006', '2018-06-20 14:56:15', '0:0:0:0:0:0:0:1', '00000001078', '/Test1/index');
+INSERT INTO `log` VALUES ('00000001007', '2018-06-20 14:57:03', '172.21.1.148', null, '/Test1/');
+INSERT INTO `log` VALUES ('00000001008', '2018-06-20 14:57:03', '172.21.1.148', null, '/Test1/');
+INSERT INTO `log` VALUES ('00000001009', '2018-06-20 14:57:17', '172.21.1.148', null, '/Test1/MyPageSvl');
+INSERT INTO `log` VALUES ('00000001010', '2018-06-20 14:57:34', '172.21.1.148', null, '/Test1/MyPageSvl');
+INSERT INTO `log` VALUES ('00000001011', '2018-06-20 14:59:20', '172.21.1.148', null, '/Test1/');
+INSERT INTO `log` VALUES ('00000001012', '2018-06-20 14:59:21', '172.21.1.148', null, '/Test1/');
+INSERT INTO `log` VALUES ('00000001013', '2018-06-20 14:59:32', '172.21.1.148', null, '/Test1/');
+INSERT INTO `log` VALUES ('00000001014', '2018-06-20 14:59:35', '172.21.1.148', null, '/Test1/MyPageSvl');
+INSERT INTO `log` VALUES ('00000001015', '2018-06-20 14:59:38', '172.21.1.148', null, '/Test1/MyPageSvl');
+INSERT INTO `log` VALUES ('00000001016', '2018-06-20 14:59:42', '172.21.1.148', null, '/Test1/MyPageSvl');
+INSERT INTO `log` VALUES ('00000001017', '2018-06-20 15:05:47', '172.21.1.148', null, '/Test1/MyPageSvl');
+INSERT INTO `log` VALUES ('00000001018', '2018-06-20 15:05:48', '172.21.1.148', null, '/Test1/MyPageSvl');
+INSERT INTO `log` VALUES ('00000001019', '2018-06-20 15:06:16', '172.21.1.148', null, '/Test1/');
+INSERT INTO `log` VALUES ('00000001020', '2018-06-20 15:06:18', '172.21.1.148', null, '/Test1/MyPageSvl');
+INSERT INTO `log` VALUES ('00000001021', '2018-06-20 15:07:13', '172.21.1.148', null, '/Test1/MyPageSvl?id=1120&timeStamp=2018-06-18%2018:11:42');
+INSERT INTO `log` VALUES ('00000001022', '2018-06-20 15:07:13', '172.21.1.148', null, '/Test1/MyPageSvl?id=1120&timeStamp=2018-06-18%2018:11:42');
+INSERT INTO `log` VALUES ('00000001023', '2018-06-20 15:07:17', '172.21.1.148', null, '/Test1/MyPageSvl?id=1120&timeStamp=2018-06-18%2018:11:42');
+INSERT INTO `log` VALUES ('00000001024', '2018-06-20 15:07:22', '172.21.1.148', null, '/Test1/?null');
+INSERT INTO `log` VALUES ('00000001025', '2018-06-20 15:07:38', '172.21.1.148', null, '/Test1/?null');
+INSERT INTO `log` VALUES ('00000001026', '2018-06-20 15:07:46', '172.21.1.148', null, '/Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001027', '2018-06-20 15:07:56', '172.21.1.148', null, '/Test1/?null');
+INSERT INTO `log` VALUES ('00000001028', '2018-06-20 15:08:02', '172.21.1.148', null, '/Test1/MyPageSvl?id=1099&timeStamp=2018-06-04%2014:42:36');
+INSERT INTO `log` VALUES ('00000001029', '2018-06-20 15:08:58', '172.21.1.148', null, '/Test1/?null');
+INSERT INTO `log` VALUES ('00000001030', '2018-06-20 15:08:58', '172.21.1.148', null, '/Test1/?null');
+INSERT INTO `log` VALUES ('00000001031', '2018-06-20 15:09:06', '172.21.1.148', null, '/Test1/?null');
+INSERT INTO `log` VALUES ('00000001032', '2018-06-20 15:09:09', '172.21.1.148', null, '/Test1/?null');
+INSERT INTO `log` VALUES ('00000001033', '2018-06-20 15:09:11', '172.21.1.148', null, '/Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001034', '2018-06-20 15:09:30', '0:0:0:0:0:0:0:1', null, '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001035', '2018-06-20 15:09:30', '0:0:0:0:0:0:0:1', null, '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001036', '2018-06-20 15:09:41', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001037', '2018-06-20 15:09:41', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001038', '2018-06-20 15:09:41', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/0fc71b3f-175a-4360-a7ba-5e9ece35730c_02ab4db185c92cc40a4f37b85a86af37_b.jpg?null');
+INSERT INTO `log` VALUES ('00000001039', '2018-06-20 15:09:41', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg?null');
+INSERT INTO `log` VALUES ('00000001040', '2018-06-20 15:09:41', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/66ab30ff-4229-412a-86a1-29b418aae676_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3?null');
+INSERT INTO `log` VALUES ('00000001041', '2018-06-20 15:10:35', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001042', '2018-06-20 15:10:35', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001043', '2018-06-20 15:10:35', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg?null');
+INSERT INTO `log` VALUES ('00000001044', '2018-06-20 15:10:35', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/0fc71b3f-175a-4360-a7ba-5e9ece35730c_02ab4db185c92cc40a4f37b85a86af37_b.jpg?null');
+INSERT INTO `log` VALUES ('00000001045', '2018-06-20 15:10:35', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/66ab30ff-4229-412a-86a1-29b418aae676_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3?null');
+INSERT INTO `log` VALUES ('00000001046', '2018-06-20 15:10:36', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001047', '2018-06-20 15:10:36', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001048', '2018-06-20 15:10:36', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/0fc71b3f-175a-4360-a7ba-5e9ece35730c_02ab4db185c92cc40a4f37b85a86af37_b.jpg?null');
+INSERT INTO `log` VALUES ('00000001049', '2018-06-20 15:10:36', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg?null');
+INSERT INTO `log` VALUES ('00000001050', '2018-06-20 15:10:36', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/66ab30ff-4229-412a-86a1-29b418aae676_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3?null');
+INSERT INTO `log` VALUES ('00000001051', '2018-06-20 15:10:37', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001052', '2018-06-20 15:10:37', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001053', '2018-06-20 15:10:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/0fc71b3f-175a-4360-a7ba-5e9ece35730c_02ab4db185c92cc40a4f37b85a86af37_b.jpg?null');
+INSERT INTO `log` VALUES ('00000001054', '2018-06-20 15:10:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/66ab30ff-4229-412a-86a1-29b418aae676_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3?null');
+INSERT INTO `log` VALUES ('00000001055', '2018-06-20 15:10:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg?null');
+INSERT INTO `log` VALUES ('00000001056', '2018-06-20 15:10:39', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001057', '2018-06-20 15:10:39', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001058', '2018-06-20 15:10:41', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl;jsessionid=BD686394194F5DA5597C6C1D1F9AAA0B?id=1124&timeStamp=2018-06-19%2016:48:48');
+INSERT INTO `log` VALUES ('00000001059', '2018-06-20 15:10:41', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1121%EF%BC%86pageNumber=1%EF%BC%86pageLength=30');
+INSERT INTO `log` VALUES ('00000001060', '2018-06-20 15:10:43', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001061', '2018-06-20 15:10:43', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001062', '2018-06-20 15:10:44', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl;jsessionid=DA5F3A94ADC3ED4B773BA84AF5F18257?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001063', '2018-06-20 15:10:44', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg?null');
+INSERT INTO `log` VALUES ('00000001064', '2018-06-20 15:10:44', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/0fc71b3f-175a-4360-a7ba-5e9ece35730c_02ab4db185c92cc40a4f37b85a86af37_b.jpg?null');
+INSERT INTO `log` VALUES ('00000001065', '2018-06-20 15:10:44', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/66ab30ff-4229-412a-86a1-29b418aae676_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3?null');
+INSERT INTO `log` VALUES ('00000001066', '2018-06-20 15:10:48', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001067', '2018-06-20 15:10:48', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001068', '2018-06-20 15:10:49', '0:0:0:0:0:0:0:1', null, '//Test1/MyPageSvl;jsessionid=E7496E0C378B70884D73D049724CA3FC?id=1109&timeStamp=2018-06-18%2018:08:34');
+INSERT INTO `log` VALUES ('00000001069', '2018-06-20 15:10:51', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001070', '2018-06-20 15:10:51', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001071', '2018-06-20 15:10:53', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001072', '2018-06-20 15:10:53', '0:0:0:0:0:0:0:1', null, '//Test1/index?null');
+INSERT INTO `log` VALUES ('00000001073', '2018-06-20 15:10:58', '0:0:0:0:0:0:0:1', null, '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001074', '2018-06-20 15:10:59', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1119&timeStamp=2018-06-18%2018:09:31');
+INSERT INTO `log` VALUES ('00000001075', '2018-06-20 15:11:03', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1113&timeStamp=2018-06-16%2018:25:15');
+INSERT INTO `log` VALUES ('00000001076', '2018-06-20 15:11:08', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1105&timeStamp=2018-06-04%2012:46:04');
+INSERT INTO `log` VALUES ('00000001077', '2018-06-20 15:11:11', '0:0:0:0:0:0:0:1', null, '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001078', '2018-06-20 15:11:53', '172.21.1.148', null, '/Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001079', '2018-06-20 15:12:35', '172.21.1.148', null, '/Test1/?null');
+INSERT INTO `log` VALUES ('00000001080', '2018-06-20 15:12:35', '172.21.1.148', null, '/Test1/?null');
+INSERT INTO `log` VALUES ('00000001081', '2018-06-20 15:12:39', '172.21.1.148', null, '/Test1/MyPageSvl?id=1110&timeStamp=2018-06-05%2010:23:07');
+INSERT INTO `log` VALUES ('00000001082', '2018-06-20 15:12:43', '172.21.1.148', null, '/Test1/MyPageSvl?id=1122&timeStamp=2018-06-18%2018:35:25');
+INSERT INTO `log` VALUES ('00000001083', '2018-06-20 15:12:45', '172.21.1.148', null, '/Test1/MyPageSvl?id=1112&timeStamp=2018-06-18%2022:47:48');
+INSERT INTO `log` VALUES ('00000001084', '2018-06-20 15:12:58', '172.21.1.148', null, '/Test1/MyPageSvl?id=1112&timeStamp=2018-06-18%2022:47:48');
+INSERT INTO `log` VALUES ('00000001085', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1112&timeStamp=2018-06-18%2022:47:48');
+INSERT INTO `log` VALUES ('00000001086', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1112&timeStamp=2018-06-18%2022:47:48');
+INSERT INTO `log` VALUES ('00000001087', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001088', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/db5c182b-1b43-480c-ae1f-34292a33ed5a_4.mp4?null');
+INSERT INTO `log` VALUES ('00000001089', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001090', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/ae8450b0-efa3-4479-8cf9-dbaa06117bea_47_2826b519176277740efd436be521e53f_3.mp4?null');
+INSERT INTO `log` VALUES ('00000001091', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001092', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/db5c182b-1b43-480c-ae1f-34292a33ed5a_4.mp4?null');
+INSERT INTO `log` VALUES ('00000001093', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001094', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001095', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/8ccc5b06-e988-45fa-9678-95a839cdcdbf_%E5%90%89%E7%94%B0%E6%B4%81%20%E6%97%A5%E6%9C%AC%E4%BA%BA%E7%9A%84%E9%81%A5%E8%BF%9C%E6%97%85%E9%80%94%20%E6%97%85%E7%A8%8B%E7%9A%84%E7%BB%88%E7%BB%93.mp3?null');
+INSERT INTO `log` VALUES ('00000001096', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/643cc08f-dd96-416c-ae40-634074a10150_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3?null');
+INSERT INTO `log` VALUES ('00000001097', '2018-06-20 15:13:12', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001098', '2018-06-20 15:14:58', '172.21.1.148', null, '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001099', '2018-06-20 15:15:11', '172.21.1.148', null, '/Test1/Login.jsp?null');
+INSERT INTO `log` VALUES ('00000001100', '2018-06-20 15:15:12', '172.21.1.148', null, '/Test1/GetPassCode.jpg?null');
+INSERT INTO `log` VALUES ('00000001101', '2018-06-20 15:15:28', '172.21.1.148', null, '/Test1/login?null');
+INSERT INTO `log` VALUES ('00000001102', '2018-06-20 15:15:28', '172.21.1.148', '00000001078', '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001103', '2018-06-20 15:15:49', '172.21.1.148', '00000001078', '/Test1/MyPageSvl?id=1125&timeStamp=2018-06-19%2016:57:50');
+INSERT INTO `log` VALUES ('00000001104', '2018-06-20 15:15:57', '172.21.1.148', '00000001078', '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001105', '2018-06-20 15:16:05', '172.21.1.148', '00000001078', '/Test1/MyPageSvl?id=1121&timeStamp=2018-06-19%2016:45:26');
+INSERT INTO `log` VALUES ('00000001106', '2018-06-20 15:16:31', '172.21.1.148', '00000001078', '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001107', '2018-06-20 15:16:39', '172.21.1.148', '00000001078', '/Test1/MyPageSvl?id=1122&timeStamp=2018-06-18%2018:35:25');
+INSERT INTO `log` VALUES ('00000001108', '2018-06-20 15:16:43', '172.21.1.148', '00000001078', '/Test1/MyPageSvl?id=1112&timeStamp=2018-06-18%2022:47:48');
+INSERT INTO `log` VALUES ('00000001109', '2018-06-20 15:17:34', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1112&timeStamp=2018-06-18%2022:47:48');
+INSERT INTO `log` VALUES ('00000001110', '2018-06-20 15:17:34', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001111', '2018-06-20 15:17:34', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/ae8450b0-efa3-4479-8cf9-dbaa06117bea_47_2826b519176277740efd436be521e53f_3.mp4?null');
+INSERT INTO `log` VALUES ('00000001112', '2018-06-20 15:17:34', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001113', '2018-06-20 15:17:34', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/db5c182b-1b43-480c-ae1f-34292a33ed5a_4.mp4?null');
+INSERT INTO `log` VALUES ('00000001114', '2018-06-20 15:17:34', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001115', '2018-06-20 15:17:34', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001116', '2018-06-20 15:17:34', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001117', '2018-06-20 15:17:35', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/db5c182b-1b43-480c-ae1f-34292a33ed5a_4.mp4?null');
+INSERT INTO `log` VALUES ('00000001118', '2018-06-20 15:17:35', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/8ccc5b06-e988-45fa-9678-95a839cdcdbf_%E5%90%89%E7%94%B0%E6%B4%81%20%E6%97%A5%E6%9C%AC%E4%BA%BA%E7%9A%84%E9%81%A5%E8%BF%9C%E6%97%85%E9%80%94%20%E6%97%85%E7%A8%8B%E7%9A%84%E7%BB%88%E7%BB%93.mp3?null');
+INSERT INTO `log` VALUES ('00000001119', '2018-06-20 15:17:35', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001120', '2018-06-20 15:17:35', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/643cc08f-dd96-416c-ae40-634074a10150_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3?null');
+INSERT INTO `log` VALUES ('00000001121', '2018-06-20 15:17:43', '0:0:0:0:0:0:0:1', null, '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001122', '2018-06-20 15:17:44', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1121&timeStamp=2018-06-19%2016:45:26');
+INSERT INTO `log` VALUES ('00000001123', '2018-06-20 15:17:44', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg?null');
+INSERT INTO `log` VALUES ('00000001124', '2018-06-20 15:17:45', '0:0:0:0:0:0:0:1', null, '/Test1/upload/user/1078/21a54623-fa63-440e-ab6a-8d2224f78f32_TIM%E5%9B%BE%E7%89%8720180316145534.jpg?null');
+INSERT INTO `log` VALUES ('00000001125', '2018-06-20 15:17:47', '0:0:0:0:0:0:0:1', null, '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001126', '2018-06-20 15:17:51', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1042&timeStamp=2018-06-05%2014:28:01');
+INSERT INTO `log` VALUES ('00000001127', '2018-06-20 15:17:55', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1042&pageNumber=2&pageLength=30');
+INSERT INTO `log` VALUES ('00000001128', '2018-06-20 15:17:58', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1042&pageNumber=2&pageLength=30');
+INSERT INTO `log` VALUES ('00000001129', '2018-06-20 15:18:02', '0:0:0:0:0:0:0:1', null, '/Test1/index?null');
+INSERT INTO `log` VALUES ('00000001130', '2018-06-20 15:19:09', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1042&timeStamp=2018-06-05%2014:28:01');
+INSERT INTO `log` VALUES ('00000001131', '2018-06-20 15:19:12', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1042&pageNumber=2&pageLength=30');
+INSERT INTO `log` VALUES ('00000001132', '2018-06-20 15:19:15', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1042&pageNumber=2&pageLength=30');
+INSERT INTO `log` VALUES ('00000001133', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1112&timeStamp=2018-06-18%2022:47:48');
+INSERT INTO `log` VALUES ('00000001134', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001135', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/db5c182b-1b43-480c-ae1f-34292a33ed5a_4.mp4?null');
+INSERT INTO `log` VALUES ('00000001136', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/ae8450b0-efa3-4479-8cf9-dbaa06117bea_47_2826b519176277740efd436be521e53f_3.mp4?null');
+INSERT INTO `log` VALUES ('00000001137', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001138', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001139', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001140', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/db5c182b-1b43-480c-ae1f-34292a33ed5a_4.mp4?null');
+INSERT INTO `log` VALUES ('00000001141', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001142', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/8ccc5b06-e988-45fa-9678-95a839cdcdbf_%E5%90%89%E7%94%B0%E6%B4%81%20%E6%97%A5%E6%9C%AC%E4%BA%BA%E7%9A%84%E9%81%A5%E8%BF%9C%E6%97%85%E9%80%94%20%E6%97%85%E7%A8%8B%E7%9A%84%E7%BB%88%E7%BB%93.mp3?null');
+INSERT INTO `log` VALUES ('00000001143', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001144', '2018-06-20 15:19:37', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/643cc08f-dd96-416c-ae40-634074a10150_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3?null');
+INSERT INTO `log` VALUES ('00000001145', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/MyPageSvl?id=1112&timeStamp=2018-06-18%2022:47:48');
+INSERT INTO `log` VALUES ('00000001146', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001147', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001148', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/ae8450b0-efa3-4479-8cf9-dbaa06117bea_47_2826b519176277740efd436be521e53f_3.mp4?null');
+INSERT INTO `log` VALUES ('00000001149', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/db5c182b-1b43-480c-ae1f-34292a33ed5a_4.mp4?null');
+INSERT INTO `log` VALUES ('00000001150', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001151', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001152', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/8ccc5b06-e988-45fa-9678-95a839cdcdbf_%E5%90%89%E7%94%B0%E6%B4%81%20%E6%97%A5%E6%9C%AC%E4%BA%BA%E7%9A%84%E9%81%A5%E8%BF%9C%E6%97%85%E9%80%94%20%E6%97%85%E7%A8%8B%E7%9A%84%E7%BB%88%E7%BB%93.mp3?null');
+INSERT INTO `log` VALUES ('00000001153', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/db5c182b-1b43-480c-ae1f-34292a33ed5a_4.mp4?null');
+INSERT INTO `log` VALUES ('00000001154', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/www.baidu.com?null');
+INSERT INTO `log` VALUES ('00000001155', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/9364d1f5-b1a3-499f-abf1-f7d47dd491fb_%E6%B2%99%E5%AE%9D%E4%BA%AE%20-%20%E6%9A%97%E9%A6%99%20[mqms2].mp3?null');
+INSERT INTO `log` VALUES ('00000001156', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/643cc08f-dd96-416c-ae40-634074a10150_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3?null');
+INSERT INTO `log` VALUES ('00000001157', '2018-06-20 15:20:28', '0:0:0:0:0:0:0:1', null, '/Test1/upload/picture/user/1078/0309876e-1380-4ceb-a96a-a88d01b51f49_%E3%80%90%E5%9B%9B%E6%9C%88%E6%90%9C%E5%A4%A9%E4%B8%8B%E3%80%91%E4%BF%84%E7%BD%97%E6%96%AF%E5%9B%BD%E5%AE%B6%E5%BD%A2%E8%B1%A1%E5%AE%A3%E4%BC%A0%E7%89%87%EF%BC%88%E4%B8%AD%E6%96%87%E5%AD%97%E5%B9%95%EF%BC%89_%E8%B6%85%E6%B8%85.mp4?null');
 
 -- ----------------------------
 -- Table structure for media
@@ -29,12 +206,17 @@ CREATE TABLE `media` (
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
   CONSTRAINT `media_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1035 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1065 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of media
 -- ----------------------------
-INSERT INTO `media` VALUES ('1034', '1078', '123.mp3', 'http://localhost:8080/Test1/upload/user/1078/bdcba5c0-8efa-4a55-9809-931ea589e0e2_123.mp3', '0', '2018-06-19 11:42:26');
+INSERT INTO `media` VALUES ('1048', '1078', '9ff6991a5839a413b1ac40a532ab42c1_r.jpg', 'http://localhost:8080/Test1/upload/user/1078/e4685ed2-23cc-4396-86eb-96e84a3c3b49_9ff6991a5839a413b1ac40a532ab42c1_r.jpg', '0', '2018-06-20 12:04:48');
+INSERT INTO `media` VALUES ('1053', '1078', '9ff6991a5839a413b1ac40a532ab42c1_r.jpg', 'http://localhost:8080/Test1/upload/user/1078/f6601eda-c235-4d9c-a396-aa15b5f08def_9ff6991a5839a413b1ac40a532ab42c1_r.jpg', '0', '2018-06-20 12:07:30');
+INSERT INTO `media` VALUES ('1061', '1078', '272775451.jpg', 'http://localhost:8080/Test1/upload/user/1078/328dd806-8593-428a-a622-f158ce6ba618_272775451.jpg', '0', '2018-06-20 12:19:13');
+INSERT INTO `media` VALUES ('1062', '1078', '9ff6991a5839a413b1ac40a532ab42c1_r.jpg', 'http://localhost:8080/Test1/upload/user/1078/5b5d5e7f-eb35-4b81-82e0-4eb5a7023234_9ff6991a5839a413b1ac40a532ab42c1_r.jpg', '0', '2018-06-20 13:23:50');
+INSERT INTO `media` VALUES ('1063', '1078', '272775451.jpg', 'http://localhost:8080/Test1/upload/user/1078/43a6cb14-2858-4d8f-97d0-323c43837c2c_272775451.jpg', '0', '2018-06-20 13:25:42');
+INSERT INTO `media` VALUES ('1064', '1078', '02ab4db185c92cc40a4f37b85a86af37_b.jpg', 'http://localhost:8080/Test1/upload/user/1078/8c0fefaa-85c1-4f8e-8d27-4cb6a05beafd_02ab4db185c92cc40a4f37b85a86af37_b.jpg', '0', '2018-06-20 13:26:28');
 
 -- ----------------------------
 -- Table structure for message
@@ -52,7 +234,7 @@ CREATE TABLE `message` (
   KEY `pageId` (`pageId`) USING BTREE,
   CONSTRAINT `message_ibfk_1` FOREIGN KEY (`pageId`) REFERENCES `mypage` (`id`),
   CONSTRAINT `message_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1377 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1385 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of message
@@ -326,6 +508,14 @@ INSERT INTO `message` VALUES ('1373', '2018-06-19 00:29:23', '1078', '<audio src
 INSERT INTO `message` VALUES ('1374', '2018-06-19 00:32:13', '1078', '<audio src=\"http%3a%2f%2flocalhost%3a8080%2fTest1%2fupload%2fpicture%2fuser%2f1078%2f9b2e863b-09a3-4588-ad9d-11d984c27999_8.%e3%83%95%e3%82%a9%e3%83%bc%e3%83%ab%e3%82%aa%e3%83%96%e3%83%95%e3%82%a9%e3%83%bc%e3%83%ab%e3%80%80%ef%bd%9e+%e7%a7%8b%e3%82%81%e3%81%8f%e6%bb%9d.mp3\" controls=\"controls\" loop=\"loop\"></audio>', '1123', '11');
 INSERT INTO `message` VALUES ('1375', '2018-06-19 00:33:43', '1078', '<audio src=\"http://localhost:8080/Test1/upload/picture/user/1078/9b2e863b-09a3-4588-ad9d-11d984c27999_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3\" controls=\"controls\" loop=\"loop\"></audio>', '1123', '12');
 INSERT INTO `message` VALUES ('1376', '2018-06-19 00:50:35', '1078', '<audio src=\"http://localhost:8080/Test1/upload/picture/user/1078/8b66ed50-8971-4df8-a238-416da4a14317_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E+%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3\" controls=\"controls\" loop=\"loop\"></audio>', '1123', '13');
+INSERT INTO `message` VALUES ('1377', '2018-06-19 14:25:21', '1078', '<audio src=\"http://localhost:8080/Test1/upload/user/1078/66ab30ff-4229-412a-86a1-29b418aae676_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3\" controls=\"controls\" loop=\"loop\"></audio>', '1123', '14');
+INSERT INTO `message` VALUES ('1378', '2018-06-19 14:35:44', '1078', '<video src=\"http://localhost:8080/Test1/upload/user/1078/695848da-aea6-41f0-92e5-a1a2592f8575_E52BDAD8-7637-43C1-88EE-D8FE0E6A0227.MOV\" controls=\"controls\"></video>', '1123', '15');
+INSERT INTO `message` VALUES ('1379', '2018-06-19 16:18:16', '1078', '<a href = \"http://localhost:8080/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg\"><img src=\"http://localhost:8080/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg\" style=\"max-width:1280px\"/></a>', '1121', '1');
+INSERT INTO `message` VALUES ('1380', '2018-06-19 16:18:08', '1078', '<a href = \"http://localhost:8080/Test1/upload/user/1078/21a54623-fa63-440e-ab6a-8d2224f78f32_TIM%E5%9B%BE%E7%89%8720180316145534.jpg\"><img src=\"http://localhost:8080/Test1/upload/user/1078/21a54623-fa63-440e-ab6a-8d2224f78f32_TIM%E5%9B%BE%E7%89%8720180316145534.jpg\" style=\"max-width:1280px\"/></a>', '1121', '2');
+INSERT INTO `message` VALUES ('1381', '2018-06-19 16:44:49', '1078', '<a href=\"http://localhost:8080/Test1/upload/user/1078/21a54623-fa63-440e-ab6a-8d2224f78f32_TIM%E5%9B%BE%E7%89%8720180316145534.jpg\"><img src=\"http://localhost:8080/Test1/upload/user/1078/21a54623-fa63-440e-ab6a-8d2224f78f32_TIM%E5%9B%BE%E7%89%8720180316145534.jpg\" style=\"max-width:800px\"/></a>', '1121', '3');
+INSERT INTO `message` VALUES ('1382', '2018-06-19 16:45:26', '1078', '<a href=\"http://localhost:8080/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg\"><img src=\"http://localhost:8080/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg\" style=\"max-width:800px\"/></a>', '1121', '4');
+INSERT INTO `message` VALUES ('1383', '2018-06-19 16:55:02', '1078', '<a href=\"http://localhost:8080/Test1/upload/user/1078/0fc71b3f-175a-4360-a7ba-5e9ece35730c_02ab4db185c92cc40a4f37b85a86af37_b.jpg\"><img src=\"http://localhost:8080/Test1/upload/user/1078/0fc71b3f-175a-4360-a7ba-5e9ece35730c_02ab4db185c92cc40a4f37b85a86af37_b.jpg\" style=\"max-width:800px\"/></a>', '1125', '1');
+INSERT INTO `message` VALUES ('1384', '2018-06-19 16:57:50', '1078', '<audio src=\"http://localhost:8080/Test1/upload/user/1078/66ab30ff-4229-412a-86a1-29b418aae676_8.%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%96%E3%83%95%E3%82%A9%E3%83%BC%E3%83%AB%E3%80%80%EF%BD%9E%20%E7%A7%8B%E3%82%81%E3%81%8F%E6%BB%9D.mp3\" controls=\"controls\" loop=\"loop\"></audio>', '1125', '2');
 
 -- ----------------------------
 -- Table structure for mypage
@@ -342,7 +532,7 @@ CREATE TABLE `mypage` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `userId` (`userId`) USING BTREE,
   CONSTRAINT `mypage_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1124 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=1126 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of mypage
@@ -421,9 +611,11 @@ INSERT INTO `mypage` VALUES ('1117', '&nbsp&nbsp&nbsp', '2018-06-18 18:04:53', '
 INSERT INTO `mypage` VALUES ('1118', '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp1', '2018-06-18 18:08:09', '都是防辐射地方escapeXml=＂false＂', '1078', '2018-06-18 18:09:21', '1');
 INSERT INTO `mypage` VALUES ('1119', '＜a&nbsphref=＂Home?id=100', '2018-06-18 18:09:31', '＜a&nbsphref=＂Home?id=1000＂＞秦亚祺＜/a＞', '1078', '2018-06-18 18:09:31', '0');
 INSERT INTO `mypage` VALUES ('1120', '＜a&nbsphref=＂Home?id=1000＂＞秦亚祺＜/a＞', '2018-06-18 18:11:42', '＜a&nbsphref=＂Home?id=1000＂＞秦亚祺＜/a＞', '1078', '2018-06-18 18:11:42', '0');
-INSERT INTO `mypage` VALUES ('1121', 'what\'s&nbspyou&nbspname?', '2018-06-18 18:13:00', '1', '1078', '2018-06-18 18:13:00', '0');
+INSERT INTO `mypage` VALUES ('1121', 'what\'s&nbspyou&nbspname?', '2018-06-18 18:13:00', '1', '1078', '2018-06-19 16:45:26', '4');
 INSERT INTO `mypage` VALUES ('1122', 'what\'s&nbspyou&nbspname?', '2018-06-18 18:13:22', 'sdf', '1078', '2018-06-18 18:35:25', '3');
-INSERT INTO `mypage` VALUES ('1123', 'what\'s&nbspyou&nbspname?', '2018-06-18 23:33:17', '/upload/picture/user/1078/8ccc5b06-e988-45fa-9678-95a839cdcdbf_吉田洁&nbsp日本人的遥远旅途&nbsp旅程的终结.mp3<audio src=\"/upload/picture/user/1078/8ccc5b06-e988-45fa-9678-95a839cdcdbf_吉田洁&nbsp日本人的遥远旅途&nbsp旅程的终结.mp3\" controls=\"controls\" loop=\"loop\"></audio>', '1078', '2018-06-19 00:50:35', '13');
+INSERT INTO `mypage` VALUES ('1123', 'what\'s&nbspyou&nbspname?', '2018-06-18 23:33:17', '/upload/picture/user/1078/8ccc5b06-e988-45fa-9678-95a839cdcdbf_吉田洁&nbsp日本人的遥远旅途&nbsp旅程的终结.mp3<audio src=\"/upload/picture/user/1078/8ccc5b06-e988-45fa-9678-95a839cdcdbf_吉田洁&nbsp日本人的遥远旅途&nbsp旅程的终结.mp3\" controls=\"controls\" loop=\"loop\"></audio>', '1078', '2018-06-19 14:35:44', '15');
+INSERT INTO `mypage` VALUES ('1124', 'win32下&nbsp如何定位内存泄漏', '2018-06-19 16:48:48', '<a href=\"http://localhost:8080/Test1/MyPageSvl?id=1121＆pageNumber=1＆pageLength=30\"><img src=\"http://localhost:8080/Test1/MyPageSvl?id=1121＆pageNumber=1＆pageLength=30\" style=\"max-width:800px\"/></a>', '1078', '2018-06-19 16:48:48', '0');
+INSERT INTO `mypage` VALUES ('1125', 'win32下&nbsp如何定位内存泄漏', '2018-06-19 16:49:54', '<a href=\"http://localhost:8080/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg\"><img src=\"http://localhost:8080/Test1/upload/user/1078/d2bc0960-2681-46ce-b02f-be5f411cd06a_RedEaredSlider05.jpg\" style=\"max-width:800px\"/></a>', '1078', '2018-06-19 16:57:50', '2');
 
 -- ----------------------------
 -- Table structure for user

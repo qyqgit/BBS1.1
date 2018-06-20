@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.obj.Database;
+import com.obj.MyLog;
+import com.obj.User;
 
 /**
  * Servlet Filter implementation class MyFilter
@@ -45,16 +47,19 @@ public class MyFitler implements Filter {
           
         HttpSession session = req.getSession();
         
-        if(session.getAttribute("conn") == null)
-        {
+        User user = (User)session.getAttribute("user");
+		MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
+        if(session.getAttribute("conn") == null) {
         	Connection conn = Database.getConn();
         	if(conn!=null) {
     			session.setAttribute("conn", conn);
     			System.out.println(conn);
         	}
+        	MyLog.insertMyLog(myLog, conn);
         }
-		
-		
+        Connection conn = (Connection)session.getAttribute("conn");
+        MyLog.insertMyLog(myLog, conn);
+        
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
 	}
