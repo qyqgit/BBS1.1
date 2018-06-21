@@ -42,8 +42,8 @@ public class DeleteFile extends HttpServlet {
 			return;
 		}
 		if(Media.removeMedia(mediaId, conn)) {
-            //String realPath = getServletContext().getRealPath("/upload");
-            String realPath = "D:\\eclipse-workspace\\BBS1.0\\WebContent\\upload\\user\\"  + user.getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
+            String realPath = getServletContext().getRealPath("/upload");
+            realPath = realPath + "\\user\\"  + user.getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
             //创建文件对象
             File dir = new File(realPath);
             if(dir.exists()) dir.delete();

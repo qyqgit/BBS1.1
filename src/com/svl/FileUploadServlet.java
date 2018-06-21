@@ -85,9 +85,9 @@ public class FileUploadServlet extends HttpServlet {
                         //与文件名拼接
                         fileName = id +"_"+ fileName;
                         //【三、上传到指定目录：获取上传目录路径】
-                        //String realPath = getServletContext().getRealPath("/upload");
-                        
-                        String realPath = "D:\\eclipse-workspace\\BBS1.0\\WebContent\\upload\\user\\" + user.getId() + "\\";
+                        String realPath = getServletContext().getRealPath("/upload");
+                        System.out.println(realPath);
+                        realPath =  realPath + "\\user\\" + user.getId() + "\\";
                         //创建文件对象
                         File dir = new File(realPath);
                         if(!dir.exists()) dir.mkdirs();
