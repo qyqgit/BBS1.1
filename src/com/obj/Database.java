@@ -8,7 +8,7 @@ public class Database {
 	private static String driver = "com.mysql.jdbc.Driver";
 	private static String url = "jdbc:mysql://127.0.0.1:3306/temp";
 	private static String user = "root";
-	private static String password = "qin123";
+	private static String password = "83$a56Dfc2%9c";
 	private static Connection conn;
 	
 	public static String getDriver() {

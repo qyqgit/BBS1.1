@@ -50,9 +50,9 @@ class HttpServletRequestMediaSupport extends HttpServletRequestWrapper{
             return value;
         if("textarea".equalsIgnoreCase(name)) {
         	String text = value;
-    		String videoHtml = "<video src=* controls=\"controls\" style=\"max-width:1024px\"></video>";
+    		String videoHtml = "<video src=* controls=\"controls\" style=\"max-width:1024px;max-height:576px\"></video>";
     		String audioHtml = "<audio src=* controls=\"controls\" loop=\"loop\"></audio>";
-    		String imageHtml = "<a href=*><img src=* style=\"max-width:1024px\"/></a>";
+    		String imageHtml = "<a href=*><img src=* style=\"max-width:1024px;max-height:576px\"/></a>";
     		int videoStart = text.indexOf("$video");
     		int videoEnd = text.indexOf("video$");
     		while(videoStart != -1 && videoEnd != -1 && videoStart < videoEnd) {

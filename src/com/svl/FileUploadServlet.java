@@ -86,7 +86,6 @@ public class FileUploadServlet extends HttpServlet {
                         fileName = id +"_"+ fileName;
                         //【三、上传到指定目录：获取上传目录路径】
                         String realPath = getServletContext().getRealPath("/upload");
-                        System.out.println(realPath);
                         realPath =  realPath + "\\user\\" + user.getId() + "\\";
                         //创建文件对象
                         File dir = new File(realPath);
@@ -95,7 +94,7 @@ public class FileUploadServlet extends HttpServlet {
                         item.write(file);
                         item.delete();
                         
-                        Media media = new Media(user, a[a.length-1], "http://localhost:8080/Test1/upload/user/" + user.getId() + "/" + fileName,"0");
+                        Media media = new Media(user, a[a.length-1], "http://119.3.31.209:8080/BBS1.1/upload/user/" + user.getId() + "/" + fileName,"0");
                         HttpSession session = request.getSession();
                         Connection conn = (Connection)session.getAttribute("conn");
                         Media.insertMedia(media, conn);
