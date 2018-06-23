@@ -32,6 +32,8 @@
 			alert("Word count is " + document.getElementById("text").value.length + " > 511.");
 			return false;
 		}
+		if(document.getElementById("text").value.length == 0)
+			return false;
 		return true;
   }
 </script>
@@ -39,6 +41,7 @@
 </head>
 <body>
 	<div id="head">
+		<a href="index">index</a>
 		Id:
 		<c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
 		<a href="${url }"><c:out value="${sessionScope.user.id}"></c:out></a>
