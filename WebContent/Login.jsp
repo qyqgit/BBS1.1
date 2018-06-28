@@ -50,7 +50,7 @@
            <td>Password</td>    
            <td><input name="password" type="password" maxlength="12"/></td>    
         </tr>    
-        <tr id="passcode">    
+        <tr id="passcode" style="display:none;">    
            <td><img id="img" src="GetPassCode.jpg" onclick="refresh()"> </td>    
            <td><input name="passcode" type="text" /></td>    
         </tr>
