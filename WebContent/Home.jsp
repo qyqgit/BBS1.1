@@ -238,7 +238,6 @@
 					    <c:url value="${mediaList.url}" var="url"></c:url>
 						<a href="${url }"><c:out value="${mediaList.name}"></c:out></a>
 					</td>
-				    <td><c:out value="${mediaList.date }"/></td>
 				    <td>
 				    	<input style="position:absolute;z-index:-1;opacity:0.0;" id="_${mediaList.id }" type="text" value="${mediaList.url}">
 				    	<button class="btn" data-clipboard-action="copy" data-clipboard-target="#_${mediaList.id }" onclick="encodeUrl('_${mediaList.id }','${mediaList.url}')">URL</button>
@@ -247,6 +246,7 @@
 				    <c:set value = '<a href="deleteFile?id=${mediaList.id}" >Delete</a>' var = "delete"></c:set>
 				    <c:out value="${sessionScope.user.id == user.id ? delete:''}" escapeXml="false"/>
 				    </td>
+				    <td><c:out value="${mediaList.date }"/></td>
 			    </tr>
 				</c:forEach>
 		</table>
