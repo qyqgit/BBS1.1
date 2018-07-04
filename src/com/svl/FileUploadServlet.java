@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -94,7 +95,9 @@ public class FileUploadServlet extends HttpServlet {
                         item.write(file);
                         item.delete();
                         
-                        Media media = new Media(user, a[a.length-1], "http://119.3.31.209:8080/BBS1.1/upload/user/" + user.getId() + "/" + fileName,"0");
+                        Properties profile = (Properties)getServletContext().getAttribute("profile");
+                        String url = profile.getProperty("url");
+                        Media media = new Media(user, a[a.length-1], url + user.getId() + "/" + fileName,"0");
                         HttpSession session = request.getSession();
                         Connection conn = (Connection)session.getAttribute("conn");
                         Media.insertMedia(media, conn);
