@@ -66,7 +66,7 @@
 					<a href="${url }"><c:out value="${myPageList.user.name}"></c:out></a>
 				</td>
 				<td><c:out value="${myPageList.createDate }"></c:out></td>
-				<td><c:out value="--------" /></td>
+				<td><c:out value="&nbsp&nbsp&nbsp&nbsp" escapeXml="false"/></td>
 				<td>
 				    <c:url value="Home?id=${lastSendMessageUserList[loop.index].id}" var="url"></c:url>
 					<a href="${url }"><c:out value="${lastSendMessageUserList[loop.index].name}"></c:out></a>
