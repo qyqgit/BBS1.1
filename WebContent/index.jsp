@@ -50,8 +50,8 @@
 		${sessionScope.user.id == null?'<a href="Login.jsp">Login</a>':''}
 		${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
-
 	</div>
+	<br>
 	<div id="main">
 		<table border=0>
 		<c:forEach var="myPageList" items="${requestScope.myPageList }" varStatus="loop">

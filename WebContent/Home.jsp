@@ -144,7 +144,6 @@
 </head>
 <body>
 	<div id="head">
-		<a href="index">Index</a>
 		Id:
 		<c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
 		<a href="${url }"><c:out value="${sessionScope.user.id}"></c:out></a>
@@ -155,7 +154,9 @@
 		${sessionScope.user.id == null?'<a href="Login.jsp">Login</a>':''}
 		${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
+		<a href="index">Index</a>
 	</div>
+	<br>
 	<div id="main">
 		<table id="viewTable" border="0">
 			<tr>
@@ -246,7 +247,7 @@
 				    <c:set value = '<a href="deleteFile?id=${mediaList.id}" >Delete</a>' var = "delete"></c:set>
 				    <c:out value="${sessionScope.user.id == user.id ? delete:''}" escapeXml="false"/>
 				    </td>
-				    <td><c:out value="${mediaList.date }"/></td>
+				    <td style="white-space:nowrap;"><c:out value="${mediaList.date }"/></td>
 			    </tr>
 				</c:forEach>
 		</table>
