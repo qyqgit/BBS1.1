@@ -140,6 +140,7 @@
 		 window.location.href="Home?id=" +${user.id}+ '&edit=0';
 	 }
 </script>
+<link href="sys/pic/fish58.png" rel="icon"/>
 <title>fishcc.org</title>
 </head>
 <body>

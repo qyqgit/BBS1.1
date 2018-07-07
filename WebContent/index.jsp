@@ -37,6 +37,7 @@
   }
 </script>
 <title>fishcc.org</title>
+<link href="sys/pic/fish58.png" rel="icon"/>
 </head>
 <body>
 	<div id="head">

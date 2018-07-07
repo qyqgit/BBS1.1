@@ -37,6 +37,7 @@
 		return true;
   }
 </script>
+<link href="sys/pic/fish58.png" rel="icon"/>
 <title>fishcc.org</title>
 </head>
 <body>
