@@ -37,7 +37,7 @@
 		return true;
   }
 </script>
-<title>Insert title here</title>
+<title>fishcc.org</title>
 </head>
 <body>
 	<div id="head">

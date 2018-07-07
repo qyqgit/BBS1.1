@@ -140,7 +140,7 @@
 		 window.location.href="Home?id=" +${user.id}+ '&edit=0';
 	 }
 </script>
-<title>Insert title here</title>
+<title>fishcc.org</title>
 </head>
 <body>
 	<div id="head">

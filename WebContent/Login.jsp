@@ -37,7 +37,7 @@
 	  showPassCode();
   }
 </script>
-<title>Insert title here</title>
+<title>fishcc.org</title>
 </head>
 <body>
 	<form   name="login"   method="post"  action="login">    

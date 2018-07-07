@@ -76,7 +76,7 @@
 	return null;  
   }
 </script>
-<title>Insert title here</title>
+<title>fishcc.org</title>
 </head>
 <body>
 	<form   name="register"   method="post"  action="register" onsubmit="return inputCheck()">    
