@@ -21,9 +21,11 @@
 *.mp3
 *.mp4
 *.mov
-*.jpg
-*.png
-*.bmp
+#*.jpg
+#*.png
+#*.bmp
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+upload/
