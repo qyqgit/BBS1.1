@@ -35,7 +35,19 @@ public class SendMessage extends HttpServlet {
 		HttpSession session = request.getSession();
 		Connection conn = (Connection)session.getAttribute("conn");
 		User user = (User)session.getAttribute("user");
-		Message message = new Message(new User(user.getId(),user.getName()),request.getParameter("textarea"),request.getParameter("id"));
+		String text = request.getParameter("textarea");
+		String replyHtml = "<a href='#' onclick=\"return gotoReply(*)\">Reply</a> *:";
+		int replyStart = text.indexOf("$reply");
+		int replyEnd = text.indexOf("reply$");
+		if(replyStart != -1 && replyStart != -1) {
+			String reply = text.substring(replyStart, replyEnd + 6);
+			String[] temp = reply.split("'");
+			String replyFloor = temp[1];
+			String replyId = temp[3];
+			replyHtml = replyHtml.replace("*", replyFloor);
+			text = text.replace(reply, replyHtml);
+		}
+		Message message = new Message(new User(user.getId(),user.getName()),text,request.getParameter("id"));
 		if(!Message.insertMessage(message, conn))
 			response.sendRedirect("MyPageSvl?id=" + request.getParameter("id") + "&pageNumber=" + request.getParameter("pageNumber") + "&pageLength=" + request.getParameter("pageLength"));
 		else {

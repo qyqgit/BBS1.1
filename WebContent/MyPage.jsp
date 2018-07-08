@@ -6,6 +6,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript">
+  function gotoReply(floor) {
+	  document.getElementById("_"+floor).focus();
+	  return false;
+  }
+  function replyFunction(floor,id) {
+	  document.getElementById("text").focus();
+	  document.getElementById("text").value = "$reply floor='" + floor+ "' id='" + id + "' reply$\n";
+	  return false;
+  }
   function insertAudio() {
 	  var url = prompt("audio url:");
 	  if(url != null && url.length != 0) {
@@ -69,8 +78,9 @@
 				<td width="220px" style="vertical-align:bottom;"><h2>${requestScope.myPage.date}</h2></td>
 			</tr>
 			<c:forEach var="messageList" items="${requestScope.messageList }" >
+			<tr><td colspan="5"><input style="width:98%;text-align:right;position:absolute;z-index:-1;opacity:0.0;" id="_${messageList.floorNumber }" type="text" value=""></td></tr>
 			<tr>
-				<td colspan="4"><c:out value="${messageList.text }" escapeXml="false"/></td>
+				<td colspan="5"><c:out value="${messageList.text }" escapeXml="false"/></td>
 			</tr>
 			<tr>
 			    <td></td>
@@ -79,9 +89,14 @@
 					<a href="${url }"><c:out value="${messageList.user.name}"></c:out></a>
 				</td>
 			    <td  style="vertical-align:bottom;"><c:out value="${messageList.date }"/></td>
-			    <td width="50px" style="vertical-align:bottom;"><c:out value="${messageList.floorNumber }"/></td>
+			    <td width="50px" style="vertical-align:bottom;">
+			    	<c:out value="${messageList.floorNumber }"/>
+			    </td>
+			    <td width="50px" style="vertical-align:bottom;">
+			    	<a href="${messageList.id}" onclick="return replyFunction(${messageList.floorNumber },${messageList.id})"><c:out value="${messageList.id == null?'':'Reply' }"></c:out></a>
+			    </td>
 		    </tr>
-		    <tr><td colspan="4"><hr></td></tr>
+		    <tr><td colspan="5"><hr></td></tr>
 			</c:forEach>
 		</table>
 		<table>
