@@ -33,6 +33,10 @@
 		alert("Word count is " + document.getElementById("text").value.length + " > 511.");
 		return false;
 	}
+	if(document.getElementById("text").value.length == 0)
+		return false;
+	if(document.getElementById("title").value.length == 0)
+		return false;
 	return true;
   }
 </script>
@@ -96,7 +100,7 @@
 		</table>
 		<br>
 		<form method="post"  action="sendPage" onsubmit="return inputCheck()">
-			<input name="title" type="text" style="width:352px" maxlength="20"/>
+			<input id="title" name="title" type="text" style="width:352px" maxlength="20"/>
 			<br>
 			<br>
 			<textarea id="text" name="textarea" rows="10" cols="20" style="height:200px;width:352px;color:green;font-size:18px;resize:none;" ></textarea>
