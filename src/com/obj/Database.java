@@ -3,6 +3,7 @@ package com.obj;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Database {
 	private static String driver = "com.mysql.jdbc.Driver";
@@ -43,6 +44,25 @@ public class Database {
 		conn = null;
 		try {
 
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, user, password);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
+	public static Connection getProfileConn(Properties profile) {
+		String driver = profile.getProperty("db_driver");
+		String url = profile.getProperty("db_url");
+		String user = profile.getProperty("db_user");
+		String password = profile.getProperty("db_password");
+		conn = null;
+		try {
+			
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);
 		} catch (ClassNotFoundException e) {

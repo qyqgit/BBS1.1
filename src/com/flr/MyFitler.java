@@ -2,6 +2,8 @@ package com.flr;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Properties;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -50,10 +52,11 @@ public class MyFitler implements Filter {
         User user = (User)session.getAttribute("user");
         MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
         if(session.getAttribute("conn") == null) {
-        	Connection conn = Database.getConn();
+        	Properties profile = (Properties)req.getServletContext().getAttribute("profile");
+        	Connection conn = Database.getProfileConn(profile);
         	if(conn!=null) {
     			session.setAttribute("conn", conn);
-    			System.out.println(conn);
+    			System.out.println(conn + " created");
         	}
         	MyLog.insertMyLog(myLog, conn);
         }

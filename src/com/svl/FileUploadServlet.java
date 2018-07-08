@@ -96,7 +96,7 @@ public class FileUploadServlet extends HttpServlet {
                         item.delete();
                         
                         Properties profile = (Properties)getServletContext().getAttribute("profile");
-                        String url = profile.getProperty("url");
+                        String url = profile.getProperty("media_url");
                         Media media = new Media(user, a[a.length-1], url + user.getId() + "/" + fileName,"0");
                         HttpSession session = request.getSession();
                         Connection conn = (Connection)session.getAttribute("conn");
