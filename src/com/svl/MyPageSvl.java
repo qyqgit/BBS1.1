@@ -3,6 +3,7 @@ package com.svl;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,28 +40,28 @@ public class MyPageSvl extends HttpServlet {
 		if(MyPage.getMyPage(myPage, conn))
 			request.setAttribute("myPage", myPage);
 		Message message = new Message(request.getParameter("id"));
+		Properties profile = (Properties)request.getServletContext().getAttribute("profile");
 		int pageLength;
 		int[] count = {0};
-		int listLength =  10;
+		int listLength =  Integer.parseInt(profile.getProperty("message_listlength"));
 		int pageNumber;
 		Message.getMessageCount(count, message, conn);
 		try {
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
-			pageNumber = 1;
+			pageNumber = Integer.parseInt(profile.getProperty("message_number"));;
 		}
 		try {
 			pageLength = Integer.parseInt(request.getParameter("pageLength"));
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
-			pageLength = 30;
+			pageLength = Integer.parseInt(profile.getProperty("message_length"));;
 		}
 		EachPage eachPage = new EachPage(pageLength,count[0],listLength,pageNumber);
 		int howManyPage = eachPage.getHowManyPage();
 		request.setAttribute("pageId", request.getParameter("id"));
 		request.setAttribute("pageNumber", pageNumber);
-		request.setAttribute("pageLength", pageLength);
 		request.setAttribute("howManyPage", howManyPage);
 		
 		ArrayList<EachPage> eachPageList = eachPage.getEachPageList();

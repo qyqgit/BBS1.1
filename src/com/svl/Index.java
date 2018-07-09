@@ -3,6 +3,7 @@ package com.svl;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,9 +38,10 @@ public class Index extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		Connection conn = (Connection)session.getAttribute("conn");
+		Properties profile = (Properties)request.getServletContext().getAttribute("profile");
 		int pageLength;
 		int[] count = {0};
-		int listLength =  10;
+		int listLength =  Integer.parseInt(profile.getProperty("page_listlength"));
 		int pageNumber;
 		MyPage.getMyPageCount(count, conn);
 		try {
@@ -47,8 +49,8 @@ public class Index extends HttpServlet {
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
-			pageLength = 30;
-			pageNumber = 1;
+			pageLength = Integer.parseInt(profile.getProperty("page_length"));
+			pageNumber = Integer.parseInt(profile.getProperty("page_number"));
 		}
 		EachPage eachPage = new EachPage(pageLength,count[0],listLength,pageNumber);
 		int howManyPage = eachPage.getHowManyPage();

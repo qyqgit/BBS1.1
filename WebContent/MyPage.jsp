@@ -117,7 +117,7 @@
 				</td>
 			</tr>
 		</table>
-		<form method="post"  action="sendMessage?id=${requestScope.pageId}&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.pageLength}" onsubmit="return inputCheck()">
+		<form method="post"  action="sendMessage?id=${requestScope.pageId}&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength}" onsubmit="return inputCheck()">
 			<textarea id="text" name="textarea" rows="10" cols="20" style="height:200px;width:352px;color:green;font-size:18px;resize:none;"></textarea>
 			<br>
 			<br>
