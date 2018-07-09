@@ -2,6 +2,8 @@ package com.svl;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Properties;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,14 +38,21 @@ public class SendMessage extends HttpServlet {
 		Connection conn = (Connection)session.getAttribute("conn");
 		User user = (User)session.getAttribute("user");
 		String text = request.getParameter("textarea");
-		String replyHtml = "<a href='#' onclick=\"return gotoReply(*)\">Reply</a> *:";
 		int replyStart = text.indexOf("$reply");
 		int replyEnd = text.indexOf("reply$");
 		if(replyStart != -1 && replyStart != -1) {
+			String replyHtml = "<a href='MyPageSvl?id=****&pageNumber=***&pageLength=**#*' >Reply</a> *:";
 			String reply = text.substring(replyStart, replyEnd + 6);
 			String[] temp = reply.split("'");
 			String replyFloor = temp[1];
 			String replyId = temp[3];
+			replyHtml = replyHtml.replace("****", request.getParameter("id"));
+			Properties profile = (Properties)request.getServletContext().getAttribute("profile");
+			int messageLength = Integer.parseInt(profile.getProperty("message_length"));
+			String pageNumber = (Integer.parseInt(replyFloor) % messageLength == 0 ? Integer.parseInt(replyFloor) / messageLength : Integer.parseInt(replyFloor) / messageLength + 1) + "";
+			replyHtml = replyHtml.replace("***", pageNumber);
+			String pageLength = messageLength + "";
+			replyHtml = replyHtml.replace("**", pageLength);
 			replyHtml = replyHtml.replace("*", replyFloor);
 			text = text.replace(reply, replyHtml);
 		}
