@@ -9,47 +9,78 @@ import java.util.ArrayList;
 
 public class Message {
 	private String id;
+	private String replyId;
 	private String date;
 	private User user;
 	private String text;
 	private String pageId;
 	private String floorNumber;
-	public String getPageId() {
-		return pageId;
-	}
-	public void setPageId(String pageId) {
-		this.pageId = pageId;
-	}
+	private String read;
+	
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public User getUser() {
-		return user;
+
+	public String getReplyId() {
+		return replyId;
 	}
-	public void setUser(User user) {
-		this.user = user;
+
+	public void setReplyId(String replyId) {
+		this.replyId = replyId;
 	}
+
 	public String getDate() {
 		return date;
 	}
+
 	public void setDate(String date) {
 		this.date = date;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public String getText() {
 		return text;
 	}
+
 	public void setText(String text) {
 		this.text = text;
 	}
+
+	public String getPageId() {
+		return pageId;
+	}
+
+	public void setPageId(String pageId) {
+		this.pageId = pageId;
+	}
+
 	public String getFloorNumber() {
 		return floorNumber;
 	}
+
 	public void setFloorNumber(String floorNumber) {
 		this.floorNumber = floorNumber;
 	}
+
+	public String getRead() {
+		return read;
+	}
+
+	public void setRead(String read) {
+		this.read = read;
+	}
+
 	public Message(String id, String date, User user, String text, String pageId, String floorNumber) {
 		super();
 		this.id = id;
@@ -60,11 +91,13 @@ public class Message {
 		this.floorNumber = floorNumber;
 	}
 	
-	public Message(User user, String text, String pageId) {
+	public Message(String replyId, User user, String text, String pageId, String read) {
 		super();
+		this.replyId = replyId;
 		this.user = user;
 		this.text = text;
 		this.pageId = pageId;
+		this.read = read;
 	}
 	
 	
@@ -92,11 +125,13 @@ public class Message {
 				messageNumber = rs.getString("messageNumber");
 			}
 			
-			pstmt = conn.prepareStatement("insert into message(userid,text,pageId,floorNumber) values (?,?,?,?)");
-			pstmt.setString(1, message.getUser().getId());
-			pstmt.setString(2, message.getText());
-			pstmt.setString(3, message.getPageId());
-			pstmt.setString(4, Integer.parseInt(messageNumber) + 1 + "");
+			pstmt = conn.prepareStatement("insert into message(replyId,userid,text,pageId,floorNumber,haveRead) values (?,?,?,?,?,?)");
+			pstmt.setString(1, message.getReplyId());
+			pstmt.setString(2, message.getUser().getId());
+			pstmt.setString(3, message.getText());
+			pstmt.setString(4, message.getPageId());
+			pstmt.setString(5, Integer.parseInt(messageNumber) + 1 + "");
+			pstmt.setString(6, message.getRead());
 			pstmt.executeUpdate();
 			
 			pstmt = conn.prepareStatement("update mypage set messageNumber=messageNumber+1 where id = ?");
@@ -208,11 +243,11 @@ public class Message {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement("select count(*) from message where pageId = ?");
+			pstmt = conn.prepareStatement("select count(id) from message where pageId = ?");
 			pstmt.setString(1, message.getPageId());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				count[0] = Integer.parseInt(rs.getString("count(*)"));
+				count[0] = Integer.parseInt(rs.getString("count(id)"));
 				if(count[0]==0)
 					count[0]++;
 				return true;

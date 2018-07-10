@@ -36,6 +36,7 @@ public class SendMessage extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		Connection conn = (Connection)session.getAttribute("conn");
+		String replyId = null;
 		User user = (User)session.getAttribute("user");
 		String text = request.getParameter("textarea");
 		int replyStart = text.indexOf("$reply");
@@ -45,7 +46,7 @@ public class SendMessage extends HttpServlet {
 			String reply = text.substring(replyStart, replyEnd + 6);
 			String[] temp = reply.split("'");
 			String replyFloor = temp[1];
-			String replyId = temp[3];
+			replyId = temp[3];
 			replyHtml = replyHtml.replace("****", request.getParameter("id"));
 			Properties profile = (Properties)request.getServletContext().getAttribute("profile");
 			int messageLength = Integer.parseInt(profile.getProperty("message_length"));
@@ -56,7 +57,7 @@ public class SendMessage extends HttpServlet {
 			replyHtml = replyHtml.replace("*", replyFloor);
 			text = text.replace(reply, replyHtml);
 		}
-		Message message = new Message(new User(user.getId(),user.getName()),text,request.getParameter("id"));
+		Message message = new Message(replyId, new User(user.getId(),user.getName()),text,request.getParameter("id"), "0");
 		if(!Message.insertMessage(message, conn))
 			response.sendRedirect("MyPageSvl?id=" + request.getParameter("id") + "&pageNumber=" + request.getParameter("pageNumber") + "&pageLength=" + request.getParameter("pageLength"));
 		else {
