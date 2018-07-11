@@ -35,12 +35,8 @@ public class MyReply extends HttpServlet {
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
 		ArrayList<Message> replyList = new ArrayList<Message>();
 		Message.getReplyList(request.getParameter("id"), replyList, conn);
-		for(int i = 0; i < replyList.size(); i++) {
-			System.out.println(replyList.get(i).getId());
-			System.out.println(replyList.get(i).getDate());
-			System.out.println(replyList.get(i).getUser().getName());
-			System.out.println(replyList.get(i).getText());
-		}
+		request.setAttribute("replyList", replyList);
+		request.getRequestDispatcher("MyReply.jsp").forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

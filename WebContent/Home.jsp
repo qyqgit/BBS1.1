@@ -155,7 +155,7 @@
 		${sessionScope.user.id == null?'<a href="Login.jsp">Login</a>':''}
 		${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
-		${sessionScope.user.id == null?'':'<a href="Reply">Reply('.concat(sessionScope.user.id).concat(')</a>')}
+		${sessionScope.user.id == null?'':'<a href="MyReply?id='.concat(sessionScope.user.id).concat('">Reply('.concat(sessionScope.user.id).concat(')</a>'))}
 		<a href="index">Index</a>
 	</div>
 	<br>
