@@ -153,4 +153,12 @@
     <servlet-name>DeleteFile</servlet-name>
     <url-pattern>/deleteFile</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>MyReply</servlet-name>
+    <servlet-class>com.svl.MyReply</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyReply</servlet-name>
+    <url-pattern>/myReply</url-pattern>
+  </servlet-mapping>
 </web-app>

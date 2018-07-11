@@ -201,6 +201,44 @@ public class Message {
 		} 
 		return false;
 	}
+	public static boolean getReplyList(String userId, ArrayList<Message> replyList, Connection conn) {
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("select table2.id,from_unixtime(unix_timestamp(table2.date),'%Y-%m-%d %H:%i') as date,table2.userid,table2.text,table2.pageid,table2.floornumber,user.name from (select message.id,message.date,message.userid,message.text,message.pageid,message.floornumber from (select mypage.id from mypage where userid = ? )as table1,message where pageid=table1.id and userid != ? union select message.id,message.date,message.userid,message.text,message.pageid,message.floornumber from (select id from message where userid = ? )as table1,message where replyid = table1.id order by date desc) as table2,user where table2.userid = user.id;");
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userId);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Message message = new Message(
+						rs.getString("id"),
+						rs.getString("date"),
+						new User(rs.getString("userId"), rs.getString("name")),
+						rs.getString("text"),
+						rs.getString("pageId"),
+						rs.getString("floorNumber")
+						);
+				replyList.add(message);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
+		return false;
+	}
 	public static boolean getMessageListMN(ArrayList<Message> messageList, Connection conn, int pageIndex, int pageLength) {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
