@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.obj.Message;
+import com.obj.MyPage;
 import com.obj.User;
 
 /**
@@ -57,7 +58,7 @@ public class SendMessage extends HttpServlet {
 			replyHtml = replyHtml.replace("*", replyFloor);
 			text = text.replace(reply, replyHtml);
 		}
-		Message message = new Message(replyId, new User(user.getId(),user.getName()),text,request.getParameter("id"), "0");
+		Message message = new Message(replyId, new User(user.getId(),user.getName()),text,new MyPage(request.getParameter("id")), "0");
 		if(!Message.insertMessage(message, conn))
 			response.sendRedirect("MyPageSvl?id=" + request.getParameter("id") + "&pageNumber=" + request.getParameter("pageNumber") + "&pageLength=" + request.getParameter("pageLength"));
 		else {

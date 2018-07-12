@@ -13,10 +13,11 @@ public class Message {
 	private String date;
 	private User user;
 	private String text;
-	private String pageId;
+	private MyPage myPage;
 	private String floorNumber;
 	private String read;
 	
+
 	public String getId() {
 		return id;
 	}
@@ -57,12 +58,12 @@ public class Message {
 		this.text = text;
 	}
 
-	public String getPageId() {
-		return pageId;
+	public MyPage getMyPage() {
+		return myPage;
 	}
 
-	public void setPageId(String pageId) {
-		this.pageId = pageId;
+	public void setMyPage(MyPage myPage) {
+		this.myPage = myPage;
 	}
 
 	public String getFloorNumber() {
@@ -81,29 +82,29 @@ public class Message {
 		this.read = read;
 	}
 
-	public Message(String id, String date, User user, String text, String pageId, String floorNumber) {
+	public Message(String id, String date, User user, String text, MyPage myPage, String floorNumber) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.user = user;
 		this.text = text;
-		this.pageId = pageId;
+		this.myPage = myPage;
 		this.floorNumber = floorNumber;
 	}
 	
-	public Message(String replyId, User user, String text, String pageId, String read) {
+	public Message(String replyId, User user, String text, MyPage myPage, String read) {
 		super();
 		this.replyId = replyId;
 		this.user = user;
 		this.text = text;
-		this.pageId = pageId;
+		this.myPage = myPage;
 		this.read = read;
 	}
 	
 	
-	public Message(String pageId) {
+	public Message(MyPage myPage) {
 		super();
-		this.pageId = pageId;
+		this.myPage = myPage;
 	}
 	public static boolean insertMessage(Message message, Connection conn) {
 		
@@ -119,7 +120,7 @@ public class Message {
 			conn.setAutoCommit(false);
 			
 			pstmt = conn.prepareStatement("select messageNumber from mypage where id = ?");
-			pstmt.setString(1, message.getPageId());
+			pstmt.setString(1, message.getMyPage().getId());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				messageNumber = rs.getString("messageNumber");
@@ -129,13 +130,13 @@ public class Message {
 			pstmt.setString(1, message.getReplyId());
 			pstmt.setString(2, message.getUser().getId());
 			pstmt.setString(3, message.getText());
-			pstmt.setString(4, message.getPageId());
+			pstmt.setString(4, message.getMyPage().getId());
 			pstmt.setString(5, Integer.parseInt(messageNumber) + 1 + "");
 			pstmt.setString(6, message.getRead());
 			pstmt.executeUpdate();
 			
 			pstmt = conn.prepareStatement("update mypage set messageNumber=messageNumber+1 where id = ?");
-			pstmt.setString(1, message.getPageId());
+			pstmt.setString(1, message.getMyPage().getId());
 			pstmt.executeUpdate();
 			
 			conn.commit();
@@ -170,7 +171,7 @@ public class Message {
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement("select message.id,userId,text,name,pageid,from_unixtime(unix_timestamp(message.date),'%Y-%m-%d %H:%i') as date,floorNumber from message,user where pageid = ? and message.userId = user.id order by floornumber");
-			pstmt.setString(1, messageList.get(0).getPageId());
+			pstmt.setString(1, messageList.get(0).getMyPage().getId());
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -179,7 +180,7 @@ public class Message {
 						rs.getString("date"),
 						new User(rs.getString("userId"),rs.getString("name")),
 						rs.getString("text"),
-						rs.getString("pageId"),
+						new MyPage(rs.getString("pageId")),
 						rs.getString("floorNumber")
 						);
 				messageList.add(message);
@@ -217,7 +218,7 @@ public class Message {
 						rs.getString("date"),
 						new User(rs.getString("userId"), rs.getString("name")),
 						rs.getString("text"),
-						rs.getString("pageId"),
+						new MyPage(rs.getString("pageId")),
 						rs.getString("floorNumber")
 						);
 				replyList.add(message);
@@ -244,7 +245,7 @@ public class Message {
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement("select message.id,userId,text,name,pageid,from_unixtime(unix_timestamp(message.date),'%Y-%m-%d %H:%i') as date,floorNumber from message,user where pageid = ? and message.userId = user.id order by floornumber limit ?,?");
-			pstmt.setString(1, messageList.get(0).getPageId());
+			pstmt.setString(1, messageList.get(0).getMyPage().getId());
 			pstmt.setInt(2, pageIndex);
 			pstmt.setInt(3, pageLength);
 			rs = pstmt.executeQuery();
@@ -255,7 +256,7 @@ public class Message {
 						rs.getString("date"),
 						new User(rs.getString("userId"),rs.getString("name")),
 						rs.getString("text"),
-						rs.getString("pageId"),
+						new MyPage(rs.getString("pageId")),
 						rs.getString("floorNumber")
 						);
 				messageList.add(message);
@@ -282,7 +283,7 @@ public class Message {
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement("select count(id) from message where pageId = ?");
-			pstmt.setString(1, message.getPageId());
+			pstmt.setString(1, message.getMyPage().getId());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count[0] = Integer.parseInt(rs.getString("count(id)"));

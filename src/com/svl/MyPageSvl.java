@@ -39,7 +39,7 @@ public class MyPageSvl extends HttpServlet {
 		MyPage myPage = new MyPage(request.getParameter("id"));
 		if(MyPage.getMyPage(myPage, conn))
 			request.setAttribute("myPage", myPage);
-		Message message = new Message(request.getParameter("id"));
+		Message message = new Message(new MyPage(request.getParameter("id")));
 		Properties profile = (Properties)request.getServletContext().getAttribute("profile");
 		int pageLength;
 		int[] count = {0};
