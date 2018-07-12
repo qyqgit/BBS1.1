@@ -14,6 +14,7 @@ public class MyPage {
 	private String date;
 	private String createDate;
 	private String messageNumber;
+	
 	public MyPage(String id, String title, String text, User user, String date, String createDate, String messageNumber) {
 		super();
 		this.id = id;
@@ -30,6 +31,13 @@ public class MyPage {
 		this.title = title;
 		this.text = text;
 		this.user = user;
+	}
+	
+
+	public MyPage(String id, String title) {
+		super();
+		this.id = id;
+		this.title = title;
 	}
 
 	public MyPage(String id) {

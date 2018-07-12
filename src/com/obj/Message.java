@@ -206,7 +206,7 @@ public class Message {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = conn.prepareStatement("select table2.id,from_unixtime(unix_timestamp(table2.date),'%Y-%m-%d %H:%i') as date,table2.userid,table2.text,table2.pageid,table2.floornumber,user.name from (select message.id,message.date,message.userid,message.text,message.pageid,message.floornumber from (select mypage.id from mypage where userid = ? )as table1,message where pageid=table1.id and userid != ? union select message.id,message.date,message.userid,message.text,message.pageid,message.floornumber from (select id from message where userid = ? )as table1,message where replyid = table1.id order by date desc) as table2,user where table2.userid = user.id;");
+			pstmt = conn.prepareStatement("select table3.id,table3.date,table3.userid,table3.text,table3.pageid,table3.floornumber,table3.name,mypage.title from(select table2.id,from_unixtime(unix_timestamp(table2.date),'%Y-%m-%d %H:%i') as date,table2.userid,table2.text,table2.pageid,table2.floornumber,user.name from (select message.id,message.date,message.userid,message.text,message.pageid,message.floornumber from (select mypage.id from mypage where userid = ?)as table1,message where pageid=table1.id and userid != ? union select message.id,message.date,message.userid,message.text,message.pageid,message.floornumber from (select id from message where userid = ? )as table1,message where replyid = table1.id order by date desc) as table2,user where table2.userid = user.id)as table3,mypage where table3.pageid = mypage.id;");
 			pstmt.setString(1, userId);
 			pstmt.setString(2, userId);
 			pstmt.setString(3, userId);
@@ -218,7 +218,7 @@ public class Message {
 						rs.getString("date"),
 						new User(rs.getString("userId"), rs.getString("name")),
 						rs.getString("text"),
-						new MyPage(rs.getString("pageId")),
+						new MyPage(rs.getString("pageId"), rs.getString("title")),
 						rs.getString("floorNumber")
 						);
 				replyList.add(message);

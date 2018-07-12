@@ -36,7 +36,7 @@
 		
  		<table border="0">
 			<c:forEach var="replyList" items="${requestScope.replyList }" >
-			<tr><td><h1>${replyList.pageId }</h1></td></tr>
+			<tr><td colspan="5"><h1>${replyList.myPage.title }</h1></td></tr>
 			<tr><td colspan="5"><a name="${replyList.floorNumber }"></a></td></tr>
 			<tr>
 				<td colspan="5"><c:out value="${replyList.text }" escapeXml="false"/></td>
@@ -52,7 +52,7 @@
 			    	<c:out value="${replyList.floorNumber }"/>
 			    </td>
 			    <td width="50px" style="vertical-align:bottom;">
-			    	<a href="${replyList.id}" onclick="return replyFunction(${replyList.floorNumber },${replyList.pageId},${replyList.id })"><c:out value="${replyList.id == null?'':'Reply' }"></c:out></a>
+			    	<a href="${replyList.id}" onclick="return replyFunction(${replyList.floorNumber },${replyList.myPage.id},${replyList.id })"><c:out value="${replyList.id == null?'':'Search' }"></c:out></a>
 			    </td>
 		    </tr>
 		    <tr><td colspan="5"><hr></td></tr>
