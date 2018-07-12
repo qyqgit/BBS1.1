@@ -4,7 +4,8 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="com.obj.MyPage" %>
 <%@ page import="com.obj.User" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -77,7 +78,7 @@
 				    <c:url value="Home?id=${lastSendMessageUserList[loop.index].id}" var="url"></c:url>
 					<a href="${url }"><c:out value="${lastSendMessageUserList[loop.index].name}"></c:out></a>
 				</td>
-				<td><c:out value="${myPageList.date }"></c:out></td>
+				<td><c:out value="${fn:substring(myPageList.date, 0, 11)}"></c:out></td>
 			</tr>
 		</c:forEach>
 		</table>

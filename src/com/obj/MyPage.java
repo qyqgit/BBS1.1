@@ -159,7 +159,7 @@ public class MyPage {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = conn.prepareStatement("select mypage.id,text,messageNumber,title,name,userId,from_unixtime(unix_timestamp(mypage.createDate),'%Y-%m-%d %H:%i') as createDate,from_unixtime(unix_timestamp(mypage.date),'%Y-%m-%d %H:%i:%S') as date from mypage,user where mypage.userId=user.id order by mypage.date desc limit ?,?;");
+			pstmt = conn.prepareStatement("select mypage.id,text,messageNumber,title,name,userId,from_unixtime(unix_timestamp(mypage.createDate),'%m-%d %H:%i') as createDate,from_unixtime(unix_timestamp(mypage.date),'%m-%d %H:%i:%S') as date from mypage,user where mypage.userId=user.id order by mypage.date desc limit ?,?;");
 			pstmt.setInt(1, pageIndex);
 			pstmt.setInt(2, pageLength);
 			rs = pstmt.executeQuery();
