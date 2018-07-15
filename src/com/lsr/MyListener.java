@@ -45,7 +45,7 @@ public class MyListener implements ServletContextListener, HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent se)  { 
          // TODO Auto-generated method stub
     	System.out.println("sessionDestroyed");
-    	numMembers++;
+    	numMembers--;
     	se.getSession().getServletContext().setAttribute("numMembers", numMembers);
     	
     	HttpSession session = se.getSession();
