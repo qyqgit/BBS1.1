@@ -37,31 +37,36 @@ public class Login extends HttpServlet {
 		User user = new User(request.getParameter("id"));
 		if(session.getAttribute("passCodeNeed")== null) {
 			if(User.getUser(user, conn)&&user.getPassword().equals(request.getParameter("password"))) {
-				session.removeAttribute("passCodeNeed");
-				session.setAttribute("user", user);
-				response.sendRedirect("index");
+				loginSuccess(response, session, user);
 			} else {
-				session.setAttribute("passCodeNeed", passCodeNeed);
-				request.getRequestDispatcher("Login.jsp").forward(request, response);
+				loginFail(request, response, passCodeNeed, session);
 			}
 		} else {
 			String code = (String)session.getAttribute("code");
 			String passCode = request.getParameter("passcode");
 			if(code.equalsIgnoreCase(passCode)) {
 				if(User.getUser(user, conn)&&user.getPassword().equals(request.getParameter("password"))) {
-					session.removeAttribute("passCodeNeed");
-					session.setAttribute("user", user);
-					response.sendRedirect("index");
+					loginSuccess(response, session, user);
 				} else {
-					session.setAttribute("passCodeNeed", passCodeNeed);
-					request.getRequestDispatcher("Login.jsp").forward(request, response);
+					loginFail(request, response, passCodeNeed, session);
 				}
 			} else {
-				session.setAttribute("passCodeNeed", passCodeNeed);
-				request.getRequestDispatcher("Login.jsp").forward(request, response);
+				loginFail(request, response, passCodeNeed, session);
 			}
 		}
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	private void loginFail(HttpServletRequest request, HttpServletResponse response, int passCodeNeed,
+			HttpSession session) throws ServletException, IOException {
+		session.setAttribute("passCodeNeed", passCodeNeed);
+		request.getRequestDispatcher("Login.jsp").forward(request, response);
+	}
+
+	private void loginSuccess(HttpServletResponse response, HttpSession session, User user) throws IOException {
+		session.removeAttribute("passCodeNeed");
+		session.setAttribute("user", user);
+		response.sendRedirect("index");
 	}
 
 	/**

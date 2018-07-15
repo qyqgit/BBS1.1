@@ -56,7 +56,7 @@
 		${sessionScope.user.id == null?'<a href="Login.jsp">Login</a>':''}
 		${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
-		${sessionScope.user.id == null?'':'<a href="MyReply?id='.concat(sessionScope.user.id).concat('">Reply('.concat(sessionScope.user.id).concat(')</a>'))}
+		${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
 	</div>
 	<br>
 	<div id="main">

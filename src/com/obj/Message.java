@@ -223,6 +223,11 @@ public class Message {
 						);
 				replyList.add(message);
 			}
+			pstmt = conn.prepareStatement("update message inner join (select message.id from (select mypage.id from mypage where userid = ? )as table1,message where pageid = table1.id and userid != ? and haveread != 1  union select message.id from (select id from message where userid = ? )as table1,message where replyid = table1.id and haveread != 1 )as table2 on message.id = table2.id set message.haveread = 1;");
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userId);
+			pstmt.executeUpdate();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -289,6 +294,37 @@ public class Message {
 				count[0] = Integer.parseInt(rs.getString("count(id)"));
 				if(count[0]==0)
 					count[0]++;
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public static boolean getReplyCount(int[] count, User user, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(id) from (select message.id,haveread from (select mypage.id from mypage where userid = ?)as table1,message where pageid=table1.id and userid != ? union select message.id,haveread from (select id from message where userid = ?)as table1,message where replyid = table1.id) as table2 where haveread = 0 ;");
+			pstmt.setString(1, user.getId());
+			pstmt.setString(2, user.getId());
+			pstmt.setString(3, user.getId());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count[0] = Integer.parseInt(rs.getString("count(id)"));
 				return true;
 			}
 		} catch (Exception e) {

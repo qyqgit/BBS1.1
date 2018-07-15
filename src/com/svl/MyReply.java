@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.obj.Message;
+import com.obj.User;
 
 /**
  * Servlet implementation class MyReply
@@ -34,7 +35,8 @@ public class MyReply extends HttpServlet {
 		// TODO Auto-generated method stub
 		Connection conn = (Connection)request.getSession().getAttribute("conn");
 		ArrayList<Message> replyList = new ArrayList<Message>();
-		Message.getReplyList(request.getParameter("id"), replyList, conn);
+		User user = (User)request.getSession().getAttribute("user");
+		Message.getReplyList(user.getId(), replyList, conn);
 		request.setAttribute("replyList", replyList);
 		request.getRequestDispatcher("MyReply.jsp").forward(request, response);
 		response.getWriter().append("Served at: ").append(request.getContextPath());

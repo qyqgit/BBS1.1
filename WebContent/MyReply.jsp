@@ -22,6 +22,7 @@
 <link href="sys/pic/fish58.png" rel="icon"/>
 </head>
 <body>
+	<div id="head">
 		Id:
 		<c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
 		<a href="${url }"><c:out value="${sessionScope.user.id}"></c:out></a>
@@ -33,7 +34,8 @@
 		${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
 		<a href="index">Index</a>
-		
+	</div>
+	<div id="main">
  		<table border="0">
 			<c:forEach var="replyList" items="${requestScope.replyList }" >
 			<tr><td colspan="5"><h1>${replyList.myPage.title }</h1></td></tr>
@@ -58,5 +60,8 @@
 		    <tr><td colspan="5"><hr></td></tr>
 			</c:forEach>
 		</table>
+	</div>
+	<div id="foot">
+	</div>
 </body>
 </html>

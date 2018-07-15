@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.obj.Database;
+import com.obj.Message;
 import com.obj.MyLog;
 import com.obj.User;
 
@@ -58,10 +59,15 @@ public class MyFitler implements Filter {
     			session.setAttribute("conn", conn);
     			System.out.println(conn + " created");
         	}
-        	MyLog.insertMyLog(myLog, conn);
         }
         Connection conn = (Connection)session.getAttribute("conn");
         MyLog.insertMyLog(myLog, conn);
+        
+        if(user != null) {
+        	int count[] = {0};
+        	Message.getReplyCount(count, user, conn);
+        	session.setAttribute("count", count);
+        }
         
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
