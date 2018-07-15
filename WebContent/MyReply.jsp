@@ -34,6 +34,7 @@
 		${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
 		<a href="index">Index</a>
+		<a href="" style="float:right">${applicationScope.numMembers}</a>
 	</div>
 	<div id="main">
  		<table border="0">

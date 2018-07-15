@@ -19,6 +19,7 @@ import com.obj.Profile;
  */
 @WebListener
 public class MyListener implements ServletContextListener, HttpSessionListener {
+	private static int numMembers;
 
     /**
      * Default constructor. 
@@ -33,6 +34,8 @@ public class MyListener implements ServletContextListener, HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se)  { 
          // TODO Auto-generated method stub
     	System.out.println("sessionCreated");
+    	numMembers++;
+    	se.getSession().getServletContext().setAttribute("numMembers", numMembers);
     	//se.getSession().setMaxInactiveInterval(2);
     }
 
@@ -42,6 +45,9 @@ public class MyListener implements ServletContextListener, HttpSessionListener {
     public void sessionDestroyed(HttpSessionEvent se)  { 
          // TODO Auto-generated method stub
     	System.out.println("sessionDestroyed");
+    	numMembers++;
+    	se.getSession().getServletContext().setAttribute("numMembers", numMembers);
+    	
     	HttpSession session = se.getSession();
     	Connection conn = (Connection)session.getAttribute("conn");
     	try {
