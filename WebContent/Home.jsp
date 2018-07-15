@@ -243,7 +243,7 @@
 					</td>
 				    <td style="white-space:nowrap;"><c:out value="${mediaList.date }"/></td>
 				    <td>
-				    	<input style="width:0px;position:absolute;z-index:-1;opacity:0.0;" id="_${mediaList.id }" type="text" value="${mediaList.url}">
+				    	<input style="width:1px;position:absolute;z-index:-1;opacity:0.0;" id="_${mediaList.id }" type="text" value="${mediaList.url}">
 				    	<button class="btn" data-clipboard-action="copy" data-clipboard-target="#_${mediaList.id }" onclick="encodeUrl('_${mediaList.id }','${mediaList.url}')">URL</button>
 				    </td>
 				    <td>
