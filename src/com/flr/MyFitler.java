@@ -24,7 +24,7 @@ import com.obj.User;
  */
 @WebFilter("/MyFilter")
 public class MyFitler implements Filter {
-
+	public static int numConn; 
     /**
      * Default constructor. 
      */
@@ -57,6 +57,8 @@ public class MyFitler implements Filter {
         	Connection conn = Database.getProfileConn(profile);
         	if(conn!=null) {
     			session.setAttribute("conn", conn);
+    			numConn++;
+    			session.getServletContext().setAttribute("numConn", numConn);
     			System.out.println(conn + " created");
         	}
         }

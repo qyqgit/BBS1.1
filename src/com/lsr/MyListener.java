@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import com.flr.MyFitler;
 import com.obj.Profile;
 
 /**
@@ -53,6 +54,8 @@ public class MyListener implements ServletContextListener, HttpSessionListener {
     	try {
 			if(conn!=null) {
 				conn.close();
+				MyFitler.numConn--;
+				se.getSession().getServletContext().setAttribute("numConn", MyFitler.numConn);
 				System.out.println(conn + " closed");
 			}
 		} catch (SQLException e) {

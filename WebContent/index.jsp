@@ -118,6 +118,7 @@
 		</form>
 	</div>
 	<div id="foot">
+		<a href="" style="float:right">${applicationScope.numConn}</a>
 	</div>
 	
 </body>
