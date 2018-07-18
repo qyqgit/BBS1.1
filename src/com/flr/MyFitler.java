@@ -2,6 +2,8 @@ package com.flr;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Properties;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -40,13 +42,15 @@ public class MyFitler implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		// place your code here
-		
-        HttpServletRequest req = (HttpServletRequest)request;  
-        HttpSession session = req.getSession();
-        User user = (User)session.getAttribute("user");
-        MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
-        Connection conn = (Connection)session.getAttribute("conn");
-        MyLog.insertMyLog(myLog, conn);
+		Properties profile = (Properties)request.getServletContext().getAttribute("profile");
+		if("on".equalsIgnoreCase(profile.getProperty("log"))) {
+			HttpServletRequest req = (HttpServletRequest)request;  
+			HttpSession session = req.getSession();
+			User user = (User)session.getAttribute("user");
+			MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
+			Connection conn = (Connection)session.getAttribute("conn");
+			MyLog.insertMyLog(myLog, conn);
+		}
         
 
         
