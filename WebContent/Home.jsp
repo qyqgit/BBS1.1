@@ -15,11 +15,8 @@
     	document.getElementById("editLink").style.display ="none";
     	document.getElementById("clearLink").style.display ="block";
     	document.getElementById("submitLink").style.display ="block";
-    	
-    } else {
-    	document.getElementById("editTable").style.display ="none";
-    		
-    	}
+    	document.getElementById("editTable").style.display ="block";
+    }
 	  if (document.getElementById("sex").value == "1")
 		  document.getElementById("boy").checked = true;
 	  else if(document.getElementById("sex").value =="0")
@@ -188,7 +185,7 @@
 			</tr>
 		</table>
 		<form name="editForm"   method="post"  action="Home?id=${user.id}&submit=1" onsubmit="return inputCheck()">
-			<table id="editTable" border="0">
+			<table id="editTable" border="0" style="display:none">
 				<tr>
 				<td>Id:</td>
 				<td>${user.id }</td>
