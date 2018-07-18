@@ -6,21 +6,27 @@ import java.util.Properties;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRequestEvent;
+import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import com.flr.MyFitler;
+import com.obj.Database;
+import com.obj.Message;
 import com.obj.Profile;
+import com.obj.User;
 
 /**
  * Application Lifecycle Listener implementation class MyListener
  *
  */
 @WebListener
-public class MyListener implements ServletContextListener, HttpSessionListener {
+public class MyListener implements ServletContextListener, HttpSessionListener, ServletRequestListener {
 	private static int numMembers;
+	private static int numConn;
 
     /**
      * Default constructor. 
@@ -37,7 +43,17 @@ public class MyListener implements ServletContextListener, HttpSessionListener {
     	System.out.println("sessionCreated");
     	numMembers++;
     	se.getSession().getServletContext().setAttribute("numMembers", numMembers);
-    	//se.getSession().setMaxInactiveInterval(2);
+    	//se.getSession().setMaxInactiveInterval(10);
+        if(se.getSession().getAttribute("conn") == null) {
+        	Properties profile = (Properties)se.getSession().getServletContext().getAttribute("profile");
+        	Connection conn = Database.getProfileConn(profile);
+        	if(conn!=null) {
+    			se.getSession().setAttribute("conn", conn);
+    			numConn++;
+    			se.getSession().getServletContext().setAttribute("numConn", numConn);
+    			System.out.println(conn + " created");
+        	}
+        }
     }
 
 	/**
@@ -54,8 +70,8 @@ public class MyListener implements ServletContextListener, HttpSessionListener {
     	try {
 			if(conn!=null) {
 				conn.close();
-				MyFitler.numConn--;
-				se.getSession().getServletContext().setAttribute("numConn", MyFitler.numConn);
+				numConn--;
+				se.getSession().getServletContext().setAttribute("numConn", numConn);
 				System.out.println(conn + " closed");
 			}
 		} catch (SQLException e) {
@@ -80,6 +96,28 @@ public class MyListener implements ServletContextListener, HttpSessionListener {
     	realPath = realPath + "\\etc\\config.ini";
     	Properties profile = Profile.getProfile(realPath);
     	sce.getServletContext().setAttribute("profile", profile);
+    }
+    
+	/**
+     * @see ServletRequestListener#requestDestroyed(ServletRequestEvent)
+     */
+    public void requestDestroyed(ServletRequestEvent sre)  { 
+         // TODO Auto-generated method stub
+    }
+
+	/**
+     * @see ServletRequestListener#requestInitialized(ServletRequestEvent)
+     */
+    public void requestInitialized(ServletRequestEvent sre)  { 
+         // TODO Auto-generated method stub
+    	HttpServletRequest request = (HttpServletRequest)sre.getServletRequest();
+    	User user = (User)request.getSession().getAttribute("user");
+        if(user != null) {
+        	Connection conn = (Connection)request.getSession().getAttribute("conn");
+        	int count[] = {0};
+        	Message.getReplyCount(count, user, conn);
+        	request.getSession().setAttribute("count", count);
+        }
     }
 	
 }

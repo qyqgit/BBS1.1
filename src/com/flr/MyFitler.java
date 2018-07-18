@@ -2,8 +2,6 @@ package com.flr;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.Properties;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -14,8 +12,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.obj.Database;
-import com.obj.Message;
 import com.obj.MyLog;
 import com.obj.User;
 
@@ -24,7 +20,6 @@ import com.obj.User;
  */
 @WebFilter("/MyFilter")
 public class MyFitler implements Filter {
-	public static int numConn; 
     /**
      * Default constructor. 
      */
@@ -47,29 +42,13 @@ public class MyFitler implements Filter {
 		// place your code here
 		
         HttpServletRequest req = (HttpServletRequest)request;  
-          
         HttpSession session = req.getSession();
-        
         User user = (User)session.getAttribute("user");
         MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
-        if(session.getAttribute("conn") == null) {
-        	Properties profile = (Properties)req.getServletContext().getAttribute("profile");
-        	Connection conn = Database.getProfileConn(profile);
-        	if(conn!=null) {
-    			session.setAttribute("conn", conn);
-    			numConn++;
-    			session.getServletContext().setAttribute("numConn", numConn);
-    			System.out.println(conn + " created");
-        	}
-        }
         Connection conn = (Connection)session.getAttribute("conn");
         MyLog.insertMyLog(myLog, conn);
         
-        if(user != null) {
-        	int count[] = {0};
-        	Message.getReplyCount(count, user, conn);
-        	session.setAttribute("count", count);
-        }
+
         
 		// pass the request along the filter chain
 		chain.doFilter(request, response);
