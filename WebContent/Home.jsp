@@ -5,6 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="sys/css/global.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+</style>
 <script src="sys/js/clipboard.js"></script>
 <script type="text/javascript">
 	window.onload = function(){
@@ -154,11 +157,11 @@
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
 		${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
 		<a href="index">Index</a>
-		<a href="" style="float:right">${applicationScope.numMembers}</a>
+		<span style="float:right;">Members:${applicationScope.numMembers}</span>
 	</div>
 	<br>
 	<div id="main">
-		<table id="viewTable" border="0">
+		<table id="viewTable">
 			<tr>
 			<td>Id:</td>
 			<td>${user.id }</td>
@@ -185,7 +188,7 @@
 			</tr>
 		</table>
 		<form name="editForm"   method="post"  action="Home?id=${user.id}&submit=1" onsubmit="return inputCheck()">
-			<table id="editTable" border="0" style="display:none">
+			<table id="editTable" style="display:none">
 				<tr>
 				<td>Id:</td>
 				<td>${user.id }</td>
@@ -219,7 +222,7 @@
 				</tr>
 			</table>
 			
-			<table id="" border="0">
+			<table>
 			<c:set value="<input id='editLink'  type='button' value='Edit' onclick='editLinkFun()'/>" var="editUrl"></c:set>
 			<c:set value="<input id='clearLink' type='button' style='display:none;' value='Clear' onclick='clearLinkFun()'/>" var="clearUrl"></c:set>
 			<c:set value="<input id='submitLink' type='submit' style='display:none;' value='Submit'/>" var="submitUrl"></c:set>
@@ -255,7 +258,7 @@
 		${sessionScope.user.id == user.id ? upload:''}
 	</div>
 	<div id="foot">
-		<a href="" style="float:right">${applicationScope.numConn}</a>
+		<span style="float:right;">Connections:${applicationScope.numConn}</span>
 	</div>
 </body>
 </html>

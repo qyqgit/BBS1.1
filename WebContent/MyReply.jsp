@@ -5,6 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="sys/css/global.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+</style>
 <script type="text/javascript">
 	function replyFunction(floor,pageId,messageId) {
 		var url = 'MyPageSvl?id=****&pageNumber=***&pageLength=**#*';
@@ -34,10 +37,10 @@
 		${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
 		<a href="index">Index</a>
-		<a href="" style="float:right">${applicationScope.numMembers}</a>
+		<span style="float:right;">Members:${applicationScope.numMembers}</span>
 	</div>
 	<div id="main">
- 		<table border="0">
+ 		<table>
 			<c:forEach var="replyList" items="${requestScope.replyList }" >
 			<tr><td colspan="5"><h1>${replyList.myPage.title }</h1></td></tr>
 			<tr><td colspan="5"><a name="${replyList.floorNumber }"></a></td></tr>
@@ -63,7 +66,7 @@
 		</table>
 	</div>
 	<div id="foot">
-		<a href="" style="float:right">${applicationScope.numConn}</a>
+		<span style="float:right;">Connections:${applicationScope.numConn}</span>
 	</div>
 </body>
 </html>

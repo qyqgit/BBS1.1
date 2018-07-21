@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="utf-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="com.obj.MyPage" %>
@@ -10,6 +10,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="sys/css/global.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+</style>
 <script type="text/javascript">
   function insertAudio() {
   	  var url = prompt("audio url:");
@@ -57,24 +60,30 @@
 		${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
 		${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
-		<a href="" style="float:right">${applicationScope.numMembers}</a>
-		
+		<span style="float:right;">Members:${applicationScope.numMembers}</span>
+		<img src="sys/pic/default_head20141014.png">
 	</div>
 	<br>
 	<div id="main">
-		<table border=0>
-		<c:forEach var="myPageList" items="${requestScope.myPageList }" varStatus="loop">
-			<tr>
+		<table id="main_tb">
+			<tr bgcolor="#EEEEEE">
+				<td>Num</td>
+				<td>Title</td>
+				<td>Author</td>
+				<td><c:out value="&nbsp&nbsp&nbsp&nbsp" escapeXml="false"/></td>
+				<td colspan="2">Reply</td>
+			</tr>
+			<c:forEach var="myPageList" items="${requestScope.myPageList }" varStatus="loop">
+			<tr <c:if test="${loop.count%2==0}">bgcolor="#FFFFFF"</c:if>>
 				<td><c:out value="${myPageList.messageNumber}" /></td>
 				<td>
 				    <c:url value="MyPageSvl?id=${myPageList.id}&timeStamp=${myPageList.date }" var="url"></c:url>
-					<a href="${url }"><c:out value="${myPageList.title} " escapeXml="false"></c:out></a>
+					<a href="${url }" style="text-decoration:none;"><c:out value="${myPageList.title} " escapeXml="false"></c:out></a>
 				</td>
 				<td>
 				    <c:url value="Home?id=${myPageList.user.id}" var="url"></c:url>
 					<a href="${url }"><c:out value="${myPageList.user.name}"></c:out></a>
 				</td>
-				<td><c:out value="${myPageList.createDate }"></c:out></td>
 				<td><c:out value="&nbsp&nbsp&nbsp&nbsp" escapeXml="false"/></td>
 				<td>
 				    <c:url value="Home?id=${lastSendMessageUserList[loop.index].id}" var="url"></c:url>
@@ -82,7 +91,8 @@
 				</td>
 				<td><c:out value="${fn:substring(myPageList.date, 0, 11)}"></c:out></td>
 			</tr>
-		</c:forEach>
+			<tr><td colspan="6"><hr></td></tr>
+			</c:forEach>
 		</table>
 		<table>
 			<tr>
@@ -103,8 +113,9 @@
 			</tr>
 		</table>
 		<br>
+		<div id="form">
 		<form method="post"  action="sendPage" onsubmit="return inputCheck()">
-			<input id="title" name="title" type="text" style="width:352px" maxlength="20"/>
+			<input id="title" name="title" type="text" style="width:352px" maxlength="30"/>
 			<br>
 			<br>
 			<textarea id="text" name="textarea" rows="10" cols="20" style="height:200px;width:352px;color:green;font-size:18px;resize:none;" ></textarea>
@@ -116,10 +127,10 @@
 			<input type="reset"  value="Clear"/>
 			<input type="submit"  value="SendPage"/>
 		</form>
+		</div>
 	</div>
 	<div id="foot">
-		<a href="" style="float:right">${applicationScope.numConn}</a>
+		<span style="float:right;">Connections:${applicationScope.numConn}</span>
 	</div>
-	
 </body>
 </html>

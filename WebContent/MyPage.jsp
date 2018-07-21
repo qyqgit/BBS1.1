@@ -5,6 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="sys/css/global.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+</style>
 <script type="text/javascript">
   function replyFunction(floor,id) {
 	  document.getElementById("text").focus();
@@ -59,12 +62,12 @@
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
 		${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
 		<a href="index">Index</a>
-		<a href="" style="float:right">${applicationScope.numMembers}</a>
+		<span style="float:right;">Members:${applicationScope.numMembers}</span>
 	</div>
 	<div id="main">
 		<h1>${requestScope.myPage.title}</h1>
-	    <table border="0">
-	    	<tr><td colspan="3"><h2>${requestScope.myPage.text}</h2></td></tr>
+	    <table>
+	    	<tr><td colspan="5"><h2>${requestScope.myPage.text}</h2></td></tr>
 	    	<tr>
 	    		<td></td>
 				<td width="200px"  style="vertical-align:bottom;">
@@ -128,7 +131,7 @@
 		</form>
 	</div>
 	<div id="foot">
-		<a href="" style="float:right">${applicationScope.numConn}</a>
+		<span style="float:right;">Connections:${applicationScope.numConn}</span>
 	</div>
 </body>
 </html>
