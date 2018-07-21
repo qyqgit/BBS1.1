@@ -40,7 +40,7 @@
 		<span style="float:right;">Members:${applicationScope.numMembers}</span>
 	</div>
 	<div id="main">
- 		<table>
+ 		<table id="main_tb">
 			<c:forEach var="replyList" items="${requestScope.replyList }" >
 			<tr><td colspan="5"><h1>${replyList.myPage.title }</h1></td></tr>
 			<tr><td colspan="5"><a name="${replyList.floorNumber }"></a></td></tr>

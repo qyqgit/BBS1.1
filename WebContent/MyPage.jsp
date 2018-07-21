@@ -66,7 +66,7 @@
 	</div>
 	<div id="main">
 		<h1>${requestScope.myPage.title}</h1>
-	    <table>
+	    <table id="main_tb">
 	    	<tr><td colspan="5"><h2>${requestScope.myPage.text}</h2></td></tr>
 	    	<tr>
 	    		<td></td>

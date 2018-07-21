@@ -233,12 +233,12 @@
 				</tr>
 			</table>
 		</form>
-		<table>
+		<table id="main_tb">
 				<c:forEach var="mediaList" items="${requestScope.mediaList }" >
 				<tr>
 				    <td><c:out value="${mediaList.id }"/></td>
-				    <td style="max-width:400px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><c:out value="${mediaList.name }"/></td>
-				    <td style="max-width:400px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+				    <td style="max-width:350px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><c:out value="${mediaList.name }"/></td>
+				    <td style="max-width:350px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
 					    <c:url value="${mediaList.url}" var="url"></c:url>
 						<a href="${url }"><c:out value="${mediaList.name}"></c:out></a>
 					</td>
