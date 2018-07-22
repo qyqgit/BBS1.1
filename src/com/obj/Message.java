@@ -101,11 +101,16 @@ public class Message {
 		this.read = read;
 	}
 	
-	
 	public Message(MyPage myPage) {
 		super();
 		this.myPage = myPage;
 	}
+	
+	public Message(String messageId) {
+		super();
+		this.id = messageId;
+	}
+	
 	public static boolean insertMessage(Message message, Connection conn) {
 		
 		if(message.text==null||message.text.length()==0)
@@ -281,6 +286,42 @@ public class Message {
 				e.printStackTrace();
 			}
 		} 
+		return false;
+	}
+	public static boolean getMessage(Message message, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select message.id,replyId,from_unixtime(unix_timestamp(message.date),'%Y-%m-%d %H:%i') as date,userId,name,text,pageId,floorNumber,haveRead from message,user where message.id = ? and message.userId = user.id");
+			pstmt.setString(1, message.getId());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				message.setId(rs.getString("id"));
+				message.setReplyId(rs.getString("replyId"));
+				message.setDate(rs.getString("date"));
+				message.setUser(new User(rs.getString("userId"),rs.getString("name")));
+				message.setText(rs.getString("text"));
+				message.setMyPage(new MyPage(rs.getString("pageId")));
+				message.setFloorNumber(rs.getString("floorNumber"));
+				message.setRead(rs.getString("haveRead"));
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
 		return false;
 	}
 	public static boolean getMessageCount(int[] count,Message message, Connection conn) {

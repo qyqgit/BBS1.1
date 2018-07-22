@@ -43,19 +43,22 @@ public class SendMessage extends HttpServlet {
 		int replyStart = text.indexOf("$reply");
 		int replyEnd = text.indexOf("reply$");
 		if(replyStart != -1 && replyStart != -1) {
-			String replyHtml = "<a href='MyPageSvl?id=****&pageNumber=***&pageLength=**#*' >Reply</a> *:";
+			String replyHtml = "<a href='MyPageSvl?id=*****&pageNumber=****&pageLength=***#**' >Reply</a> *(#**):";
 			String reply = text.substring(replyStart, replyEnd + 6);
 			String[] temp = reply.split("'");
 			String replyFloor = temp[1];
 			replyId = temp[3];
-			replyHtml = replyHtml.replace("****", request.getParameter("id"));
+			replyHtml = replyHtml.replace("*****", request.getParameter("id"));
 			Properties profile = (Properties)request.getServletContext().getAttribute("profile");
 			int messageLength = Integer.parseInt(profile.getProperty("message_length"));
 			String pageNumber = (Integer.parseInt(replyFloor) % messageLength == 0 ? Integer.parseInt(replyFloor) / messageLength : Integer.parseInt(replyFloor) / messageLength + 1) + "";
-			replyHtml = replyHtml.replace("***", pageNumber);
+			replyHtml = replyHtml.replace("****", pageNumber);
 			String pageLength = messageLength + "";
-			replyHtml = replyHtml.replace("**", pageLength);
-			replyHtml = replyHtml.replace("*", replyFloor);
+			replyHtml = replyHtml.replace("***", pageLength);
+			replyHtml = replyHtml.replace("**", replyFloor);
+			Message message = new Message(replyId);
+			if(Message.getMessage(message, conn))
+				replyHtml = replyHtml.replace("*", message.getUser().getName());
 			text = text.replace(reply, replyHtml);
 		}
 		Message message = new Message(replyId, new User(user.getId(),user.getName()),text,new MyPage(request.getParameter("id")), "0");
