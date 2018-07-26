@@ -7,8 +7,35 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link href="sys/css/global.css" rel="stylesheet" type="text/css"/>
 <style type="text/css">
+	#more{
+	  position: relative;
+	}
+	#morein{
+	  position: absolute;
+	  left: 25px;
+	  bottom: 25px;
+      border-collapse:collapse;
+      background-color: white;
+      display:none;
+	}
+    .td{
+      border: 1px solid black;
+    }
 </style>
 <script type="text/javascript">
+  window.onload = function() {
+    document.getElementById('morein').style.display = 'none';
+  }
+  function addEmoji(){
+    if(document.getElementById('morein').style.display == 'none')
+      document.getElementById('morein').style.display='block';
+    else
+      document.getElementById('morein').style.display='none';
+  }
+  function emojiFun(emoji) {
+	document.getElementById("text").value = document.getElementById("text").value +"$image src='" + emoji +"' image$";
+    addEmoji();
+  }
   function replyFunction(floor,id) {
 	  document.getElementById("text").focus();
 	  document.getElementById("text").value = "$reply floor='" + floor+ "' id='" + id + "' reply$\n";
@@ -122,6 +149,43 @@
 			<textarea id="text" name="textarea" rows="10" cols="20" style="height:200px;width:352px;color:green;font-size:18px;resize:none;"></textarea>
 			<br>
 			<br>
+			<div id="more">
+		      <table id="morein" >
+		        <tr>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f01.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f01.png" />
+		        </td>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f02.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f02.png" />
+		        </td>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f03.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f03.png" />
+		        </td>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f04.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f04.png" />
+		        </td>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f05.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f05.png" />
+		        </td>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f06.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f06.png" />
+		        </td>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f07.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f07.png" />
+		        </td>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f08.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f08.png" />
+		        </td>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f09.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f09.png" />
+		        </td>
+		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f10.png")'>
+		          <img src = "sys/pic/emoji/i_f/i_f10.png" />
+		        </td>
+		        </tr>
+		      </table>
+			</div>
+			<input type="button"  value="Emoji" onclick="addEmoji()"/>
 			<input type="button"  value="Audio" onclick="insertAudio()"/>
 			<input type="button"  value="Video" onclick="insertVideo()"/>
 			<input type="button"  value="Image" onclick="insertImage()"/>

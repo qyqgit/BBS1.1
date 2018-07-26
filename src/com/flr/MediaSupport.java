@@ -50,15 +50,14 @@ class HttpServletRequestMediaSupport extends HttpServletRequestWrapper{
             return value;
         if("textarea".equalsIgnoreCase(name)) {
         	String text = value;
-    		String videoHtml = "<video src=* controls=\"controls\" style=\"max-width:1024px;max-height:576px\"></video>";
-    		String audioHtml = "<audio src=* controls=\"controls\" loop=\"loop\"></audio>";
-    		String imageHtml = "<a href=*><img src=* style=\"max-width:1024px;max-height:576px\"/></a>";
+    		
     		int videoStart = text.indexOf("$video");
     		int videoEnd = text.indexOf("video$");
     		while(videoStart != -1 && videoEnd != -1 && videoStart < videoEnd) {
+    			String videoHtml = "<video src=\"*\" controls=\"controls\" style=\"max-width:1024px;max-height:576px\"></video>";
     			String video = text.substring(videoStart, videoEnd + 6);
     			String[] temp = video.split("\'");
-    			String videoUrl = "\"" + temp[1] + "\"";
+    			String videoUrl = temp[1];
     			videoHtml = videoHtml.replace("*", videoUrl);
     			text = text.replace(video, videoHtml);
     			videoStart = text.indexOf("$video");
@@ -67,9 +66,10 @@ class HttpServletRequestMediaSupport extends HttpServletRequestWrapper{
     		int audioStart = text.indexOf("$audio");
     		int audioEnd = text.indexOf("audio$");
     		while(audioStart != -1 && audioEnd != -1 && audioStart < audioEnd) {
+    			String audioHtml = "<audio src=\"*\" controls=\"controls\" loop=\"loop\"></audio>";
     			String audio = text.substring(audioStart, audioEnd + 6);
     			String[] temp = audio.split("\'");
-    			String audioUrl = "\"" + temp[1] + "\"";
+    			String audioUrl = temp[1];
     			audioHtml = audioHtml.replace("*", audioUrl);
     			text = text.replace(audio, audioHtml);
     			audioStart = text.indexOf("$audio");
@@ -78,9 +78,10 @@ class HttpServletRequestMediaSupport extends HttpServletRequestWrapper{
     		int imageStart = text.indexOf("$image");
     		int imageEnd = text.indexOf("image$");
     		while(imageStart != -1 && imageEnd != -1 && imageStart < imageEnd) {
+    			String imageHtml = "<a href=\"*\"><img src=\"*\" style=\"max-width:1024px;max-height:576px\"/></a>";
     			String image = text.substring(imageStart, imageEnd + 6);
     			String[] temp = image.split("\'");
-    			String imageUrl = "\"" + temp[1] + "\"";
+    			String imageUrl = temp[1];
     			imageHtml = imageHtml.replace("*", imageUrl);
     			text = text.replace(image, imageHtml);
     			imageStart = text.indexOf("$image");
