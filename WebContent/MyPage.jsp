@@ -151,38 +151,40 @@
 			<br>
 			<div id="more">
 		      <table id="morein" >
+		        <c:forEach var="emojiList" items="${applicationScope.emojiList }" varStatus="loop" step="10">
 		        <tr>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f01.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f01.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index].emojiUrl}" />
 		        </td>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f02.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f02.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index+1].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index+1].emojiUrl}" />
 		        </td>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f03.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f03.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index+2].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index+2].emojiUrl}" />
 		        </td>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f04.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f04.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index+3].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index+3].emojiUrl}" />
 		        </td>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f05.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f05.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index+4].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index+4].emojiUrl}" />
 		        </td>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f06.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f06.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index+5].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index+5].emojiUrl}" />
 		        </td>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f07.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f07.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index+6].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index+6].emojiUrl}" />
 		        </td>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f08.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f08.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index+7].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index+7].emojiUrl}" />
 		        </td>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f09.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f09.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index+8].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index+8].emojiUrl}" />
 		        </td>
-		        <td class="td" onclick='emojiFun("sys/pic/emoji/i_f/i_f10.png")'>
-		          <img src = "sys/pic/emoji/i_f/i_f10.png" />
+		        <td class="td" onclick='emojiFun("${applicationScope.emojiList[loop.index+9].emojiUrl}")'>
+		          <img src = "${applicationScope.emojiList[loop.index+9].emojiUrl}" />
 		        </td>
 		        </tr>
+		        </c:forEach>
 		      </table>
 			</div>
 			<input type="button"  value="Emoji" onclick="addEmoji()"/>

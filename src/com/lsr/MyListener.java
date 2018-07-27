@@ -2,6 +2,7 @@ package com.lsr;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.servlet.ServletContextEvent;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import com.obj.Database;
+import com.obj.Emoji;
 import com.obj.Message;
 import com.obj.Profile;
 import com.obj.User;
@@ -92,10 +94,14 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
      */
     public void contextInitialized(ServletContextEvent sce)  { 
          // TODO Auto-generated method stub
-    	String realPath = sce.getServletContext().getRealPath("/sys");
-    	realPath = realPath + "\\etc\\config.ini";
-    	Properties profile = Profile.getProfile(realPath);
+    	String sysPath = sce.getServletContext().getRealPath("/sys");
+    	String profilePath = sysPath + "\\etc\\config.ini";
+    	Properties profile = Profile.getProfile(profilePath);
     	sce.getServletContext().setAttribute("profile", profile);
+    	String emojiPath = sysPath + "\\pic\\emoji";
+    	ArrayList<Emoji> emojiList = new ArrayList<Emoji>();
+    	if(Emoji.getEmojiList(emojiPath, emojiList))
+    		sce.getServletContext().setAttribute("emojiList", emojiList);
     }
     
 	/**
