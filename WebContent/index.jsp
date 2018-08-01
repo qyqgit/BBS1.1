@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@ page import="java.util.*" %>
-<%@ page import="java.sql.*" %>
-<%@ page import="com.obj.MyPage" %>
-<%@ page import="com.obj.User" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -53,14 +49,14 @@
   function insertAudio() {
   	  var url = prompt("audio url:");
 	  if(url != null && url.length != 0) {
-	      var log = document.execCommand("inserthtml", false, "&nbsp<audio src='" + url + "' controls='controls' loop='loop'></audio>&nbsp");
+	      var log = document.execCommand("inserthtml", false, "&nbsp;<audio src='" + url + "' controls='controls' loop='loop'></audio>&nbsp;");
 	      console.log(log);
 	  }
   }
   function insertVideo() {
 	  var url = prompt("video url:");
 	  if(url != null && url.length != 0) {
-	      var log = document.execCommand("inserthtml", false, "&nbsp<video src='" + url + "' controls='controls' style='max-width:1024px;max-height:576px'></video>&nbsp");
+	      var log = document.execCommand("inserthtml", false, "&nbsp;<video src='" + url + "' controls='controls' style='max-width:1024px;max-height:576px'></video>&nbsp;");
 	      console.log(log);
 	  }
   }
@@ -70,6 +66,9 @@
 	      var log = document.execCommand("insertimage", false, url);
 	      console.log(log);
 	  }
+  }
+  function clearDiv() {
+	  document.getElementById("text").innerHTML = "";
   }
   function inputCheck(){
 	if(document.getElementById("textarea").value.length > 511){
@@ -109,7 +108,7 @@
 				<td>Num</td>
 				<td>Title</td>
 				<td>Author</td>
-				<td><c:out value="&nbsp&nbsp&nbsp&nbsp" escapeXml="false"/></td>
+				<td><c:out value="&nbsp;&nbsp;&nbsp;&nbsp;" escapeXml="false"/></td>
 				<td colspan="2">Reply</td>
 			</tr>
 			<c:forEach var="myPageList" items="${requestScope.myPageList }" varStatus="loop">
@@ -123,7 +122,7 @@
 				    <c:url value="Home?id=${myPageList.user.id}" var="url"></c:url>
 					<a href="${url }"><c:out value="${myPageList.user.name}"></c:out></a>
 				</td>
-				<td><c:out value="&nbsp&nbsp&nbsp&nbsp" escapeXml="false"/></td>
+				<td><c:out value="&nbsp;&nbsp;&nbsp;&nbsp" escapeXml="false"/></td>
 				<td>
 				    <c:url value="Home?id=${lastSendMessageUserList[loop.index].id}" var="url"></c:url>
 					<a href="${url }"><c:out value="${lastSendMessageUserList[loop.index].name}"></c:out></a>
@@ -152,7 +151,6 @@
 			</tr>
 		</table>
 		<br>
-		<div id="form">
 		<form id="form1" method="post"  action="sendPage" onsubmit="return inputCheck()">
 			<input id="title" name="title" type="text" style="width:352px" maxlength="30"/>
 			<br>
@@ -204,10 +202,9 @@
 			<input type="button"  value="Audio" onclick="insertAudio()"/>
 			<input type="button"  value="Video" onclick="insertVideo()"/>
 			<input type="button"  value="Image" onclick="insertImage()"/>
-			<input type="button"  value="Clear"/>
+			<input type="reset"  value="Clear" onclick="clearDiv()"/>
 			<input type="button"  value="SendPage" onclick="Submit()"/>
 		</form>
-		</div>
 	</div>
 	<div id="foot">
 		<span style="float:right;">Connections:${applicationScope.numConn}</span>

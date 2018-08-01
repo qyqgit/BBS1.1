@@ -41,7 +41,7 @@ public class DirtyWordsFilter implements Filter {
  
 }
 class DWHttpServletRequest extends HttpServletRequestWrapper{
-    private String[] strs = {"testWord","<",">","&","\"","\n"," "};
+    private String[] strs = {"testWord","<",">","&","\"","\n"," ","£¼div£¾","£¼/div£¾","£¼br£¾","£¼b£¾","£¼/b£¾","£¼i£¾","£¼/i£¾","£¼u£¾","£¼/u£¾","£¼sub£¾","£¼/sub£¾","£¼sup£¾","£¼/sup£¾","£¼strike£¾","£¼/strike£¾","£¼audio","£¼/audio","£¼video","£¼/video","£¼img","£¾","£¦"};
     public DWHttpServletRequest(HttpServletRequest request){
         super(request);
     }
@@ -53,11 +53,77 @@ class DWHttpServletRequest extends HttpServletRequestWrapper{
          
         for(String s:strs){
         	switch (s) {
+        	case "£¦":
+        		value = value.replace(s, "&");
+        		break;
+        	case "£¾":
+        		value = value.replace(s, ">");
+        		break;
+        	case "£¼img":
+        		value = value.replace(s, "<img");
+        		break;
+        	case "£¼video":
+        		value = value.replace(s, "<video");
+        		break;
+        	case "£¼/video":
+        		value = value.replace(s, "</video");
+        		break;
+        	case "£¼audio":
+        		value = value.replace(s, "<audio");
+        		break;
+        	case "£¼/audio":
+        		value = value.replace(s, "</audio");
+        		break;
+        	case "£¼strike£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼/strike£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼sup£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼/sup£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼sub£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼/sub£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼u£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼/u£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼i£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼/i£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼b£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼/b£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼br£¾":
+        		value = value.replace(s, "<br>");
+        		break;
+        	case "£¼div£¾":
+        		value = value.replace(s, "");
+        		break;
+        	case "£¼/div£¾":
+        		value = value.replace(s, "<br>");
+        		break;
         	case "\n":
         		value = value.replace(s, "<br>");
         		break;
         	case " ":
-        		value = value.replace(s, "&nbsp");
+        		value = value.replace(s, " ");
         		break;
             case "<":
             	value = value.replace(s, "£¼");
@@ -69,7 +135,7 @@ class DWHttpServletRequest extends HttpServletRequestWrapper{
             	value = value.replace(s, "£¦");
                 break;
             case "\"":
-            	value = value.replace(s, "£¢");
+            	value = value.replace(s, "\"");
                 break;
             default:
             	value = value.replace(s, "**");

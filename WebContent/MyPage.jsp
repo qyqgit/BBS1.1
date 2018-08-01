@@ -33,43 +33,56 @@
       document.getElementById('morein').style.display='none';
   }
   function emojiFun(emoji) {
-	document.getElementById("text").value = document.getElementById("text").value +"$image src='" + emoji +"' image$";
+    var log = document.execCommand("insertimage", false, emoji);
+    console.log(log);
     addEmoji();
   }
   function replyFunction(floor,id) {
 	  document.getElementById("text").focus();
-	  document.getElementById("text").value = "$reply floor='" + floor+ "' id='" + id + "' reply$\n";
+	  document.getElementById("text").innerHTML = "$reply floor='" + floor+ "' id='" + id + "' reply$\n";
 	  return false;
   }
+  function Submit(){
+      document.getElementById("textarea").value=document.getElementById("text").innerHTML;
+	  if(inputCheck())
+      	document.getElementById("form1").submit();
+  }
+  
   function insertAudio() {
-	  var url = prompt("audio url:");
+  	  var url = prompt("audio url:");
 	  if(url != null && url.length != 0) {
-	  		document.getElementById("text").value = document.getElementById("text").value +"$audio src='" + url +"' audio$";
+	      var log = document.execCommand("inserthtml", false, "&nbsp;<audio src='" + url + "' controls='controls' loop='loop'></audio>&nbsp;");
+	      console.log(log);
 	  }
   }
   function insertVideo() {
 	  var url = prompt("video url:");
 	  if(url != null && url.length != 0) {
-	  		document.getElementById("text").value = document.getElementById("text").value +"$video src='" + url +"' video$";
+	      var log = document.execCommand("inserthtml", false, "&nbsp;<video src='" + url + "' controls='controls' style='max-width:1024px;max-height:576px'></video>&nbsp;");
+	      console.log(log);
 	  }
   }
   function insertImage() {
 	  var url = prompt("image url:");
 	  if(url != null && url.length != 0) {
-	  		document.getElementById("text").value = document.getElementById("text").value +"$image src='" + url +"' image$";
+	      var log = document.execCommand("insertimage", false, url);
+	      console.log(log);
 	  }
+  }
+  function clearDiv() {
+	  document.getElementById("text").innerHTML = "";
+  }
+  function inputCheck(){
+	if(document.getElementById("textarea").value.length > 511){
+		alert("Word count is " + document.getElementById("textarea").value.length + " > 511.");
+		return false;
+	}
+	if(document.getElementById("textarea").value.length == 0)
+		return false;
+	return true;
   }
   function back() {
 	  window.location.href="index";
-  }
-  function inputCheck(){
-		if(document.getElementById("text").value.length > 511){
-			alert("Word count is " + document.getElementById("text").value.length + " > 511.");
-			return false;
-		}
-		if(document.getElementById("text").value.length == 0)
-			return false;
-		return true;
   }
 </script>
 <link href="sys/pic/fish58.png" rel="icon"/>
@@ -145,8 +158,10 @@
 				</td>
 			</tr>
 		</table>
-		<form method="post"  action="sendMessage?id=${requestScope.pageId}&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength}" onsubmit="return inputCheck()">
-			<textarea id="text" name="textarea" rows="10" cols="20" style="height:200px;width:352px;color:green;font-size:18px;resize:none;"></textarea>
+		<form id="form1" method="post"  action="sendMessage?id=${requestScope.pageId}&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength}" onsubmit="return inputCheck()">
+			<div id="text"  contentEditable="true" style="width:358px;height:206px;border:1px solid black;overflow:auto; ">
+			</div>
+			<input type="hidden" name="textarea" id="textarea" value="">
 			<br>
 			<br>
 			<div id="more">
@@ -191,8 +206,8 @@
 			<input type="button"  value="Audio" onclick="insertAudio()"/>
 			<input type="button"  value="Video" onclick="insertVideo()"/>
 			<input type="button"  value="Image" onclick="insertImage()"/>
-			<input type="submit"  value="SendMessage"/>
-			<input type="reset"  value="Clear"/>
+			<input type="button"  value="SendMessage" onclick="Submit()"/>
+			<input type="reset"  value="Clear" onclick="clearDiv()"/>
 			<input type="button"  value="Back" onclick="back()"/>
 		</form>
 	</div>
