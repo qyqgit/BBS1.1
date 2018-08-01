@@ -37,10 +37,12 @@
     console.log(log);
     addEmoji();
   }
-  function replyFunction(floor,id) {
+  function replyFunction(floor,messageId,pageNumber,pageLength,userName,pageId) {
+	  clearDiv();
 	  document.getElementById("text").focus();
-	  document.getElementById("text").innerHTML = "$reply floor='" + floor+ "' id='" + id + "' reply$\n";
-	  return false;
+      var log = document.execCommand("inserthtml", false, "<a href='MyPageSvl?id="+ pageId +"&replyId="+ messageId +"&pageNumber="+ pageNumber +"&pageLength="+ pageLength +"#"+ floor +"' >Reply</a> "+ userName +"(#"+ floor +"):");
+      console.log(log);
+	  return false;//necessary
   }
   function Submit(){
       document.getElementById("textarea").value=document.getElementById("text").innerHTML;
@@ -134,7 +136,7 @@
 			    	<c:out value="${messageList.floorNumber }"/>
 			    </td>
 			    <td width="50px" style="vertical-align:bottom;">
-			    	<a href="${messageList.id}" onclick="return replyFunction(${messageList.floorNumber },${messageList.id})"><c:out value="${messageList.id == null?'':'Reply' }"></c:out></a>
+			    	<a href="${messageList.id}" onclick="return replyFunction(${messageList.floorNumber },${messageList.id},${requestScope.pageNumber},${requestScope.eachPageList[0].pageLength},'${messageList.user.name}',${requestScope.pageId })"><c:out value="${messageList.id == null?'':'Reply' }"></c:out></a>
 			    </td>
 		    </tr>
 		    <tr><td colspan="5"><hr></td></tr>

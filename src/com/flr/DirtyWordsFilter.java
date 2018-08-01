@@ -41,7 +41,7 @@ public class DirtyWordsFilter implements Filter {
  
 }
 class DWHttpServletRequest extends HttpServletRequestWrapper{
-    private String[] strs = {"testWord","<",">","&","\"","\n"," ","£¼div£¾","£¼/div£¾","£¼br£¾","£¼b£¾","£¼/b£¾","£¼i£¾","£¼/i£¾","£¼u£¾","£¼/u£¾","£¼sub£¾","£¼/sub£¾","£¼sup£¾","£¼/sup£¾","£¼strike£¾","£¼/strike£¾","£¼audio","£¼/audio","£¼video","£¼/video","£¼img","£¾","£¦"};
+    private String[] strs = {"testWord","<",">","&","\"","\n"," ","£¼div£¾","£¼/div£¾","£¼br£¾","£¼b£¾","£¼/b£¾","£¼i£¾","£¼/i£¾","£¼u£¾","£¼/u£¾","£¼sub£¾","£¼/sub£¾","£¼sup£¾","£¼/sup£¾","£¼strike£¾","£¼/strike£¾","£¼audio","£¼/audio","£¼video","£¼/video","£¼a","£¼/a","£¼img","£¾","£¦"};
     public DWHttpServletRequest(HttpServletRequest request){
         super(request);
     }
@@ -61,6 +61,12 @@ class DWHttpServletRequest extends HttpServletRequestWrapper{
         		break;
         	case "£¼img":
         		value = value.replace(s, "<img");
+        		break;
+        	case "£¼a":
+        		value = value.replace(s, "<a");
+        		break;
+        	case "£¼/a":
+        		value = value.replace(s, "</a");
         		break;
         	case "£¼video":
         		value = value.replace(s, "<video");
