@@ -43,14 +43,6 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <filter>
-    <filter-name>MediaSupport</filter-name>
-    <filter-class>com.flr.MediaSupport</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>MediaSupport</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <filter>
     <filter-name>LoginFilter</filter-name>
     <filter-class>com.flr.LoginFilter</filter-class>
   </filter>
