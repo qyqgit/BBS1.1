@@ -2,4 +2,5 @@
 #head img{width:1000px;height:80px}
 #main{width:1000px;margin:0px auto}
 #main #main_tb{border-collapse:collapse;width:1000px}
+#main #main_tb img{max-width:1024px;max-height:576px}
 #foot{width:1000px;margin:0px auto}
