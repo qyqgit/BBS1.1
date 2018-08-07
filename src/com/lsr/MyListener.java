@@ -94,8 +94,9 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
      */
     public void contextInitialized(ServletContextEvent sce)  { 
          // TODO Auto-generated method stub
+    	String etcPath = sce.getServletContext().getRealPath("/WEB-INF");
     	String sysPath = sce.getServletContext().getRealPath("/sys");
-    	String profilePath = sysPath + "\\etc\\config.ini";
+    	String profilePath = etcPath + "\\etc\\config.ini";
     	Properties profile = Profile.getProfile(profilePath);
     	sce.getServletContext().setAttribute("profile", profile);
     	String emojiPath = sysPath + "\\pic\\emoji";
