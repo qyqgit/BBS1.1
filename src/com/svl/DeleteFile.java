@@ -3,6 +3,7 @@ package com.svl;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,8 +43,10 @@ public class DeleteFile extends HttpServlet {
 			return;
 		}
 		if(Media.removeMedia(mediaId, conn)) {
-            String realPath = getServletContext().getRealPath("/upload");
-            realPath = realPath + "\\user\\"  + user.getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
+			Properties profile = (Properties)getServletContext().getAttribute("profile");
+            String realPath = getServletContext().getRealPath("/");
+            File tempFile = new File(realPath);
+            realPath = tempFile.getParent() + "\\" + profile.getProperty("media_path") + "\\" + user.getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
             //创建文件对象
             File dir = new File(realPath);
             if(dir.exists()) dir.delete();

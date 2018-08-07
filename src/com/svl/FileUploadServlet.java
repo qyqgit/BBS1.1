@@ -47,14 +47,17 @@ public class FileUploadServlet extends HttpServlet {
         	res.sendRedirect("Login.jsp");
         	return;
 		};
+		Properties profile = (Properties)getServletContext().getAttribute("profile");
+		int fileSizeMax = Integer.parseInt(profile.getProperty("file_size_max"));
+		int uploadSizeMax = Integer.parseInt(profile.getProperty("upload_size_max"));
 		//1.创建文件上传工厂类
         DiskFileItemFactory fac = new DiskFileItemFactory();
         //2.创建文件上传核心类对象
         ServletFileUpload upload = new ServletFileUpload(fac);
         //【一、设置单个文件最大50M】
-        upload.setFileSizeMax(50*1024*1024);//50M
+        upload.setFileSizeMax(fileSizeMax*1024*1024);//50M
         //【二、设置总文件大小：100M】
-        upload.setSizeMax(100*1024*1024); //100M
+        upload.setSizeMax(uploadSizeMax*1024*1024); //100M
 
         //判断，当前表单是否为文件上传表单
         if (ServletFileUpload.isMultipartContent(request)){
@@ -86,8 +89,9 @@ public class FileUploadServlet extends HttpServlet {
                         //与文件名拼接
                         fileName = id +"_"+ fileName;
                         //【三、上传到指定目录：获取上传目录路径】
-                        String realPath = getServletContext().getRealPath("/upload");
-                        realPath =  realPath + "\\user\\" + user.getId() + "\\";
+                        String realPath = getServletContext().getRealPath("/");
+                        File tempFile = new File(realPath);
+                        realPath =  tempFile.getParent() + "\\" + profile.getProperty("media_path") + "\\" + user.getId() + "\\";
                         //创建文件对象
                         File dir = new File(realPath);
                         if(!dir.exists()) dir.mkdirs();
@@ -95,9 +99,12 @@ public class FileUploadServlet extends HttpServlet {
                         item.write(file);
                         item.delete();
                         
-                        Properties profile = (Properties)getServletContext().getAttribute("profile");
-                        String url = profile.getProperty("media_url");
-                        Media media = new Media(user, a[a.length-1], url + user.getId() + "/" + fileName,"0");
+                        String url = profile.getProperty("host_url");
+                        String mediaPath = profile.getProperty("media_path");
+                        if(mediaPath.startsWith("ROOT"))
+                        	mediaPath = mediaPath.substring(5);
+                        url = url + "/" + mediaPath.replace("\\", "/");
+                        Media media = new Media(user, a[a.length-1], url + "/" + user.getId() + "/" + fileName,"0");
                         HttpSession session = request.getSession();
                         Connection conn = (Connection)session.getAttribute("conn");
                         Media.insertMedia(media, conn);
