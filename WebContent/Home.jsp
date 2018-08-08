@@ -157,7 +157,7 @@
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
 		${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
 		<a href="index">Index</a>
-		<span style="float:right;">Members:${applicationScope.numMembers}</span>
+		<span style="float:right;">Sessions:${applicationScope.numMembers}</span>
 	</div>
 	<br>
 	<div id="main">

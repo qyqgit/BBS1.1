@@ -26,7 +26,7 @@
   window.onload = function() {
     document.getElementById('morein').style.display = 'none';
   }
-  function addEmoji(){
+  function addEmoji() {
     if(document.getElementById('morein').style.display == 'none')
       document.getElementById('morein').style.display='block';
     else
@@ -58,7 +58,7 @@
       }
 	  return false;//necessary
   }
-  function Submit(){
+  function Submit() {
       document.getElementById("textarea").value=document.getElementById("text").innerHTML;
 	  if(inputCheck())
       	document.getElementById("form1").submit();
@@ -111,7 +111,7 @@
   function clearDiv() {
 	  document.getElementById("text").innerHTML = "";
   }
-  function inputCheck(){
+  function inputCheck() {
 	if(document.getElementById("textarea").value.length > 511){
 		alert("Word count is " + document.getElementById("textarea").value.length + " > 511.");
 		return false;
@@ -119,6 +119,10 @@
 	if(document.getElementById("textarea").value.length == 0)
 		return false;
 	return true;
+  }
+  function inputLength() {
+	  var y=document.getElementById("text").innerHTML;
+	  document.getElementById("len").innerHTML=y.length;
   }
   function back() {
 	  window.location.href="index";
@@ -141,7 +145,7 @@
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
 		${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
 		<a href="index">Index</a>
-		<span style="float:right;">Members:${applicationScope.numMembers}</span>
+		<span style="float:right;">Sessions:${applicationScope.numMembers}</span>
 	</div>
 	<div id="main">
 		<h1>${requestScope.myPage.title}</h1>
@@ -198,9 +202,10 @@
 			</tr>
 		</table>
 		<form id="form1" method="post"  action="sendMessage?id=${requestScope.pageId}&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength}" onsubmit="return inputCheck()">
-			<div id="text"  contentEditable="true" style="width:358px;height:206px;border:1px solid black;overflow:auto; ">
+			<div id="text" onkeyup="inputLength()"  contentEditable="true" style="width:358px;height:206px;border:1px solid black;overflow:auto; ">
 			</div>
 			<input type="hidden" name="textarea" id="textarea" value="">
+			<span id="len">0</span>
 			<br>
 			<br>
 			<div id="more">

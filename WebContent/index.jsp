@@ -28,7 +28,7 @@
     document.getElementById('morein').style.display = 'none';
   }
   
-  function addEmoji(){
+  function addEmoji() {
     if(document.getElementById('morein').style.display == 'none')
       document.getElementById('morein').style.display='block';
     else
@@ -46,7 +46,7 @@
       addEmoji();
   }
 
-  function Submit(){
+  function Submit() {
       document.getElementById("textarea").value=document.getElementById("text").innerHTML;
 	  if(inputCheck())
       	document.getElementById("form1").submit();
@@ -99,7 +99,7 @@
   function clearDiv() {
 	  document.getElementById("text").innerHTML = "";
   }
-  function inputCheck(){
+  function inputCheck() {
 	if(document.getElementById("textarea").value.length > 511){
 		alert("Word count is " + document.getElementById("textarea").value.length + " > 511.");
 		return false;
@@ -109,6 +109,10 @@
 	if(document.getElementById("title").value.length == 0)
 		return false;
 	return true;
+  }
+  function inputLength() {
+	  var y=document.getElementById("text").innerHTML;
+	  document.getElementById("len").innerHTML=y.length;
   }
 </script>
 <title>fishcc.org</title>
@@ -127,7 +131,7 @@
 		${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
 		${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
 		${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
-		<span style="float:right;">Members:${applicationScope.numMembers}</span>
+		<span style="float:right;">Sessions:${applicationScope.numMembers}</span>
 		<img src="sys/pic/default_head20141014.png">
 	</div>
 	<br>
@@ -184,9 +188,10 @@
 			<input id="title" name="title" type="text" style="width:352px" maxlength="30"/>
 			<br>
 			<br>
-			<div id="text"  contentEditable="true" style="width:358px;height:206px;border:1px solid black;overflow:auto; ">
+			<div id="text" onkeyup="inputLength()"  contentEditable="true" style="width:358px;height:206px;border:1px solid black;overflow:auto; ">
 			</div>
 			<input type="hidden" name="textarea" id="textarea" value="">
+			<span id="len">0</span>
 			<br>
 			<br>
 			<div id="more">
