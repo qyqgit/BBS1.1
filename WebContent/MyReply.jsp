@@ -26,7 +26,7 @@
 </head>
 <body>
 	<div id="head">
-		Id:
+		ID:
 		<c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
 		<a href="${url }"><c:out value="${sessionScope.user.id}"></c:out></a>
 		Name:
