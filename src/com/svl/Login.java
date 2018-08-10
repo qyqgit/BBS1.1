@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.obj.MyLog;
 import com.obj.User;
 
 /**
@@ -37,7 +38,7 @@ public class Login extends HttpServlet {
 		User user = new User(request.getParameter("id"));
 		if(session.getAttribute("passCodeNeed")== null) {
 			if(User.getUser(user, conn)&&user.getPassword().equals(request.getParameter("password"))) {
-				loginSuccess(response, session, user);
+				loginSuccess(request, response, session, user);
 			} else {
 				loginFail(request, response, passCodeNeed, session);
 			}
@@ -46,7 +47,7 @@ public class Login extends HttpServlet {
 			String passCode = request.getParameter("passcode");
 			if(code.equalsIgnoreCase(passCode)) {
 				if(User.getUser(user, conn)&&user.getPassword().equals(request.getParameter("password"))) {
-					loginSuccess(response, session, user);
+					loginSuccess(request, response, session, user);
 				} else {
 					loginFail(request, response, passCodeNeed, session);
 				}
@@ -63,9 +64,12 @@ public class Login extends HttpServlet {
 		request.getRequestDispatcher("Login.jsp").forward(request, response);
 	}
 
-	private void loginSuccess(HttpServletResponse response, HttpSession session, User user) throws IOException {
+	private void loginSuccess(HttpServletRequest request, HttpServletResponse response, HttpSession session, User user) throws IOException {
 		session.removeAttribute("passCodeNeed");
 		session.setAttribute("user", user);
+		MyLog myLog = new MyLog(request.getRemoteAddr(), user, request.getRequestURI() + "?" + request.getQueryString());
+		Connection conn = (Connection)session.getAttribute("conn");
+		MyLog.insertMyLog(myLog, conn);
 		response.sendRedirect("index");
 	}
 
