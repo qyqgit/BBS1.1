@@ -86,13 +86,13 @@
 	  var url = prompt("image url:");
 	  if(url != null && url.length != 0) {
 		  document.getElementById("text").focus();
-	      var log = document.execCommand("insertimage", false, url);
+	      var log = document.execCommand("inserthtml", false, "<a href='" + url + "'><img src='"+ url +"' style='max-width:1024px;max-height:576px'></a>");
 	      if(!log) {
 	    	  var range = window.getSelection().getRangeAt(0);
-	    	  var img = document.createElement("img");
-	    	  img.setAttribute("src", emoji);
-	    	  img.setAttribute("style", "max-width:1024px;max-height:576px");
-	    	  range.insertNode(img);
+	    	  var a = document.createElement("a");
+	    	  a.setAttribute("href", url);
+	    	  a.innerHTML = "<img src='"+ url +"' style='max-width:1024px;max-height:576px'>";
+	    	  range.insertNode(a);
 	      }
 	  }
   }

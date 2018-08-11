@@ -93,6 +93,7 @@
 	  }
 	  function preSubmit() {
 		  document.getElementById('box').style.display='block';
+		  document.getElementById("oldPassword").focus();
 	  }
 	  function formSubmit() {
 		  if(inputCheck())
