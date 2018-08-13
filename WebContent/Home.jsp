@@ -166,7 +166,7 @@
 	 }
 </script>
 <link href="sys/pic/fish58.png" rel="icon"/>
-<title>fishcc.org</title>
+<title>${user.name }</title>
 </head>
 <body>
 	<div id="head">

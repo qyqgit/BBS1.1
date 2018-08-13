@@ -129,7 +129,7 @@
   }
 </script>
 <link href="sys/pic/fish58.png" rel="icon"/>
-<title>fishcc.org</title>
+<title>${requestScope.myPage.title}</title>
 </head>
 <body>
 	<div id="head">
