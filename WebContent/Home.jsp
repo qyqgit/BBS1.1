@@ -232,8 +232,8 @@
 		          <table>
 		          <tr><td>Old Password:</td><td><input type="password" name="oldPassword" id="oldPassword" value="" /></td></tr>
 		          <tr>
-		          <td align="center"><button onclick='formSubmit()'>Commit</button></td>
-		          <td align="center"><button onclick='clearSubmit()'>Clear</button></td>
+		          <td align="center"><button type="button" onclick='formSubmit()'>Commit</button></td>
+		          <td align="center"><button type="button" onclick='clearSubmit()'>Clear</button></td>
 		          </tr>
 		          </table>
 				</div>
