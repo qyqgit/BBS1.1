@@ -4,76 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="sys/js/format_date.js"></script>
 <script type="text/javascript">
-  
   function inputCheck(){
 	if(document.getElementById("name").value == null || document.getElementById("name").value == "" ||document.getElementById("password").value == null || document.getElementById("password").value == ""){
 		alert("name or password can't be empty.");
 		return false;
 	}
 	return true;
-  }
-  function formatDate(){
-	if(!(document.getElementById("birthday").value == null || document.getElementById("birthday").value == "")){
-		var regExp = /^\d{4}\/\d{2}\/\d{2}$/;
-		var regExp2 = /^\d{4}\-\d{2}\-\d{2}$/;
-		if(regExp.test(document.getElementById("birthday").value)||regExp2.test(document.getElementById("birthday").value)){
-			var intYear = document.getElementById("birthday").value.substring(0,4)
-			var intMonth = document.getElementById("birthday").value.substring(5,7)
-			var intDay = document.getElementById("birthday").value.substring(8,10)
-			if(isDate(intYear,intMonth,intDay))
-				return;
-			else{
-			      alert("input date error.");
-				  //document.getElementById("birthday").focus();
-				  document.getElementById("birthday").value = "";
-				  return;
-			}
-		}
-			
-		var reg = /^[0-9]+.?[0-9]*$/;
-		if (!(reg.test(document.getElementById("birthday").value))) {
-		  alert("birthday need to be eight number(yyyymmdd or yyyy/mm/dd).");
-		  //document.getElementById("birthday").focus();
-		  document.getElementById("birthday").value = "";
-		  return;
-		}
-		if(document.getElementById("birthday").value.length!=8){
-		  alert("birthday need to be eight number(yyyymmdd or yyyy/mm/dd).");
-		  //document.getElementById("birthday").focus();
-		  document.getElementById("birthday").value = "";
-		  return;
-		}
-		var year = document.getElementById("birthday").value.substring(0,4)
-		var month = document.getElementById("birthday").value.substring(4,6)
-		var day = document.getElementById("birthday").value.substring(6,8)
-		if(!isDate(year,month,day)) {
-	      alert("input date error.");
-		  //document.getElementById("birthday").focus();
-		  document.getElementById("birthday").value = "";
-		  return;
-			
-		}
-		document.getElementById("birthday").value = year + "/" + month + "/" + day;
-	}
-
-  }
-  function isDate(intYear,intMonth,intDay){ 
-	if(isNaN(intYear)||isNaN(intMonth)||isNaN(intDay)) return false;   
-	if(intMonth>12||intMonth<1) return false; 
-	if ( intDay<1||intDay>31)return false; 
-	if((intMonth==4||intMonth==6||intMonth==9||intMonth==11)&&(intDay>30)) return false; 
-	if(intMonth==2){ 
-	  if(intDay>29) return false;  
-	  if((((intYear%100==0)&&(intYear%400!=0))||(intYear%4!=0))&&(intDay>28))return false; 
-	}
-	return true; 
- }
-  function getQueryString(name) {  
-	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");  
-	var r = window.location.search.substr(1).match(reg);  
-	if (r != null) return unescape(r[2]);  
-	return null;  
   }
 </script>
 <link href="sys/pic/fish58.png" rel="icon"/>
@@ -92,7 +30,7 @@
         </tr>    
         <tr>    
            <td>birthday</td>    
-           <td><input id="birthday" name="birthday" type="text" value="" onBlur="formatDate()" /></td>    
+           <td><input id="birthday" name="birthday" type="text" value="" onBlur="formatDate('birthday')" /></td>    
         </tr>    
         <tr>    
            <td>sex</td>    

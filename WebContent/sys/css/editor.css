@@ -1,0 +1,15 @@
+@charset "UTF-8";
+	#more{
+	  position: relative;
+	}
+	#morein{
+	  position: absolute;
+	  left: 25px;
+	  bottom: 25px;
+      border-collapse:collapse;
+      background-color: white;
+      display:none;
+	}
+    .td{
+      border: 1px solid black;
+    }
