@@ -26,6 +26,29 @@
       	document.getElementById("form1").submit();
   }
   
+  function insertLink() {
+	  var name = document.getElementById("linkName").value;
+	  var value = document.getElementById("linkValue").value;
+	  if(name != null && name.length != 0 && value != null && value.length != 0) {
+		  document.getElementById("text").focus();
+	      var log = document.execCommand("inserthtml", false, "<a href='" + value + "'>" + name + "</a>");
+	      if(!log) {
+	    	  var range = window.getSelection().getRangeAt(0);
+	    	  var a = document.createElement("a");
+	    	  a.setAttribute("href", value);
+	    	  a.innerHTML = name;
+	    	  range.insertNode(a);
+	      }
+	      clearLink();
+	  }
+  }
+  function clearLink() {
+	  document.getElementById('box').style.display='none';
+  }
+  function preInsertLink() {
+	  document.getElementById('box').style.display='block';
+	  document.getElementById("linkName").focus();
+  }
   function insertAudio() {
   	  var url = prompt("audio url:");
 	  if(url != null && url.length != 0) {
