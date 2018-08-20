@@ -31,18 +31,22 @@
 	  var value = document.getElementById("linkValue").value;
 	  if(name != null && name.length != 0 && value != null && value.length != 0) {
 		  document.getElementById("text").focus();
-	      var log = document.execCommand("inserthtml", false, "<a href='" + value + "'>" + name + "</a>");
+	      var log = document.execCommand("inserthtml", false, "<a href='" + value + "'>" + name + "</a><br>");
 	      if(!log) {
 	    	  var range = window.getSelection().getRangeAt(0);
 	    	  var a = document.createElement("a");
+	    	  var br = document.createElement("br");
 	    	  a.setAttribute("href", value);
 	    	  a.innerHTML = name;
+	    	  range.insertNode(br);
 	    	  range.insertNode(a);
 	      }
 	      clearLink();
 	  }
   }
   function clearLink() {
+	  document.getElementById("linkName").value = null;
+	  document.getElementById("linkValue").value = null;
 	  document.getElementById('box').style.display='none';
   }
   function preInsertLink() {
