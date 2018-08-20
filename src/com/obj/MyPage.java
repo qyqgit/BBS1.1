@@ -193,6 +193,44 @@ public class MyPage {
 		}
 		return false;
 	}
+	public static boolean getMyPageListMnEx(ArrayList<MyPage> myPageList, Connection conn, int pageIndex, int pageLength) {
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("select mypage.id,text,messageNumber,title,name,userId,from_unixtime(unix_timestamp(mypage.createDate),'%m-%d %H:%i') as createDate,from_unixtime(unix_timestamp(mypage.date),'%m-%d %H:%i:%S') as date from mypage,user where mypage.userId=user.id and mypage.invalid !=1 order by mypage.date desc limit ?,?;");
+			pstmt.setInt(1, pageIndex);
+			pstmt.setInt(2, pageLength);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				MyPage myPage = new MyPage(
+						rs.getString("id"),
+						rs.getString("title"),
+						rs.getString("text"),
+						new User(rs.getString("userId"),rs.getString("name")),
+						rs.getString("date"),
+						rs.getString("createDate"),
+						rs.getString("messageNumber"));
+				myPageList.add(myPage);
+			}
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 	public static boolean getMyPage(MyPage myPage, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

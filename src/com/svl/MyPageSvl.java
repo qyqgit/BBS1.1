@@ -69,7 +69,7 @@ public class MyPageSvl extends HttpServlet {
 		
 		ArrayList<Message> messageList = new ArrayList<Message>();
 		messageList.add(message);
-		if(Message.getMessageListMN(messageList, conn, eachPage.getPageIndex(), pageLength))
+		if(Message.getMessageListMnEx(messageList, conn, eachPage.getPageIndex(), pageLength))
 			request.setAttribute("messageList", messageList);
 		
 		

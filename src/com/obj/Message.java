@@ -288,6 +288,44 @@ public class Message {
 		} 
 		return false;
 	}
+	public static boolean getMessageListMnEx(ArrayList<Message> messageList, Connection conn, int pageIndex, int pageLength) {
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("select message.id,userId,text,name,pageid,from_unixtime(unix_timestamp(message.date),'%Y-%m-%d %H:%i') as date,floorNumber from message,user where pageid = ? and message.userId = user.id and message.invalid != 1 order by floornumber limit ?,?");
+			pstmt.setString(1, messageList.get(0).getMyPage().getId());
+			pstmt.setInt(2, pageIndex);
+			pstmt.setInt(3, pageLength);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Message message = new Message(
+						rs.getString("id"),
+						rs.getString("date"),
+						new User(rs.getString("userId"),rs.getString("name")),
+						rs.getString("text"),
+						new MyPage(rs.getString("pageId")),
+						rs.getString("floorNumber")
+						);
+				messageList.add(message);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
+		return false;
+	}
 	public static boolean getMessage(Message message, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

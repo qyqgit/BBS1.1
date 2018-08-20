@@ -61,7 +61,7 @@ public class Index extends HttpServlet {
 		request.setAttribute("eachPageList", eachPageList);
 		
 		ArrayList<MyPage> myPageList = new ArrayList<MyPage>();
-		if(MyPage.getMyPageListMN(myPageList, conn, eachPage.getPageIndex(), pageLength))
+		if(MyPage.getMyPageListMnEx(myPageList, conn, eachPage.getPageIndex(), pageLength))
 			request.setAttribute("myPageList", myPageList);
 
 		ArrayList<User> lastSendMessageUserList = new ArrayList<User>();

@@ -170,6 +170,42 @@ public class Media {
 		} 
 		return false;
 	}
+	public static boolean getMediaListEx(String userId, ArrayList<Media> mediaList, Connection conn) {
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("select id,userId,name,url,type,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date from media where userId = ? and media.invalid != 1");
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Media media = new Media(
+						rs.getString("id"),
+						new User(rs.getString("userId")),
+						rs.getString("name"),
+						rs.getString("url"),
+						rs.getString("type"),
+						rs.getString("date")
+						);
+				mediaList.add(media);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
+		return false;
+	}
 	public static boolean removeMedia(String mediaId, Connection conn) {
 		PreparedStatement pstmt = null;
 		try {

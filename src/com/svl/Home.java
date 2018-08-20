@@ -40,7 +40,7 @@ public class Home extends HttpServlet {
 		if(User.getUser(user, conn))
 			request.setAttribute("user", user);
 		ArrayList<Media> mediaList = new ArrayList<Media>();
-		if(Media.getMediaList(user.getId(), mediaList, conn))
+		if(Media.getMediaListEx(user.getId(), mediaList, conn))
 			request.setAttribute("mediaList", mediaList);
 		//change information of user
 		User loginUser = (User)session.getAttribute("user");
