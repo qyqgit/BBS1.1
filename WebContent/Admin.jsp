@@ -6,8 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style type="text/css">
     #nav {
-        line-height:30px;
-        background-color:yellow;
+        line-height:70px;
         width:100px;
         float:left;
         padding:0px;	      
@@ -31,11 +30,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<div  style="width:1100px">
+	<div  style="width:1100px;margin:0 auto;">
 		<div id="nav">
 	      <a href="adminPage" target="iframe_a">Pages<br></a>
-	      <a href="demo_iframe2.htm" target="iframe_a">Paris<br></a>
-	      <a href="demo_iframe3.htm" target="iframe_a">Tokyo<br></a>
+	      <a href="adminMessage" target="iframe_a">Messages<br></a>
+	      <a href="adminMedia" target="iframe_a">Media<br></a>
+	      <a href="adminUser" target="iframe_a">User<br></a>
+	      <a href="adminAdmin" target="iframe_a">Admin<br></a>
+	      <a href="adminLog" target="iframe_a">Log<br></a>
 	    </div>
 		<div id="section">
 	      <iframe id="iframepage" src="adminPage" name="iframe_a" width="1000px" frameborder="0px" scrolling="auto" onload="changeFrameHeight()"></iframe>

@@ -206,7 +206,7 @@ public class Media {
 		} 
 		return false;
 	}
-	public static boolean removeMedia(String mediaId, Connection conn) {
+	public static boolean deleteMedia(String mediaId, Connection conn) {
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement("delete from media where id = ?");

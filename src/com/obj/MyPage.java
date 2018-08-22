@@ -14,7 +14,19 @@ public class MyPage {
 	private String date;
 	private String createDate;
 	private String messageNumber;
+	private String invalid;
 	
+	public MyPage(String id, String title, String text, User user, String date, String createDate, String messageNumber, String invalid) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.text = text;
+		this.user = user;
+		this.date = date;
+		this.createDate = createDate;
+		this.messageNumber = messageNumber;
+		this.invalid = invalid;
+	}
 	public MyPage(String id, String title, String text, User user, String date, String createDate, String messageNumber) {
 		super();
 		this.id = id;
@@ -90,6 +102,15 @@ public class MyPage {
 	public void setMessageNumber(String messageNumber) {
 		this.messageNumber = messageNumber;
 	}
+	
+	public String getInvalid() {
+		return invalid;
+	}
+
+	public void setInvalid(String invalid) {
+		this.invalid = invalid;
+	}
+
 	public static boolean insertMyPage(MyPage myPage, Connection conn) {
 		if(myPage.getTitle()==null||myPage.getTitle().length()==0) {
 			return false;
@@ -155,11 +176,11 @@ public class MyPage {
 		}
 		return false;
 	}
-	public static boolean getMyPageListMN(ArrayList<MyPage> myPageList, Connection conn, int pageIndex, int pageLength) {
+	public static boolean getMyPageListAdminMN(ArrayList<MyPage> myPageList, Connection conn, int pageIndex, int pageLength) {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = conn.prepareStatement("select mypage.id,text,messageNumber,title,name,userId,from_unixtime(unix_timestamp(mypage.createDate),'%m-%d %H:%i') as createDate,from_unixtime(unix_timestamp(mypage.date),'%m-%d %H:%i:%S') as date from mypage,user where mypage.userId=user.id order by mypage.date desc limit ?,?;");
+			pstmt = conn.prepareStatement("select mypage.id,text,messageNumber,title,mypage.invalid,name,userId,from_unixtime(unix_timestamp(mypage.createDate),'%m-%d %H:%i') as createDate,from_unixtime(unix_timestamp(mypage.date),'%m-%d %H:%i:%S') as date from mypage,user where mypage.userId=user.id order by mypage.date desc limit ?,?;");
 			pstmt.setInt(1, pageIndex);
 			pstmt.setInt(2, pageLength);
 			rs = pstmt.executeQuery();
@@ -172,7 +193,8 @@ public class MyPage {
 						new User(rs.getString("userId"),rs.getString("name")),
 						rs.getString("date"),
 						rs.getString("createDate"),
-						rs.getString("messageNumber"));
+						rs.getString("messageNumber"),
+						rs.getString("invalid"));
 				myPageList.add(myPage);
 			}
 			return true;
@@ -269,6 +291,34 @@ public class MyPage {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
+			pstmt = conn.prepareStatement("select count(*) from mypage where invalid !=1");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count[0] = Integer.parseInt(rs.getString("count(*)"));
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public static boolean getMyPageCountAdmin(int[] count, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
 			pstmt = conn.prepareStatement("select count(*) from mypage");
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -291,6 +341,66 @@ public class MyPage {
 				e.printStackTrace();
 			}
 		}
+		return false;
+	}
+	public static boolean setMypageInvalid(String id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("update mypage set invalid=1 where id=?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	public static boolean setMypageValid(String id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("update mypage set invalid=0 where id=?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	public static boolean deleteMyPage(String Id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("delete from mypage where id = ?");
+			pstmt.setString(1, Id);
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
 		return false;
 	}
 }

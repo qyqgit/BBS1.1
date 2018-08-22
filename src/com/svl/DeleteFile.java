@@ -42,7 +42,7 @@ public class DeleteFile extends HttpServlet {
 			response.sendRedirect("Home?id=" + media.getUser().getId());
 			return;
 		}
-		if(Media.removeMedia(mediaId, conn)) {
+		if(Media.deleteMedia(mediaId, conn)) {
 			Properties profile = (Properties)getServletContext().getAttribute("profile");
             String realPath = getServletContext().getRealPath("/");
             File tempFile = new File(realPath);

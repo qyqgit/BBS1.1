@@ -122,7 +122,7 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         if(user != null) {
         	Connection conn = (Connection)request.getSession().getAttribute("conn");
         	int count[] = {0};
-        	Message.getReplyCount(count, user, conn);
+        	Message.getReplyCountEx(count, user, conn);
         	request.getSession().setAttribute("count", count);
         }
     }

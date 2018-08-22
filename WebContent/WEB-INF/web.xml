@@ -148,11 +148,51 @@
     <url-pattern>/myReply</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>AdminPage</servlet-name>
-  	<servlet-class>com.svl.AdminPage</servlet-class>
+    <servlet-name>AdminPage</servlet-name>
+    <servlet-class>com.svl.AdminPage</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>AdminPage</servlet-name>
-  	<url-pattern>/adminPage</url-pattern>
+    <servlet-name>AdminPage</servlet-name>
+    <url-pattern>/adminPage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>AdminMessage</servlet-name>
+  	<servlet-class>com.svl.AdminMessage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminMessage</servlet-name>
+  	<url-pattern>/adminMessage</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>AdminMedia</servlet-name>
+  	<servlet-class>com.svl.AdminMedia</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminMedia</servlet-name>
+  	<url-pattern>/adminMedia</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>AdminUser</servlet-name>
+  	<servlet-class>com.svl.AdminUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminUser</servlet-name>
+  	<url-pattern>/adminUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>AdminAdmin</servlet-name>
+  	<servlet-class>com.svl.AdminAdmin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminAdmin</servlet-name>
+  	<url-pattern>/adminAdmin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>AdminLog</servlet-name>
+  	<servlet-class>com.svl.AdminLog</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>AdminLog</servlet-name>
+  	<url-pattern>/adminLog</url-pattern>
   </servlet-mapping>
 </web-app>

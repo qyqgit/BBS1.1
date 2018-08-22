@@ -250,6 +250,49 @@ public class Message {
 		} 
 		return false;
 	}
+	public static boolean getReplyListEx(String userId, ArrayList<Message> replyList, Connection conn) {
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("select table3.id,table3.date,table3.userid,table3.text,table3.pageid,table3.floornumber,table3.name,mypage.title from(select table2.id,from_unixtime(unix_timestamp(table2.date),'%Y-%m-%d %H:%i') as date,table2.userid,table2.text,table2.pageid,table2.floornumber,user.name from (select message.id,message.date,message.userid,message.text,message.pageid,message.floornumber from (select mypage.id from mypage where userid = ?)as table1,message where pageid=table1.id and userid != ? and message.invalid !=1 union select message.id,message.date,message.userid,message.text,message.pageid,message.floornumber from (select id from message where userid = ? )as table1,message where replyid = table1.id and message.invalid !=1 order by date desc) as table2,user where table2.userid = user.id)as table3,mypage where table3.pageid = mypage.id;");
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userId);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Message message = new Message(
+						rs.getString("id"),
+						rs.getString("date"),
+						new User(rs.getString("userId"), rs.getString("name")),
+						rs.getString("text"),
+						new MyPage(rs.getString("pageId"), rs.getString("title")),
+						rs.getString("floorNumber")
+						);
+				replyList.add(message);
+			}
+			pstmt = conn.prepareStatement("update message inner join (select message.id from (select mypage.id from mypage where userid = ? )as table1,message where pageid = table1.id and userid != ? and haveread != 1 and message.invalid !=1 union select message.id from (select id from message where userid = ? )as table1,message where replyid = table1.id and haveread != 1 and message.invalid !=1 )as table2 on message.id = table2.id set message.haveread = 1;");
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userId);
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
+		return false;
+	}
 	public static boolean getMessageListMN(ArrayList<Message> messageList, Connection conn, int pageIndex, int pageLength) {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -393,6 +436,68 @@ public class Message {
 		}
 		return false;
 	}
+	public static boolean getMessageCountEx(int[] count,Message message, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(id) from message where pageId = ? and invalid !=1");
+			pstmt.setString(1, message.getMyPage().getId());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count[0] = Integer.parseInt(rs.getString("count(id)"));
+				if(count[0]==0)
+					count[0]++;
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public static boolean getMessageCountAdmin(int[] count,Message message, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(id) from message");
+			pstmt.setString(1, message.getMyPage().getId());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count[0] = Integer.parseInt(rs.getString("count(id)"));
+				if(count[0]==0)
+					count[0]++;
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 	public static boolean getReplyCount(int[] count, User user, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -422,6 +527,97 @@ public class Message {
 				e.printStackTrace();
 			}
 		}
+		return false;
+	}
+	public static boolean getReplyCountEx(int[] count, User user, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(id) from (select message.id,haveread from (select mypage.id from mypage where userid = ?)as table1,message where pageid=table1.id and userid != ? and message.invalid !=1 union select message.id,haveread from (select id from message where userid = ?)as table1,message where replyid = table1.id and message.invalid !=1) as table2 where haveread = 0 ;");
+			pstmt.setString(1, user.getId());
+			pstmt.setString(2, user.getId());
+			pstmt.setString(3, user.getId());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count[0] = Integer.parseInt(rs.getString("count(id)"));
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public static boolean setMessageInvalid(String id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("update message set invalid=1 where id=?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	public static boolean setMessageValid(String id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("update message set invalid=0 where id=?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	public static boolean deleteMessage(String Id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("delete from message where id = ?");
+			pstmt.setString(1, Id);
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
 		return false;
 	}
 }
