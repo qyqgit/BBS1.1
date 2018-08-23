@@ -45,7 +45,7 @@ public class MyPageSvl extends HttpServlet {
 		int[] count = {0};
 		int listLength =  Integer.parseInt(profile.getProperty("message_listlength"));
 		int pageNumber;
-		Message.getMessageCount(count, message, conn);
+		Message.getMessageCountEx(count, request.getParameter("id"), conn);
 		try {
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		} catch (NumberFormatException e) {

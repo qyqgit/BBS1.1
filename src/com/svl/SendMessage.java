@@ -46,7 +46,7 @@ public class SendMessage extends HttpServlet {
 		else {
 			int count[] = {0};
 			int pageLength = Integer.parseInt(request.getParameter("pageLength"));
-			Message.getMessageCount(count, message, conn);
+			Message.getMessageCount(count, request.getParameter("id"), conn);
 			int howManyPage = count[0] % pageLength == 0 ? count[0] / pageLength : (count[0] / pageLength) +1 ;
 			response.sendRedirect("MyPageSvl?id=" + request.getParameter("id") + "&pageNumber=" + howManyPage + "&pageLength=" + request.getParameter("pageLength"));
 		}

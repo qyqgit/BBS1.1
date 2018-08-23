@@ -16,6 +16,7 @@ public class Message {
 	private MyPage myPage;
 	private String floorNumber;
 	private String read;
+	private String invalid;
 	
 
 	public String getId() {
@@ -82,6 +83,24 @@ public class Message {
 		this.read = read;
 	}
 
+	public String getInvalid() {
+		return invalid;
+	}
+
+	public void setInvalid(String invalid) {
+		this.invalid = invalid;
+	}
+
+	public Message(String id, String date, User user, String text, MyPage myPage, String floorNumber, String invalid) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.user = user;
+		this.text = text;
+		this.myPage = myPage;
+		this.floorNumber = floorNumber;
+		this.invalid = invalid;
+	}
 	public Message(String id, String date, User user, String text, MyPage myPage, String floorNumber) {
 		super();
 		this.id = id;
@@ -331,6 +350,44 @@ public class Message {
 		} 
 		return false;
 	}
+	public static boolean getMessageListAdminMN(ArrayList<Message> messageList, Connection conn, int pageIndex, int pageLength) {
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("select message.id,userId,text,name,pageid,from_unixtime(unix_timestamp(message.date),'%Y-%m-%d %H:%i') as date,floorNumber,message.invalid from message,user where message.userId = user.id order by message.id desc limit ?,?");
+			pstmt.setInt(1, pageIndex);
+			pstmt.setInt(2, pageLength);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Message message = new Message(
+						rs.getString("id"),
+						rs.getString("date"),
+						new User(rs.getString("userId"),rs.getString("name")),
+						rs.getString("text"),
+						new MyPage(rs.getString("pageId")),
+						rs.getString("floorNumber"),
+						rs.getString("invalid")
+						);
+				messageList.add(message);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
+		return false;
+	}
 	public static boolean getMessageListMnEx(ArrayList<Message> messageList, Connection conn, int pageIndex, int pageLength) {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -405,12 +462,12 @@ public class Message {
 		}
 		return false;
 	}
-	public static boolean getMessageCount(int[] count,Message message, Connection conn) {
+	public static boolean getMessageCount(int[] count,String pageId, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement("select count(id) from message where pageId = ?");
-			pstmt.setString(1, message.getMyPage().getId());
+			pstmt.setString(1, pageId);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count[0] = Integer.parseInt(rs.getString("count(id)"));
@@ -436,12 +493,12 @@ public class Message {
 		}
 		return false;
 	}
-	public static boolean getMessageCountEx(int[] count,Message message, Connection conn) {
+	public static boolean getMessageCountEx(int[] count,String pageId, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement("select count(id) from message where pageId = ? and invalid !=1");
-			pstmt.setString(1, message.getMyPage().getId());
+			pstmt.setString(1, pageId);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count[0] = Integer.parseInt(rs.getString("count(id)"));
@@ -467,12 +524,11 @@ public class Message {
 		}
 		return false;
 	}
-	public static boolean getMessageCountAdmin(int[] count,Message message, Connection conn) {
+	public static boolean getMessageCountAdmin(int[] count, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement("select count(id) from message");
-			pstmt.setString(1, message.getMyPage().getId());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count[0] = Integer.parseInt(rs.getString("count(id)"));
