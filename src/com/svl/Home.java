@@ -3,6 +3,7 @@ package com.svl;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.obj.EachPage;
 import com.obj.Media;
 import com.obj.User;
 
@@ -39,8 +41,31 @@ public class Home extends HttpServlet {
 		User user = new User(request.getParameter("id"));
 		if(User.getUser(user, conn))
 			request.setAttribute("user", user);
+		
+		Properties profile = (Properties)request.getServletContext().getAttribute("profile");
+		int pageLength;
+		int[] count = {0};
+		int listLength =  Integer.parseInt(profile.getProperty("page_listlength"));
+		int pageNumber;
+		Media.getMediaCountEx(count, user.getId(), conn);
+		try {
+			pageLength = Integer.parseInt(request.getParameter("pageLength"));
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			pageLength = Integer.parseInt(profile.getProperty("page_length"));
+			pageNumber = Integer.parseInt(profile.getProperty("page_number"));
+		}
+		EachPage eachPage = new EachPage(pageLength,count[0],listLength,pageNumber);
+		int howManyPage = eachPage.getHowManyPage();
+		request.setAttribute("pageNumber", pageNumber);
+		request.setAttribute("howManyPage", howManyPage);
+		
+		ArrayList<EachPage> eachPageList = eachPage.getEachPageList();
+		request.setAttribute("eachPageList", eachPageList);
+		
 		ArrayList<Media> mediaList = new ArrayList<Media>();
-		if(Media.getMediaListEx(user.getId(), mediaList, conn))
+		if(Media.getMediaListMnEx(user.getId(), mediaList, conn, eachPage.getPageIndex(), pageLength))
 			request.setAttribute("mediaList", mediaList);
 		//change information of user
 		User loginUser = (User)session.getAttribute("user");

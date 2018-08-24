@@ -13,6 +13,7 @@ public class Media {
 	private String url;
 	private String type;
 	private String date;
+	private String invalid;
 	public String getId() {
 		return id;
 	}
@@ -49,8 +50,22 @@ public class Media {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
-	
+	public String getInvalid() {
+		return invalid;
+	}
+	public void setInvalid(String invalid) {
+		this.invalid = invalid;
+	}
+	public Media(String id, User user, String name, String url, String type, String date, String invalid) {
+		super();
+		this.id = id;
+		this.user = user;
+		this.name = name;
+		this.url = url;
+		this.type = type;
+		this.date = date;
+		this.invalid = invalid;
+	}
 	public Media(String id, User user, String name, String url, String type, String date) {
 		super();
 		this.id = id;
@@ -170,12 +185,14 @@ public class Media {
 		} 
 		return false;
 	}
-	public static boolean getMediaListEx(String userId, ArrayList<Media> mediaList, Connection conn) {
+	public static boolean getMediaListMN(String userId, ArrayList<Media> mediaList, Connection conn, int pageIndex, int pageLength) {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = conn.prepareStatement("select id,userId,name,url,type,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date from media where userId = ? and media.invalid != 1");
+			pstmt = conn.prepareStatement("select id,userId,name,url,type,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date from media where userId = ? limit ?,?");
 			pstmt.setString(1, userId);
+			pstmt.setInt(1, pageIndex);
+			pstmt.setInt(2, pageLength);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
@@ -204,6 +221,217 @@ public class Media {
 				e.printStackTrace();
 			}
 		} 
+		return false;
+	}
+	public static boolean getMediaListAdminMN(String userId, ArrayList<Media> mediaList, Connection conn, int pageIndex, int pageLength) {
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("select id,userId,name,url,type,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date,invalid from media where userId = ? limit ?,?");
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, pageIndex);
+			pstmt.setInt(3, pageLength);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Media media = new Media(
+						rs.getString("id"),
+						new User(rs.getString("userId")),
+						rs.getString("name"),
+						rs.getString("url"),
+						rs.getString("type"),
+						rs.getString("date"),
+						rs.getString("invalid")
+						);
+				mediaList.add(media);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
+		return false;
+	}
+	public static boolean getMediaListMnEx(String userId, ArrayList<Media> mediaList, Connection conn, int pageIndex, int pageLength) {
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("select id,userId,name,url,type,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date from media where userId = ? and media.invalid !=1 limit ?,?");
+			pstmt.setString(1, userId);
+			pstmt.setInt(2, pageIndex);
+			pstmt.setInt(3, pageLength);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Media media = new Media(
+						rs.getString("id"),
+						new User(rs.getString("userId")),
+						rs.getString("name"),
+						rs.getString("url"),
+						rs.getString("type"),
+						rs.getString("date")
+						);
+				mediaList.add(media);
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
+		return false;
+	}
+	public static boolean getMediaCount(int[] count,String userId, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(id) from media where userId = ?");
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count[0] = Integer.parseInt(rs.getString("count(id)"));
+				if(count[0]==0)
+					count[0]++;
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public static boolean getMediaCountEx(int[] count,String userId, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(id) from media where userId = ? and invalid !=1");
+			pstmt.setString(1, userId);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count[0] = Integer.parseInt(rs.getString("count(id)"));
+				if(count[0]==0)
+					count[0]++;
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public static boolean getMediaCountAdmin(int[] count, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(id) from media");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count[0] = Integer.parseInt(rs.getString("count(id)"));
+				if(count[0]==0)
+					count[0]++;
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public static boolean setMediaInvalid(String id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("update media set invalid=1 where id=?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	public static boolean setMediaValid(String id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("update media set invalid=0 where id=?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		return false;
 	}
 	public static boolean deleteMedia(String mediaId, Connection conn) {

@@ -226,6 +226,24 @@
 				<tr><td colspan="6"><hr></td></tr>
 				</c:forEach>
 		</table>
+		<table>
+			<tr>
+				<td>
+					<c:url value="home?id=${user.id }&pageNumber=${requestScope.pageNumber - 1 < 1 ? 1:requestScope.pageNumber - 1}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
+					<a href="${url }"><c:out value="PageUp"></c:out></a>
+				</td>
+				<c:forEach var="eachPageList" items="${requestScope.eachPageList }" varStatus="loop">
+						<td>
+						    <c:url value="home?id=${user.id }&pageNumber=${eachPageList.pageNumber}&pageLength=${eachPageList.pageLength }" var="url"></c:url>
+							<a href="${url }"><c:out value="${eachPageList.pageNumber}"></c:out></a>
+						</td>
+				</c:forEach>
+				<td>
+					<c:url value="home?id=${user.id }&pageNumber=${requestScope.pageNumber + 1 > requestScope.howManyPage ?requestScope.howManyPage:requestScope.pageNumber + 1}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
+					<a href="${url }"><c:out value="NextPage"></c:out></a>
+				</td>
+			</tr>
+		</table>
 		<c:set value ='<form action="FileUploadServlet" method="post" enctype="multipart/form-data" onsubmit="return uploadCheck()"><input id="file" type="file" name="file" accept="/*"><input type="submit" value="submit"></form>' var = "upload"></c:set>
 		${sessionScope.user.id == user.id ? upload:''}
 	</div>
