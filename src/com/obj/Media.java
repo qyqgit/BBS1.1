@@ -223,20 +223,19 @@ public class Media {
 		} 
 		return false;
 	}
-	public static boolean getMediaListAdminMN(String userId, ArrayList<Media> mediaList, Connection conn, int pageIndex, int pageLength) {
+	public static boolean getMediaListAdminMN(ArrayList<Media> mediaList, Connection conn, int pageIndex, int pageLength) {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = conn.prepareStatement("select id,userId,name,url,type,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date,invalid from media where userId = ? limit ?,?");
-			pstmt.setString(1, userId);
-			pstmt.setInt(2, pageIndex);
-			pstmt.setInt(3, pageLength);
+			pstmt = conn.prepareStatement("select media.id,userId,media.name,url,type,from_unixtime(unix_timestamp(media.date),'%Y-%m-%d %H:%i') as date,media.invalid,user.name from media,user where userId=user.id limit ?,?");
+			pstmt.setInt(1, pageIndex);
+			pstmt.setInt(2, pageLength);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				Media media = new Media(
 						rs.getString("id"),
-						new User(rs.getString("userId")),
+						new User(rs.getString("userId"), rs.getString("user.name")),
 						rs.getString("name"),
 						rs.getString("url"),
 						rs.getString("type"),
