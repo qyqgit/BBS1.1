@@ -13,6 +13,7 @@ public class User {
 	private String age;
 	private String sex;
 	private String date;
+	private String invalid;
 	public String getId() {
 		return id;
 	}
@@ -49,6 +50,23 @@ public class User {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	
+	public String getInvalid() {
+		return invalid;
+	}
+	public void setInvalid(String invalid) {
+		this.invalid = invalid;
+	}
+	public User(String id, String name, String password, String age, String sex, String date, String invalid) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.age = age;
+		this.sex = sex;
+		this.date = date;
+		this.invalid = invalid;
 	}
 	public User(String id, String name, String password, String age, String sex, String date) {
 		super();
@@ -358,6 +376,135 @@ public class User {
 				e.printStackTrace();
 			}
 		}
+		return false;
+	}
+	public static boolean getUserListAdminMN(ArrayList<User> userList, Connection conn, int pageIndex, int pageLength) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select * from user order by id desc limit ?,?");
+			pstmt.setInt(1, pageIndex);
+			pstmt.setInt(2, pageLength);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				User user = new User(
+						rs.getString("id"),
+						rs.getString("name"),
+						rs.getString("password"),
+						rs.getString("birthday"),
+						rs.getString("sex"),
+						rs.getString("date"),
+						rs.getString("invalid")
+						);
+				userList.add(user);
+			}
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public static boolean getUserCountAdmin(int[] count, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select count(id) from user");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count[0] = Integer.parseInt(rs.getString("count(id)"));
+				if(count[0]==0)
+					count[0]++;
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	public static boolean setUserInvalid(String id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("update user set invalid=1 where id=?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	public static boolean setUserValid(String id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("update user set invalid=0 where id=?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			return true;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return false;
+	}
+	public static boolean deleteUser(String id, Connection conn) {
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement("delete from user where id = ?");
+			pstmt.setString(1, id);
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} 
 		return false;
 	}
 }

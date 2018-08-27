@@ -54,7 +54,7 @@
 				<a href="${url }">Delete</a>
 			</td>
 		</tr>
-		<tr><td colspan="9"><hr></td></tr>
+		<tr><td colspan="10"><hr></td></tr>
 		</c:forEach>
 	</table>
 	<table>
