@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table style="border-collapse:collapse">
+	<table style="border-collapse:collapse;width:960px">
 		<tr bgcolor="#EEEEEE">
 			<td>ID&nbsp;</td>
 			<td>Name&nbsp;</td>
@@ -25,7 +25,10 @@
 		<c:forEach var="userList" items="${requestScope.userList }" varStatus="loop">
 		<tr <c:if test="${loop.count%2==0}">bgcolor="#FFFFFF"</c:if>>
 			<td><c:out value="${userList.id}" /></td>
-			<td><c:out value="${userList.name}"></c:out></td>
+			<td>
+				<c:url value="Home?id=${userList.id}" var="url"></c:url>
+				<a href="${url }"><c:out value="${userList.name}"></c:out></a>
+			</td>
 			<td><c:out value="${userList.password}" /></td>
 			<td><c:out value="${userList.age}" /></td>
 			<td><c:out value="${userList.sex}"></c:out></td>
