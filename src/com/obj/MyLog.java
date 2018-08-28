@@ -83,7 +83,7 @@ public class MyLog {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = conn.prepareStatement("select log.id,log.date,ip,userId,url,name from log,user where userId=user.id limit ?,?");
+			pstmt = conn.prepareStatement("select log.id,log.date,ip,userId,url,name from log,user where userId=user.id order by log.id desc limit ?,?");
 			pstmt.setInt(1, pageIndex);
 			pstmt.setInt(2, pageLength);
 			rs = pstmt.executeQuery();

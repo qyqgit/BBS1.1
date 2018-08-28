@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table style="border-collapse:collapse">
+	<table style="border-collapse:collapse;width:900px">
 		<tr bgcolor="#EEEEEE">
 			<td>ID&nbsp;</td>
 			<td>IP&nbsp;</td>
