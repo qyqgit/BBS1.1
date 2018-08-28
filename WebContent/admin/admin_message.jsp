@@ -6,6 +6,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style type="text/css">
+td a img{
+	max-height:120px !important;
+}
+td video{
+	max-height:120px !important;
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
