@@ -78,6 +78,14 @@ public class User {
 		this.date = date;
 	}
 	
+	public User(String id, String name, String password, String date, String invalid) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.date = date;
+		this.invalid = invalid;
+	}
 	public User(String name, String password, String age, String sex) {
 		super();
 		this.name = name;

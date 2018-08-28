@@ -333,6 +333,8 @@ public class MyPage {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count[0] = Integer.parseInt(rs.getString("count(*)"));
+				if(count[0]==0)
+					count[0]++;
 				return true;
 			}
 		} catch (Exception e) {
@@ -361,6 +363,8 @@ public class MyPage {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count[0] = Integer.parseInt(rs.getString("count(*)"));
+				if(count[0]==0)
+					count[0]++;
 				return true;
 			}
 		} catch (Exception e) {

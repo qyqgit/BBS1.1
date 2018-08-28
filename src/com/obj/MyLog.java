@@ -83,17 +83,17 @@ public class MyLog {
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		try {
-			pstmt = conn.prepareStatement("select log.id,log.date,ip,userId,url,name from log,user where userId=user.id order by log.id desc limit ?,?");
+			pstmt = conn.prepareStatement("select * from (select log.id,log.date,ip,userId,url,name from log,user where userId=user.id union select log.id,log.date,log.ip,userId,url,name from log,admin where userId=admin.id)as table1 order by table1.id desc limit ?,?");
 			pstmt.setInt(1, pageIndex);
 			pstmt.setInt(2, pageLength);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				MyLog myLog = new MyLog(
-						rs.getString("log.id"),
-						rs.getString("log.date"),
+						rs.getString("table1.id"),
+						rs.getString("table1.date"),
 						rs.getString("ip"),
-						new User(rs.getString("userId"), rs.getString("user.name")),
+						new User(rs.getString("userId"), rs.getString("table1.name")),
 						rs.getString("url")
 						);
 				myLogList.add(myLog);
