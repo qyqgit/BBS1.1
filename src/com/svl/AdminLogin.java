@@ -39,7 +39,7 @@ public class AdminLogin extends HttpServlet {
 		Connection conn = (Connection)session.getAttribute("conn");
 		Admin admin = new Admin(request.getParameter("id"));
 		if(session.getAttribute("passCodeNeed")== null) {
-			if(Admin.getAdmin(admin, conn)&&admin.getPassword().equals(request.getParameter("password"))) {
+			if(Admin.getAdmin(admin, conn) && admin.getPassword().equals(request.getParameter("password")) && "0".equals(admin.getInvalid())) {
 				loginSuccess(request, response, session, admin);
 			} else {
 				loginFail(request, response, passCodeNeed, session);
@@ -48,7 +48,7 @@ public class AdminLogin extends HttpServlet {
 			String code = (String)session.getAttribute("code");
 			String passCode = request.getParameter("passcode");
 			if(code.equalsIgnoreCase(passCode)) {
-				if(Admin.getAdmin(admin, conn)&&admin.getPassword().equals(request.getParameter("password"))) {
+				if(Admin.getAdmin(admin, conn) && admin.getPassword().equals(request.getParameter("password")) && "0".equals(admin.getInvalid())) {
 					loginSuccess(request, response, session, admin);
 				} else {
 					loginFail(request, response, passCodeNeed, session);

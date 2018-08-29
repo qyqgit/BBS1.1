@@ -12,15 +12,16 @@
     } else {
     	document.getElementById("passcode").style.display ="none";
     }
-
   }
   function refresh() {
-
 	  var url = "GetPassCode.jpg?number="+Math.random();
 	  document.getElementById("img").src = url;
-  }  
+  }
   window.onload = function(){
 	  showPassCode();
+  }
+  if(window !=top){
+		top.location.href=location.href;
   }
 </script>
 <title>Insert title here</title>

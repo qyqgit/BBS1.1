@@ -50,11 +50,9 @@ class HttpServletRequestEncryptPassword extends HttpServletRequestWrapper{
         String value = super.getParameter(name);
         if(value==null)
             return value;
-        if("password".equalsIgnoreCase(name) || "oldPassword".equalsIgnoreCase(name)) {
+        if("password".equalsIgnoreCase(name) || "oldPassword".equalsIgnoreCase(name) || "addPassword".equalsIgnoreCase(name)) {
         	value = GetMd5.getMD5(value);
         }
-        
-
         return value;
     }
 

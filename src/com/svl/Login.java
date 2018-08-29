@@ -37,7 +37,7 @@ public class Login extends HttpServlet {
 		Connection conn = (Connection)session.getAttribute("conn");
 		User user = new User(request.getParameter("id"));
 		if(session.getAttribute("passCodeNeed")== null) {
-			if(User.getUser(user, conn)&&user.getPassword().equals(request.getParameter("password"))) {
+			if(User.getUser(user, conn) && user.getPassword().equals(request.getParameter("password")) && "0".equals(user.getInvalid())) {
 				loginSuccess(request, response, session, user);
 			} else {
 				loginFail(request, response, passCodeNeed, session);
@@ -46,7 +46,7 @@ public class Login extends HttpServlet {
 			String code = (String)session.getAttribute("code");
 			String passCode = request.getParameter("passcode");
 			if(code.equalsIgnoreCase(passCode)) {
-				if(User.getUser(user, conn)&&user.getPassword().equals(request.getParameter("password"))) {
+				if(User.getUser(user, conn) && user.getPassword().equals(request.getParameter("password")) && "0".equals(user.getInvalid())) {
 					loginSuccess(request, response, session, user);
 				} else {
 					loginFail(request, response, passCodeNeed, session);

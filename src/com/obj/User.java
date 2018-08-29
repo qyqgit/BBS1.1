@@ -164,7 +164,7 @@ public class User {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			pstmt = conn.prepareStatement("select id,name,password,birthday,sex,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date from user where id = ?");
+			pstmt = conn.prepareStatement("select id,name,password,birthday,sex,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date,invalid from user where id = ?");
 			pstmt.setString(1, user.getId());
 			rs = pstmt.executeQuery();
 
@@ -175,6 +175,7 @@ public class User {
 				user.setAge(rs.getString("birthday"));
 				user.setSex(rs.getString("sex"));
 				user.setDate(rs.getString("date"));
+				user.setInvalid(rs.getString("invalid"));
 				return true;
 			}
 			return false;

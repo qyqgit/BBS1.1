@@ -12,7 +12,7 @@
         padding:0px;	      
     }
     #section {
-        width:900px;
+        width:1000px;
         float:left;
         padding:0px;
        

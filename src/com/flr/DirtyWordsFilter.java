@@ -48,7 +48,7 @@ class DWHttpServletRequest extends HttpServletRequestWrapper{
  
     public String getParameter(String name) {
         String value = super.getParameter(name);
-        if(value==null || "password".equalsIgnoreCase(name) || "oldPassword".equalsIgnoreCase(name))
+        if(value==null || "password".equalsIgnoreCase(name) || "oldPassword".equalsIgnoreCase(name) || "addPassword".equalsIgnoreCase(name))
             return value;
          
         for(String s:strs){
