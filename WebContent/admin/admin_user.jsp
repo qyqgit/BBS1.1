@@ -37,15 +37,15 @@
 			    <c:out value="${fn:substring(userList.date, 0, 11)}"></c:out>
 			</td>
 			<td>
-			    <c:url value="adminUser?id=${userList.id}&method=invalid" var="url"></c:url>
+			    <c:url value="adminUser?id=${userList.id}&method=invalid&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
 				<a href="${url }"><button type="button">Invalid</button></a>
 			</td>
 			<td>
-			    <c:url value="adminUser?id=${userList.id}&method=valid" var="url"></c:url>
+			    <c:url value="adminUser?id=${userList.id}&method=valid&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
 				<a href="${url }"><button type="button">Valid</button></a>
 			</td>
 			<td>
-			    <c:url value="adminUser?id=${userList.id}&method=delete" var="url"></c:url>
+			    <c:url value="adminUser?id=${userList.id}&method=delete&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
 				<a href="${url }">Delete</a>
 			</td>
 		</tr>

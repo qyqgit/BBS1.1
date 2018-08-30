@@ -38,15 +38,15 @@
 			    <c:out value="${fn:substring(mediaList.date, 0, 11)}"></c:out>
 			</td>
 			<td>
-			    <c:url value="adminMedia?id=${mediaList.id}&method=invalid" var="url"></c:url>
+			    <c:url value="adminMedia?id=${mediaList.id}&method=invalid&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
 				<a href="${url }"><button type="button">Invalid</button></a>
 			</td>
 			<td>
-			    <c:url value="adminMedia?id=${mediaList.id}&method=valid" var="url"></c:url>
+			    <c:url value="adminMedia?id=${mediaList.id}&method=valid&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
 				<a href="${url }"><button type="button">Valid</button></a>
 			</td>
 			<td>
-			    <c:url value="adminMedia?id=${mediaList.id}&method=delete" var="url"></c:url>
+			    <c:url value="adminMedia?id=${mediaList.id}&method=delete&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
 				<a href="${url }">Delete</a>
 			</td>
 		</tr>

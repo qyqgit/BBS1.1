@@ -50,15 +50,15 @@ td video{
 			    <c:out value="${fn:substring(messageList.date, 0, 11)}"></c:out>
 			</td>
 			<td>
-			    <c:url value="adminMessage?id=${messageList.id}&method=invalid" var="url"></c:url>
+			    <c:url value="adminMessage?id=${messageList.id}&method=invalid&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
 				<a href="${url }"><button type="button">Invalid</button></a>
 			</td>
 			<td>
-			    <c:url value="adminMessage?id=${messageList.id}&method=valid" var="url"></c:url>
+			    <c:url value="adminMessage?id=${messageList.id}&method=valid&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
 				<a href="${url }"><button type="button">Valid</button></a>
 			</td>
 			<td>
-			    <c:url value="adminMessage?id=${messageList.id}&method=delete" var="url"></c:url>
+			    <c:url value="adminMessage?id=${messageList.id}&method=delete&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
 				<a href="${url }">Delete</a>
 			</td>
 		</tr>
