@@ -4,7 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 	<link href="sys/css/editor.css" rel="stylesheet" type="text/css"/>
 	<script src="sys/js/editor.js"></script>
-	<div id="text" onkeyup="inputLength()"  contentEditable="true" style="width:358px;height:206px;border:1px solid black;overflow:auto; ">
+	<div id="text" onkeyup="inputLength()"  contentEditable="true" style="width:580px;height:220px;border:1px solid black;overflow:auto; ">
 	</div>
 	<input type="hidden" name="textarea" id="textarea" value="">
 	<span id="len">0</span>

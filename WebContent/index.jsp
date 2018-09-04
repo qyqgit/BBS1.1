@@ -11,8 +11,8 @@
 </style>
 <script type="text/javascript">
   function inputCheck() {
-	if(document.getElementById("textarea").value.length > 511){
-		alert("Word count is " + document.getElementById("textarea").value.length + " > 511.");
+	if(document.getElementById("textarea").value.length > 1024){
+		alert("Word count is " + document.getElementById("textarea").value.length + " > 1024.");
 		return false;
 	}
 	if(document.getElementById("textarea").value.length == 0)
@@ -92,7 +92,7 @@
 		</table>
 		<br>
 		<form id="form1" method="post"  action="sendPage" onsubmit="return inputCheck()">
-			<input id="title" name="title" type="text" style="width:352px" maxlength="30"/>
+			<input id="title" name="title" type="text" style="width:570px" maxlength="40"/>
 			<br>
 			<br>
 			<%@include file="sys/jsp/editor.jsp" %>

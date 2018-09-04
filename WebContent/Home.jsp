@@ -161,7 +161,7 @@
 				</tr>
 				<tr>
 					<td>${user.id }</td>
-					<td><input id="name" name="name" type="text" value="${user.name }"></td>
+					<td><input id="name" name="name" type="text" value="${user.name }" maxlength="8"></td>
 					<td><input id="password" name="password" type="password" value="5f4dcc3b5aa765d61d8327deb882cf99"></td>
 					<td><input id="birthday" name="birthday" type="text" value="${user.age }" onBlur="formatDate('birthday')"></td>
 					<td><input id="sex" type="hidden" value="${user.sex }" />

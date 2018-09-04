@@ -25,8 +25,8 @@
 	  return false;//necessary
   }
   function inputCheck() {
-	if(document.getElementById("textarea").value.length > 511){
-		alert("Word count is " + document.getElementById("textarea").value.length + " > 511.");
+	if(document.getElementById("textarea").value.length > 1024){
+		alert("Word count is " + document.getElementById("textarea").value.length + " > 1024.");
 		return false;
 	}
 	if(document.getElementById("textarea").value.length == 0)
