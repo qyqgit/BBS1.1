@@ -49,36 +49,36 @@
     <url-pattern>/sendMessage</url-pattern>
   </filter-mapping>
   <filter>
-  	<filter-name>AdminFilter</filter-name>
-  	<filter-class>com.flr.AdminFilter</filter-class>
+    <filter-name>AdminFilter</filter-name>
+    <filter-class>com.flr.AdminFilter</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>AdminFilter</filter-name>
-  	<url-pattern>/adminPage</url-pattern>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/adminPage</url-pattern>
   </filter-mapping>
   <filter-mapping>
-  	<filter-name>AdminFilter</filter-name>
-  	<url-pattern>/adminMessage</url-pattern>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/adminMessage</url-pattern>
   </filter-mapping>
   <filter-mapping>
-  	<filter-name>AdminFilter</filter-name>
-  	<url-pattern>/adminMedia</url-pattern>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/adminMedia</url-pattern>
   </filter-mapping>
   <filter-mapping>
-  	<filter-name>AdminFilter</filter-name>
-  	<url-pattern>/adminUser</url-pattern>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/adminUser</url-pattern>
   </filter-mapping>
   <filter-mapping>
-  	<filter-name>AdminFilter</filter-name>
-  	<url-pattern>/adminAdmin</url-pattern>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/adminAdmin</url-pattern>
   </filter-mapping>
   <filter-mapping>
-  	<filter-name>AdminFilter</filter-name>
-  	<url-pattern>/adminLog</url-pattern>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/adminLog</url-pattern>
   </filter-mapping>
   <filter-mapping>
-  	<filter-name>AdminFilter</filter-name>
-  	<url-pattern>/Admin.jsp</url-pattern>
+    <filter-name>AdminFilter</filter-name>
+    <url-pattern>/Admin.jsp</url-pattern>
   </filter-mapping>
   <listener>
     <listener-class>com.lsr.MyListener</listener-class>
@@ -234,5 +234,13 @@
   <servlet-mapping>
     <servlet-name>AdminLogin</servlet-name>
     <url-pattern>/adminLogin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>GetIdFile</servlet-name>
+  	<servlet-class>com.svl.GetIdFile</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GetIdFile</servlet-name>
+  	<url-pattern>/getIdFile</url-pattern>
   </servlet-mapping>
 </web-app>

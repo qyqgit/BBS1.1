@@ -1,9 +1,6 @@
 package com.svl;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,21 +40,7 @@ public class Register extends HttpServlet {
 						request.getParameter("sex"));
 		if(User.insertUser(user, conn)) {
 			User.getLastRegisterdUserId(user, conn);
-			response.setContentType(getServletContext().getMimeType("*.txt"));
-			response.setHeader("Content-Disposition", "attachment;filename=FISHCC.ORG_" + user.getId() + ".txt");
-			String path = getServletContext().getRealPath("sys/pic/fish52.png");
-			System.out.println(path);
-			InputStream in = new FileInputStream(path);
-			OutputStream out = response.getOutputStream();
-			int len = 0;
-			byte[] buffer = new byte[128];
-			while((len = in.read(buffer)) > 0) {
-				out.write(buffer, 0, len);
-				System.out.println(len);
-			}
-			in.close();
-			request.getRequestDispatcher("Login.jsp?userId=" + user.getId()).forward(request, response);
-			//response.sendRedirect("Login.jsp?userId=" + user.getId());
+			response.sendRedirect("Login.jsp?userId=" + user.getId());
 		}
 		else
 			response.sendRedirect("Register.jsp");

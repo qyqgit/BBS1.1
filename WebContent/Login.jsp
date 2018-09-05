@@ -9,7 +9,8 @@
   function getUserId(){
     var userId = getQueryString("userId");
     document.getElementById("userId").value = userId;
-
+    if(userId != null)
+    	window.location.href="getIdFile?id=" + userId;
   }
   function showPassCode(){
     var passCodeNeed = document.getElementById("passCodeNeed").value;
