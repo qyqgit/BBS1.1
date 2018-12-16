@@ -72,24 +72,10 @@
 			<tr><td colspan="6"><hr></td></tr>
 			</c:forEach>
 		</table>
-		<table>
-			<tr>
-				<td>
-					<c:url value="index?pageNumber=${requestScope.pageNumber - 1 < 1 ? 1:requestScope.pageNumber - 1}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
-					<a href="${url }"><c:out value="PageUp"></c:out></a>
-				</td>
-				<c:forEach var="eachPageList" items="${requestScope.eachPageList }" varStatus="loop">
-						<td>
-						    <c:url value="index?pageNumber=${eachPageList.pageNumber}&pageLength=${eachPageList.pageLength }" var="url"></c:url>
-							<a href="${url }"><c:out value="${eachPageList.pageNumber}"></c:out></a>
-						</td>
-				</c:forEach>
-				<td>
-					<c:url value="index?pageNumber=${requestScope.pageNumber + 1 > requestScope.howManyPage ?requestScope.howManyPage:requestScope.pageNumber + 1}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
-					<a href="${url }"><c:out value="NextPage"></c:out></a>
-				</td>
-			</tr>
-		</table>
+		<% pageContext.setAttribute("urlName", "index"); %>
+		<% pageContext.setAttribute("paraName", ""); %>
+		<% pageContext.setAttribute("paraValue", ""); %>
+		<%@include file="sys/jsp/each_page.jsp" %>
 		<br>
 		<form id="form1" method="post"  action="sendPage" onsubmit="return inputCheck()">
 			<input id="title" name="title" type="text" style="width:570px" maxlength="40"/>

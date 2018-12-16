@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="ISO-8859-1"%>
+<%@ page import="com.obj.User" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -104,14 +105,14 @@
 		  document.getElementById('box').style.display='none';
 	  }
 	 function editLinkFun() {
-		 window.location.href="Home?id=" +${user.id}+ '&edit=1';
+		 window.location.href="Home?id=" +${sessionScope.user.id}+ '&edit=1';
 	 }
 	 function clearLinkFun() {
-		 window.location.href="Home?id=" +${user.id}+ '&edit=0';
+		 window.location.href="Home?id=" +${sessionScope.user.id}+ '&edit=0';
 	 }
 </script>
 <link href="sys/pic/fish58.png" rel="icon"/>
-<title>${user.name }</title>
+<title>${requestScope.user.name }</title>
 </head>
 <body>
 	<div id="head">
@@ -141,15 +142,15 @@
 				<td>Date</td>
 			</tr>
 			<tr>
-				<td>${user.id }</td>
-				<td>${user.name }</td>
+				<td>${requestScope.user.id }</td>
+				<td>${requestScope.user.name }</td>
 				<td>**</td>
-				<td>${user.age==null ?'unknow':user.age }</td>
-				<td>${user.sex==2 ?'unknow':''}${user.sex==1 ?'boy':''}${user.sex==0 ?'girl':''}</td>
-				<td>${user.date }</td>
+				<td>${requestScope.user.age==null ?'unknow':requestScope.user.age }</td>
+				<td>${requestScope.user.sex==2 ?'unknow':''}${requestScope.user.sex==1 ?'boy':''}${requestScope.user.sex==0 ?'girl':''}</td>
+				<td>${requestScope.user.date }</td>
 			</tr>
 		</table>
-		<form id="editForm" name="editForm"   method="post"  action="Home?id=${user.id}&submit=1">
+		<form id="editForm" name="editForm"   method="post"  action="Home?id=${sessionScope.user.id}&submit=1">
 			<table id="editTable" style="display:none">
 				<tr bgcolor="#EEEEEE">
 					<td>ID</td>
@@ -160,16 +161,16 @@
 					<td>Date</td>
 				</tr>
 				<tr>
-					<td>${user.id }</td>
-					<td><input id="name" name="name" type="text" value="${user.name }" maxlength="8"></td>
+					<td>${sessionScope.user.id }</td>
+					<td><input id="name" name="name" type="text" value="${sessionScope.user.name }" maxlength="8"></td>
 					<td><input id="password" name="password" type="password" value="5f4dcc3b5aa765d61d8327deb882cf99"></td>
-					<td><input id="birthday" name="birthday" type="text" value="${user.age }" onBlur="formatDate('birthday')"></td>
-					<td><input id="sex" type="hidden" value="${user.sex }" />
+					<td><input id="birthday" name="birthday" type="text" value="${sessionScope.user.age }" onBlur="formatDate('birthday')"></td>
+					<td><input id="sex" type="hidden" value="${sessionScope.user.sex }" />
 						<input id="null" name="sex" type="radio" value="2"/>null
 						<input id="boy" name="sex" type="radio" value="1"/>boy
 						<input id="girl" name="sex" type="radio" value="0"/>girl
 					</td>
-					<td>${user.date }</td>
+					<td>${sessionScope.user.date }</td>
 				</tr>
 			</table>
 			<div id="box">
@@ -189,9 +190,9 @@
 			<c:set value="<input id='clearLink' type='button' style='display:none;' value='Clear' onclick='clearLinkFun()'/>" var="clearUrl"></c:set>
 			<c:set value="<input id='submitLink' type='button' style='display:none;' value='Submit' onclick='preSubmit()'/>" var="submitUrl"></c:set>
 				<tr>
-				<td>${sessionScope.user.id == user.id ? editUrl:''}</td>
-				<td>${sessionScope.user.id == user.id ? clearUrl:''}</td>
-				<td>${sessionScope.user.id == user.id ? submitUrl:''}</td>
+				<td>${sessionScope.user.id == requestScope.user.id ? editUrl:''}</td>
+				<td>${sessionScope.user.id == requestScope.user.id ? clearUrl:''}</td>
+				<td>${sessionScope.user.id == requestScope.user.id ? submitUrl:''}</td>
 				</tr>
 			</table>
 		</form>
@@ -203,7 +204,7 @@
 					<td>Download</td>
 					<td>Date</td>
 					<td>URL</td>
-					<td>${sessionScope.user.id == user.id ? 'Delete':''}</td>
+					<td>${sessionScope.user.id == requestScope.user.id ? 'Delete':''}</td>
 				</tr>
 				<c:forEach var="mediaList" items="${requestScope.mediaList }" >
 				<tr>
@@ -220,32 +221,19 @@
 				    </td>
 				    <td>
 				    <c:set value = '<a href="deleteFile?id=${mediaList.id}" >Delete</a>' var = "delete"></c:set>
-				    <c:out value="${sessionScope.user.id == user.id ? delete:''}" escapeXml="false"/>
+				    <c:out value="${sessionScope.user.id == requestScope.user.id ? delete:''}" escapeXml="false"/>
 				    </td>
 			    </tr>
 				<tr><td colspan="6"><hr></td></tr>
 				</c:forEach>
 		</table>
-		<table>
-			<tr>
-				<td>
-					<c:url value="home?id=${user.id }&pageNumber=${requestScope.pageNumber - 1 < 1 ? 1:requestScope.pageNumber - 1}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
-					<a href="${url }"><c:out value="PageUp"></c:out></a>
-				</td>
-				<c:forEach var="eachPageList" items="${requestScope.eachPageList }" varStatus="loop">
-						<td>
-						    <c:url value="home?id=${user.id }&pageNumber=${eachPageList.pageNumber}&pageLength=${eachPageList.pageLength }" var="url"></c:url>
-							<a href="${url }"><c:out value="${eachPageList.pageNumber}"></c:out></a>
-						</td>
-				</c:forEach>
-				<td>
-					<c:url value="home?id=${user.id }&pageNumber=${requestScope.pageNumber + 1 > requestScope.howManyPage ?requestScope.howManyPage:requestScope.pageNumber + 1}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
-					<a href="${url }"><c:out value="NextPage"></c:out></a>
-				</td>
-			</tr>
-		</table>
-		<c:set value ='<form action="FileUploadServlet" method="post" enctype="multipart/form-data" onsubmit="return uploadCheck()"><input id="file" type="file" name="file" accept="/*"><input type="submit" value="submit"></form>' var = "upload"></c:set>
-		${sessionScope.user.id == user.id ? upload:''}
+		<% pageContext.setAttribute("urlName", "home"); %>
+		<% pageContext.setAttribute("paraName", "id"); %>
+		<% User user = (User)(request.getAttribute("user")); %>
+		<% pageContext.setAttribute("paraValue", user.getId()); %>
+		<%@include file="sys/jsp/each_page.jsp" %>
+		<c:set value ='<form action="FileUploadServlet" method="post" enctype="multipart/form-data" onsubmit="return uploadCheck()"><input id="file" type="file" name="file" accept="/*"><input type="submit" value="Upload"></form>' var = "upload"></c:set>
+		${sessionScope.user.id == requestScope.user.id ? upload:''}
 	</div>
 	<div id="foot">
 		<span style="float:right;">Connections:${applicationScope.numConn}</span>

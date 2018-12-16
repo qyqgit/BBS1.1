@@ -92,24 +92,10 @@
 		    <tr><td colspan="5"><hr></td></tr>
 			</c:forEach>
 		</table>
-		<table>
-			<tr>
-				<td>
-					<c:url value="MyPageSvl?id=${requestScope.pageId }&pageNumber=${requestScope.pageNumber - 1 < 1 ? 1:requestScope.pageNumber - 1}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
-					<a href="${url }"><c:out value="PageUp"></c:out></a>
-				</td>
-				<c:forEach var="eachPageList" items="${requestScope.eachPageList }" varStatus="loop">
-						<td>
-						    <c:url value="MyPageSvl?id=${requestScope.pageId }&pageNumber=${eachPageList.pageNumber}&pageLength=${eachPageList.pageLength }" var="url"></c:url>
-							<a href="${url }"><c:out value="${eachPageList.pageNumber}"></c:out></a>
-						</td>
-				</c:forEach>
-				<td>
-					<c:url value="MyPageSvl?id=${requestScope.pageId }&pageNumber=${requestScope.pageNumber + 1 > requestScope.howManyPage ?requestScope.howManyPage:requestScope.pageNumber + 1}&pageLength=${requestScope.eachPageList[0].pageLength }" var="url"></c:url>
-					<a href="${url }"><c:out value="NextPage"></c:out></a>
-				</td>
-			</tr>
-		</table>
+		<% pageContext.setAttribute("urlName", "MyPageSvl"); %>
+		<% pageContext.setAttribute("paraName", "id"); %>
+		<% pageContext.setAttribute("paraValue", request.getAttribute("pageId")); %>
+		<%@include file="sys/jsp/each_page.jsp" %>
 		<form id="form1" method="post"  action="sendMessage?id=${requestScope.pageId}&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength}" onsubmit="return inputCheck()">
 			<%@include file="sys/jsp/editor.jsp" %>
 			<input type="button"  value="SendMessage" onclick="Submit()"/>
