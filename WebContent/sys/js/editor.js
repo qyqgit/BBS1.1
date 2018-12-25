@@ -1,9 +1,5 @@
-  window.onload = function() {
-    document.getElementById('morein').style.display = 'none';
-  }
-  
   function addEmoji() {
-    if(document.getElementById('morein').style.display == 'none')
+    if(document.getElementById('morein').style.display != 'block')
       document.getElementById('morein').style.display='block';
     else
       document.getElementById('morein').style.display='none';
