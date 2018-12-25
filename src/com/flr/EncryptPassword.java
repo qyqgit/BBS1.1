@@ -17,7 +17,7 @@ import com.obj.GetMd5;
 /**
  * Servlet Filter implementation class DirtyWordsFilter
  */
-@WebFilter("/DirtyWordsFilter")
+@WebFilter("/EncryptPassword")
 public class EncryptPassword implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
     }

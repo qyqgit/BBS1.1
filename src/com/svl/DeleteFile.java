@@ -42,15 +42,16 @@ public class DeleteFile extends HttpServlet {
 			response.sendRedirect("Home?id=" + media.getUser().getId());
 			return;
 		}
-		if(Media.deleteMedia(mediaId, conn)) {
-			Properties profile = (Properties)getServletContext().getAttribute("profile");
-            String realPath = getServletContext().getRealPath("/");
-            File tempFile = new File(realPath);
-            realPath = tempFile.getParent() + "\\" + profile.getProperty("media_path") + "\\" + user.getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
-            //创建文件对象
-            File dir = new File(realPath);
-            if(dir.exists()) dir.delete();
-		}
+		Properties profile = (Properties)getServletContext().getAttribute("profile");
+        String realPath = getServletContext().getRealPath("/");
+        File tempFile = new File(realPath);
+        realPath = tempFile.getParent() + "\\" + profile.getProperty("media_path") + "\\" + user.getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
+        //创建文件对象
+        File dir = new File(realPath);
+        if(dir.exists()) {
+        	if(dir.delete())
+        		Media.deleteMedia(mediaId, conn);
+        }
 		response.sendRedirect("Home?id=" + user.getId());
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}

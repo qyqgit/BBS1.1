@@ -41,7 +41,8 @@ public class Home extends HttpServlet {
 		User user = new User(request.getParameter("id"));
 		if(User.getUser(user, conn))
 			request.setAttribute("user", user);
-		
+		else
+			return;
 		Properties profile = (Properties)request.getServletContext().getAttribute("profile");
 		int pageLength;
 		int[] count = {0};
