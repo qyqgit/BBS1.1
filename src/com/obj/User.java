@@ -387,6 +387,40 @@ public class User {
 		}
 		return false;
 	}
+	public static boolean getLastSendMessageUserListMnEx(ArrayList<User> userList, Connection conn, int pageIndex, int pageLength) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement("select user.id,name from (select table2.date,message.userid from (select * from mypage where mypage.invalid != 1)as table2 left join message on messagenumber=floornumber and table2.id=message.pageid order by table2.date desc)as table1 left join user on table1.userid=user.id order by table1.date desc limit ?,?");
+			pstmt.setInt(1, pageIndex);
+			pstmt.setInt(2, pageLength);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				User user = new User(
+						rs.getString("user.id"),
+						rs.getString("name")
+						);
+				userList.add(user);
+			}
+			return true;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if(pstmt!=null)pstmt.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			try {
+				if(rs!=null)rs.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 	public static boolean getUserListAdminMN(ArrayList<User> userList, Connection conn, int pageIndex, int pageLength) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
