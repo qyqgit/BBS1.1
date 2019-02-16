@@ -105,10 +105,10 @@
 		  document.getElementById('box').style.display='none';
 	  }
 	 function editLinkFun() {
-		 window.location.href="Home?id=" +${sessionScope.user.id}+ '&edit=1';
+		 window.location.href="Home?id=" +${sessionScope.user.id == null ? 0 : sessionScope.user.id}+ '&edit=1';
 	 }
 	 function clearLinkFun() {
-		 window.location.href="Home?id=" +${sessionScope.user.id}+ '&edit=0';
+		 window.location.href="Home?id=" +${sessionScope.user.id == null ? 0 : sessionScope.user.id}+ '&edit=0';
 	 }
 </script>
 <link href="sys/pic/fish58.png" rel="icon"/>
