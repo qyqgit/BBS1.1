@@ -15,6 +15,7 @@ public class Profile{
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("∂¡»°≈‰÷√–≈œ¢ ß∞‹£°");
+			System.out.println("profilePath:" + profilePath);
 		}finally{
 			if(in != null){
 				try{

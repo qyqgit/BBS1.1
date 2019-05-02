@@ -75,7 +75,8 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
 				numConn--;
 				se.getSession().getServletContext().setAttribute("numConn", numConn);
 				System.out.println(conn + " closed");
-			}
+			} else
+			System.out.println(conn + " is null");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,10 +97,19 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
          // TODO Auto-generated method stub
     	String etcPath = sce.getServletContext().getRealPath("/WEB-INF");
     	String sysPath = sce.getServletContext().getRealPath("/sys");
-    	String profilePath = etcPath + "\\etc\\config.ini";
+    	String os = System.getProperty("os.name").toLowerCase();
+    	String profilePath = null;
+    	String emojiPath = null;
+    	if(os.startsWith("win"))
+    		profilePath = etcPath + "\\etc\\config.ini";
+    	else
+    		profilePath = etcPath + "/etc/config.ini";
     	Properties profile = Profile.getProfile(profilePath);
     	sce.getServletContext().setAttribute("profile", profile);
-    	String emojiPath = sysPath + "\\pic\\emoji";
+    	if(os.startsWith("win"))
+    		emojiPath = sysPath + "\\pic\\emoji";
+    	else
+    		emojiPath = sysPath + "/pic/emoji";
     	ArrayList<Emoji> emojiList = new ArrayList<Emoji>();
     	if(Emoji.getEmojiList(emojiPath, emojiList))
     		sce.getServletContext().setAttribute("emojiList", emojiList);
