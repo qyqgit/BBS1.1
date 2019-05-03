@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebFilter("/DirtyWordsFilter")
 public class DirtyWordsFilter implements Filter {
-	public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) throws ServletException {
     }
  
     public void doFilter(ServletRequest req, ServletResponse resp,
@@ -52,105 +52,105 @@ class DWHttpServletRequest extends HttpServletRequestWrapper{
             return value;
          
         for(String s:strs){
-        	switch (s) {
-        	case "£¦":
-        		value = value.replace(s, "&");
-        		break;
-        	case "£¾":
-        		value = value.replace(s, ">");
-        		break;
-        	case "£¼img":
-        		value = value.replace(s, "<img");
-        		break;
-        	case "£¼a":
-        		value = value.replace(s, "<a");
-        		break;
-        	case "£¼/a":
-        		value = value.replace(s, "</a");
-        		break;
-        	case "£¼video":
-        		value = value.replace(s, "<video");
-        		break;
-        	case "£¼/video":
-        		value = value.replace(s, "</video");
-        		break;
-        	case "£¼audio":
-        		value = value.replace(s, "<audio");
-        		break;
-        	case "£¼/audio":
-        		value = value.replace(s, "</audio");
-        		break;
-        	case "£¼strike£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼/strike£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼sup£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼/sup£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼sub£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼/sub£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼u£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼/u£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼i£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼/i£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼b£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼/b£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼br£¾":
-        		value = value.replace(s, "<br>");
-        		break;
-        	case "£¼p£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼/p£¾":
-        		value = value.replace(s, "<br>");
-        		break;
-        	case "£¼div£¾":
-        		value = value.replace(s, "");
-        		break;
-        	case "£¼/div£¾":
-        		value = value.replace(s, "<br>");
-        		break;
-        	case "\n":
-        		value = value.replace(s, "<br>");
-        		break;
-        	case " ":
-        		value = value.replace(s, " ");
-        		break;
+            switch (s) {
+            case "£¦":
+                value = value.replace(s, "&");
+                break;
+            case "£¾":
+                value = value.replace(s, ">");
+                break;
+            case "£¼img":
+                value = value.replace(s, "<img");
+                break;
+            case "£¼a":
+                value = value.replace(s, "<a");
+                break;
+            case "£¼/a":
+                value = value.replace(s, "</a");
+                break;
+            case "£¼video":
+                value = value.replace(s, "<video");
+                break;
+            case "£¼/video":
+                value = value.replace(s, "</video");
+                break;
+            case "£¼audio":
+                value = value.replace(s, "<audio");
+                break;
+            case "£¼/audio":
+                value = value.replace(s, "</audio");
+                break;
+            case "£¼strike£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼/strike£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼sup£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼/sup£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼sub£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼/sub£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼u£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼/u£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼i£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼/i£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼b£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼/b£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼br£¾":
+                value = value.replace(s, "<br>");
+                break;
+            case "£¼p£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼/p£¾":
+                value = value.replace(s, "<br>");
+                break;
+            case "£¼div£¾":
+                value = value.replace(s, "");
+                break;
+            case "£¼/div£¾":
+                value = value.replace(s, "<br>");
+                break;
+            case "\n":
+                value = value.replace(s, "<br>");
+                break;
+            case " ":
+                value = value.replace(s, " ");
+                break;
             case "<":
-            	value = value.replace(s, "£¼");
+                value = value.replace(s, "£¼");
                 break;
             case ">":
-            	value = value.replace(s, "£¾");
+                value = value.replace(s, "£¾");
                 break;
             case "&":
-            	value = value.replace(s, "£¦");
+                value = value.replace(s, "£¦");
                 break;
             case "\"":
-            	value = value.replace(s, "\"");
+                value = value.replace(s, "\"");
                 break;
             default:
-            	value = value.replace(s, "**");
+                value = value.replace(s, "**");
             }
         }
         return value;

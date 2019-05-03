@@ -2,15 +2,15 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-	<link href="sys/css/editor.css" rel="stylesheet" type="text/css"/>
-	<script src="sys/js/editor.js"></script>
-	<div id="text" onkeyup="inputLength()"  contentEditable="true" style="width:580px;height:220px;border:1px solid black;overflow:auto; ">
-	</div>
-	<input type="hidden" name="textarea" id="textarea" value="">
-	<span id="len">0</span>
-	<br>
-	<br>
-	<div id="more">
+    <link href="sys/css/editor.css" rel="stylesheet" type="text/css"/>
+    <script src="sys/js/editor.js"></script>
+    <div id="text" onkeyup="inputLength()"  contentEditable="true" style="width:580px;height:220px;border:1px solid black;overflow:auto; ">
+    </div>
+    <input type="hidden" name="textarea" id="textarea" value="">
+    <span id="len">0</span>
+    <br>
+    <br>
+    <div id="more">
       <table id="morein" >
         <c:forEach var="emojiList" items="${applicationScope.emojiList }" varStatus="loop" step="10">
         <tr>
@@ -47,9 +47,9 @@
         </tr>
         </c:forEach>
       </table>
-	</div>
-	<div id="box">
-		<div id="cont">
+    </div>
+    <div id="box">
+        <div id="cont">
           <table>
           <tr><td>Name:</td><td><input type="text" name="linkName" id="linkName" value="" style="width:300px"/></td></tr>
           <tr><td>Value:</td><td><input type="text" name="linkValue" id="linkValue" value="" style="width:300px"/></td></tr>
@@ -58,11 +58,11 @@
           <td align="center"><button type="button" onclick='clearLink()'>Clear</button></td>
           </tr>
           </table>
-		</div>
-	</div>
-	<input type="button"  value="Emoji" onclick="addEmoji()"/>
-	<input type="button"  value="Link" onclick="preInsertLink()"/>
-	<input type="button"  value="Audio" onclick="insertAudio()"/>
-	<input type="button"  value="Video" onclick="insertVideo()"/>
-	<input type="button"  value="Image" onclick="insertImage()"/>
-	<input type="reset"  value="Clear" onclick="clearDiv()"/>
+        </div>
+    </div>
+    <input type="button"  value="Emoji" onclick="addEmoji()"/>
+    <input type="button"  value="Link" onclick="preInsertLink()"/>
+    <input type="button"  value="Audio" onclick="insertAudio()"/>
+    <input type="button"  value="Video" onclick="insertVideo()"/>
+    <input type="button"  value="Image" onclick="insertImage()"/>
+    <input type="reset"  value="Clear" onclick="clearDiv()"/>

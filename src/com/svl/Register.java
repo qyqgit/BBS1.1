@@ -16,7 +16,7 @@ import com.obj.User;
  */
 @WebServlet("/Register")
 public class Register extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -26,34 +26,34 @@ public class Register extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		Connection conn = (Connection)session.getAttribute("conn");
-		User user = new User(
-						request.getParameter("name"),
-						request.getParameter("password"),
-						request.getParameter("birthday"),
-						request.getParameter("sex"));
-		if(User.insertUser(user, conn)) {
-			User.getLastRegisterdUserId(user, conn);
-			response.sendRedirect("Login.jsp?userId=" + user.getId());
-		}
-		else
-			response.sendRedirect("Register.jsp");
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        HttpSession session = request.getSession();
+        Connection conn = (Connection)session.getAttribute("conn");
+        User user = new User(
+                        request.getParameter("name"),
+                        request.getParameter("password"),
+                        request.getParameter("birthday"),
+                        request.getParameter("sex"));
+        if(User.insertUser(user, conn)) {
+            User.getLastRegisterdUserId(user, conn);
+            response.sendRedirect("Login.jsp?userId=" + user.getId());
+        }
+        else
+            response.sendRedirect("Register.jsp");
 
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+        response.getWriter().append("Served at: ").append(request.getContextPath());
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doGet(request, response);
+    }
 
 }

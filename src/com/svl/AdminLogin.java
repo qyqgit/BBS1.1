@@ -19,7 +19,7 @@ import com.obj.User;
  */
 @WebServlet("/AdminLogin")
 public class AdminLogin extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -29,57 +29,57 @@ public class AdminLogin extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		int passCodeNeed = 1;
-		HttpSession session = request.getSession();
-		Connection conn = (Connection)session.getAttribute("conn");
-		Admin admin = new Admin(request.getParameter("id"));
-		if(session.getAttribute("passCodeNeed")== null) {
-			if(Admin.getAdmin(admin, conn) && admin.getPassword().equals(request.getParameter("password")) && "0".equals(admin.getInvalid())) {
-				loginSuccess(request, response, session, admin);
-			} else {
-				loginFail(request, response, passCodeNeed, session);
-			}
-		} else {
-			String code = (String)session.getAttribute("code");
-			String passCode = request.getParameter("passcode");
-			if(code.equalsIgnoreCase(passCode)) {
-				if(Admin.getAdmin(admin, conn) && admin.getPassword().equals(request.getParameter("password")) && "0".equals(admin.getInvalid())) {
-					loginSuccess(request, response, session, admin);
-				} else {
-					loginFail(request, response, passCodeNeed, session);
-				}
-			} else {
-				loginFail(request, response, passCodeNeed, session);
-			}
-		}
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        int passCodeNeed = 1;
+        HttpSession session = request.getSession();
+        Connection conn = (Connection)session.getAttribute("conn");
+        Admin admin = new Admin(request.getParameter("id"));
+        if(session.getAttribute("passCodeNeed")== null) {
+            if(Admin.getAdmin(admin, conn) && admin.getPassword().equals(request.getParameter("password")) && "0".equals(admin.getInvalid())) {
+                loginSuccess(request, response, session, admin);
+            } else {
+                loginFail(request, response, passCodeNeed, session);
+            }
+        } else {
+            String code = (String)session.getAttribute("code");
+            String passCode = request.getParameter("passcode");
+            if(code.equalsIgnoreCase(passCode)) {
+                if(Admin.getAdmin(admin, conn) && admin.getPassword().equals(request.getParameter("password")) && "0".equals(admin.getInvalid())) {
+                    loginSuccess(request, response, session, admin);
+                } else {
+                    loginFail(request, response, passCodeNeed, session);
+                }
+            } else {
+                loginFail(request, response, passCodeNeed, session);
+            }
+        }
+        response.getWriter().append("Served at: ").append(request.getContextPath());
+    }
 
-	private void loginFail(HttpServletRequest request, HttpServletResponse response, int passCodeNeed,
-			HttpSession session) throws ServletException, IOException {
-		session.setAttribute("passCodeNeed", passCodeNeed);
-		request.getRequestDispatcher("AdminLogin.jsp").forward(request, response);
-	}
+    private void loginFail(HttpServletRequest request, HttpServletResponse response, int passCodeNeed,
+            HttpSession session) throws ServletException, IOException {
+        session.setAttribute("passCodeNeed", passCodeNeed);
+        request.getRequestDispatcher("AdminLogin.jsp").forward(request, response);
+    }
 
-	private void loginSuccess(HttpServletRequest request, HttpServletResponse response, HttpSession session, Admin admin) throws IOException {
-		session.removeAttribute("passCodeNeed");
-		session.setAttribute("admin", admin);
-		MyLog myLog = new MyLog(request.getRemoteAddr(), (User)admin, request.getRequestURI() + "?" + request.getQueryString());
-		Connection conn = (Connection)session.getAttribute("conn");
-		MyLog.insertMyLog(myLog, conn);
-		response.sendRedirect("Admin.jsp");
-	}
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+    private void loginSuccess(HttpServletRequest request, HttpServletResponse response, HttpSession session, Admin admin) throws IOException {
+        session.removeAttribute("passCodeNeed");
+        session.setAttribute("admin", admin);
+        MyLog myLog = new MyLog(request.getRemoteAddr(), (User)admin, request.getRequestURI() + "?" + request.getQueryString());
+        Connection conn = (Connection)session.getAttribute("conn");
+        MyLog.insertMyLog(myLog, conn);
+        response.sendRedirect("Admin.jsp");
+    }
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doGet(request, response);
+    }
 
 }

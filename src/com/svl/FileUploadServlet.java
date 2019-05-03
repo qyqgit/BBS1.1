@@ -26,7 +26,7 @@ import com.obj.User;
  */
 @WebServlet("/FileUploadServlet")
 public class FileUploadServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,21 +36,21 @@ public class FileUploadServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		User user = (User)request.getSession().getAttribute("user");
-		HttpServletResponse res = (HttpServletResponse)response;
-		if(user == null) {
-        	res.sendRedirect("Login.jsp");
-        	return;
-		};
-		Properties profile = (Properties)getServletContext().getAttribute("profile");
-		int fileSizeMax = Integer.parseInt(profile.getProperty("file_size_max"));
-		int uploadSizeMax = Integer.parseInt(profile.getProperty("upload_size_max"));
-		//1.创建文件上传工厂类
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        User user = (User)request.getSession().getAttribute("user");
+        HttpServletResponse res = (HttpServletResponse)response;
+        if(user == null) {
+            res.sendRedirect("Login.jsp");
+            return;
+        };
+        Properties profile = (Properties)getServletContext().getAttribute("profile");
+        int fileSizeMax = Integer.parseInt(profile.getProperty("file_size_max"));
+        int uploadSizeMax = Integer.parseInt(profile.getProperty("upload_size_max"));
+        //1.创建文件上传工厂类
         DiskFileItemFactory fac = new DiskFileItemFactory();
         //2.创建文件上传核心类对象
         ServletFileUpload upload = new ServletFileUpload(fac);
@@ -102,7 +102,7 @@ public class FileUploadServlet extends HttpServlet {
                         String url = profile.getProperty("host_url");
                         String mediaPath = profile.getProperty("media_path");
                         if(mediaPath.startsWith("ROOT"))
-                        	mediaPath = mediaPath.substring(5);
+                            mediaPath = mediaPath.substring(5);
                         url = url + "/" + mediaPath.replace("\\", "/");
                         Media media = new Media(user, a[a.length-1], url + "/" + user.getId() + "/" + fileName,"0");
                         HttpSession session = request.getSession();
@@ -117,15 +117,15 @@ public class FileUploadServlet extends HttpServlet {
         }else {
             System.out.println("不处理！");
         }
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+        response.getWriter().append("Served at: ").append(request.getContextPath());
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doGet(request, response);
+    }
 
 }

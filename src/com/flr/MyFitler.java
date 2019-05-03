@@ -29,40 +29,40 @@ public class MyFitler implements Filter {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see Filter#destroy()
-	 */
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
+    /**
+     * @see Filter#destroy()
+     */
+    public void destroy() {
+        // TODO Auto-generated method stub
+    }
 
-	/**
-	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		// place your code here
-		Properties profile = (Properties)request.getServletContext().getAttribute("profile");
-		if("on".equalsIgnoreCase(profile.getProperty("log"))) {
-			HttpServletRequest req = (HttpServletRequest)request;  
-			HttpSession session = req.getSession();
-			User user = (User)session.getAttribute("user");
-			MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
-			Connection conn = (Connection)session.getAttribute("conn");
-			MyLog.insertMyLog(myLog, conn);
-		}
+    /**
+     * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+     */
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        // TODO Auto-generated method stub
+        // place your code here
+        Properties profile = (Properties)request.getServletContext().getAttribute("profile");
+        if("on".equalsIgnoreCase(profile.getProperty("log"))) {
+            HttpServletRequest req = (HttpServletRequest)request;  
+            HttpSession session = req.getSession();
+            User user = (User)session.getAttribute("user");
+            MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
+            Connection conn = (Connection)session.getAttribute("conn");
+            MyLog.insertMyLog(myLog, conn);
+        }
         
 
         
-		// pass the request along the filter chain
-		chain.doFilter(request, response);
-	}
+        // pass the request along the filter chain
+        chain.doFilter(request, response);
+    }
 
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
-	public void init(FilterConfig fConfig) throws ServletException {
-		// TODO Auto-generated method stub
-	}
+    /**
+     * @see Filter#init(FilterConfig)
+     */
+    public void init(FilterConfig fConfig) throws ServletException {
+        // TODO Auto-generated method stub
+    }
 
 }

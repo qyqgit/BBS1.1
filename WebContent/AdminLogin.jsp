@@ -8,27 +8,27 @@
   function showPassCode(){
     var passCodeNeed = document.getElementById("passCodeNeed").value;
     if(passCodeNeed == 1){
-    	document.getElementById("passcode").style.display ="table-row";
+        document.getElementById("passcode").style.display ="table-row";
     } else {
-    	document.getElementById("passcode").style.display ="none";
+        document.getElementById("passcode").style.display ="none";
     }
   }
   function refresh() {
-	  var url = "GetPassCode.jpg?number="+Math.random();
-	  document.getElementById("img").src = url;
+      var url = "GetPassCode.jpg?number="+Math.random();
+      document.getElementById("img").src = url;
   }
   window.onload = function(){
-	  showPassCode();
+      showPassCode();
   }
   if(window !=top){
-		top.location.href=location.href;
+        top.location.href=location.href;
   }
 </script>
 <title>Insert title here</title>
 </head>
 <body>
 <div style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
-	<form name="login"   method="post"  action="adminLogin">    
+    <form name="login"   method="post"  action="adminLogin">    
         <table border="1">    
         <tr>    
            <td>Admin</td>    
@@ -48,7 +48,7 @@
         </tr>    
         </table>    
     </form>
-	<input id="passCodeNeed" type="hidden" value="${sessionScope.passCodeNeed }" />
+    <input id="passCodeNeed" type="hidden" value="${sessionScope.passCodeNeed }" />
 </div>
 </body>
 </html>

@@ -19,7 +19,7 @@ import com.obj.GetMd5;
  */
 @WebFilter("/EncryptPassword")
 public class EncryptPassword implements Filter {
-	public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) throws ServletException {
     }
  
     public void doFilter(ServletRequest req, ServletResponse resp,
@@ -51,7 +51,7 @@ class HttpServletRequestEncryptPassword extends HttpServletRequestWrapper{
         if(value==null)
             return value;
         if("password".equalsIgnoreCase(name) || "oldPassword".equalsIgnoreCase(name) || "addPassword".equalsIgnoreCase(name)) {
-        	value = GetMd5.getMD5(value);
+            value = GetMd5.getMD5(value);
         }
         return value;
     }

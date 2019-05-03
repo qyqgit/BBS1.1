@@ -17,7 +17,7 @@ import com.obj.User;
  */
 @WebServlet("/SendPage")
 public class SendPage extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -27,29 +27,29 @@ public class SendPage extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		Connection conn = (Connection)session.getAttribute("conn");
-		User user = (User)session.getAttribute("user");
-		MyPage myPage = new MyPage(
-				request.getParameter("title"),
-				request.getParameter("textarea"),
-				new User(user.getId(),user.getName()));
-		MyPage.insertMyPage(myPage, conn);
-		response.sendRedirect("index");
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        HttpSession session = request.getSession();
+        Connection conn = (Connection)session.getAttribute("conn");
+        User user = (User)session.getAttribute("user");
+        MyPage myPage = new MyPage(
+                request.getParameter("title"),
+                request.getParameter("textarea"),
+                new User(user.getId(),user.getName()));
+        MyPage.insertMyPage(myPage, conn);
+        response.sendRedirect("index");
+        response.getWriter().append("Served at: ").append(request.getContextPath());
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doGet(request, response);
+    }
 
 }

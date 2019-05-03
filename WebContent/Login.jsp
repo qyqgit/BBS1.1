@@ -10,14 +10,14 @@
     var userId = getQueryString("userId");
     document.getElementById("userId").value = userId;
     if(userId != null)
-    	window.location.href="getIdFile?id=" + userId;
+        window.location.href="getIdFile?id=" + userId;
   }
   function showPassCode(){
     var passCodeNeed = document.getElementById("passCodeNeed").value;
     if(passCodeNeed == 1){
-    	document.getElementById("passcode").style.display ="table-row";
+        document.getElementById("passcode").style.display ="table-row";
     } else {
-    	document.getElementById("passcode").style.display ="none";
+        document.getElementById("passcode").style.display ="none";
     }
 
   }
@@ -30,19 +30,19 @@
   }
   function refresh() {
 
-	  var url = "GetPassCode.jpg?number="+Math.random();
-	  document.getElementById("img").src = url;
+      var url = "GetPassCode.jpg?number="+Math.random();
+      document.getElementById("img").src = url;
   }  
   window.onload = function(){
-	  getUserId();
-	  showPassCode();
+      getUserId();
+      showPassCode();
   }
 </script>
 <link href="sys/pic/fish58.png" rel="icon"/>
 <title>fishcc.org</title>
 </head>
 <body>
-	<form name="login"   method="post"  action="login">    
+    <form name="login"   method="post"  action="login">    
         <table border="1">    
         <tr>    
            <td>Id</td>    
@@ -62,6 +62,6 @@
         </tr>    
         </table>    
     </form>
-	<input id="passCodeNeed" type="hidden" value="${sessionScope.passCodeNeed }" />
+    <input id="passCodeNeed" type="hidden" value="${sessionScope.passCodeNeed }" />
 </body>
 </html>

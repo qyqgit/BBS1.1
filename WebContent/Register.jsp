@@ -7,18 +7,18 @@
 <script src="sys/js/format_date.js"></script>
 <script type="text/javascript">
   function inputCheck(){
-	if(document.getElementById("name").value == null || document.getElementById("name").value == "" ||document.getElementById("password").value == null || document.getElementById("password").value == ""){
-		alert("name or password can't be empty.");
-		return false;
-	}
-	return true;
+    if(document.getElementById("name").value == null || document.getElementById("name").value == "" ||document.getElementById("password").value == null || document.getElementById("password").value == ""){
+        alert("name or password can't be empty.");
+        return false;
+    }
+    return true;
   }
 </script>
 <link href="sys/pic/fish58.png" rel="icon"/>
 <title>fishcc.org</title>
 </head>
 <body>
-	<form   name="register"   method="post"  action="register" onsubmit="return inputCheck()">    
+    <form   name="register"   method="post"  action="register" onsubmit="return inputCheck()">    
         <table border="1">    
         <tr>    
            <td>name</td>    
