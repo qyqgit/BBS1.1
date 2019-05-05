@@ -51,52 +51,32 @@ public class FileUploadServlet extends HttpServlet {
         Properties profile = (Properties)getServletContext().getAttribute("profile");
         int fileSizeMax = Integer.parseInt(profile.getProperty("file_size_max"));
         int uploadSizeMax = Integer.parseInt(profile.getProperty("upload_size_max"));
-        //1.�����ļ��ϴ�������
         DiskFileItemFactory fac = new DiskFileItemFactory();
-        //2.�����ļ��ϴ����������
         ServletFileUpload upload = new ServletFileUpload(fac);
-        //��һ�����õ����ļ����50M��
         upload.setFileSizeMax(fileSizeMax*1024*1024);//50M
-        //�������������ļ���С��100M��
         upload.setSizeMax(uploadSizeMax*1024*1024); //100M
 
-        //�жϣ���ǰ���Ƿ�Ϊ�ļ��ϴ���
         if (ServletFileUpload.isMultipartContent(request)){
-
             try {
-                //3.����������ת��ΪFileItem����ļ���
                 List<FileItem> list = upload.parseRequest(request);
-                //�������õ�ÿһ���ϴ���
                 for (FileItem item : list){
-                    //�жϣ�����ͨ��������ļ��ϴ�����
                     if (item.isFormField()){
-                        //��ͨ��x
-                        String fieldName = item.getFieldName();//��ȡԪ������
-                        String value = item.getString("UTF-8"); //��ȡԪ��ֵ
+                        String fieldName = item.getFieldName();
+                        String value = item.getString("UTF-8"); 
                         System.out.println(fieldName+" : "+value);
 
                     }else {
-                        //�ļ��ϴ���
-                        String fileName = item.getName(); //�ϴ����ļ�����
+                        String fileName = item.getName(); 
                         String[] a = fileName.split("\\\\");
                         fileName = a[a.length-1];
-                        /**
-                         * ���ġ��ļ�������
-                         * ���ڲ�ͬ���û���test.txt�ļ�����ϣ�����ǣ�
-                         * ��̨�������û����һ��Ψһ��ǣ�
-                         */
-                        //a.�������һ��Ψһ���
                         String id = UUID.randomUUID().toString();
-                        //���ļ���ƴ��
                         fileName = id +"_"+ fileName;
-                        //�������ϴ���ָ��Ŀ¼����ȡ�ϴ�Ŀ¼·����
                         String realPath = getServletContext().getRealPath("/");
                         File tempFile = new File(realPath);
                         if(!SysTool.isLinux())
                             realPath =  tempFile.getParent() + "\\" + profile.getProperty("media_path_win") + "\\" + user.getId() + "\\";
                         else
                             realPath = tempFile.getParent() + "/" + profile.getProperty("media_path_linux") + "/" + user.getId() + "/";
-                        //�����ļ�����
                         File dir = new File(realPath);
                         if(!dir.exists()) dir.mkdirs();
                         File file = new File(realPath, fileName);
@@ -126,7 +106,7 @@ public class FileUploadServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }else {
-            System.out.println("������");
+            System.out.println("do nothing!");
         }
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }
