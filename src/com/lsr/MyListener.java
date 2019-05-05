@@ -19,6 +19,7 @@ import com.obj.Database;
 import com.obj.Emoji;
 import com.obj.Message;
 import com.obj.Profile;
+import com.obj.SysTool;
 import com.obj.User;
 
 /**
@@ -97,16 +98,15 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
          // TODO Auto-generated method stub
         String etcPath = sce.getServletContext().getRealPath("/WEB-INF");
         String sysPath = sce.getServletContext().getRealPath("/sys");
-        String os = System.getProperty("os.name").toLowerCase();
         String profilePath = null;
         String emojiPath = null;
-        if(os.startsWith("win"))
+        if(!SysTool.isLinux())
             profilePath = etcPath + "\\etc\\config.ini";
         else
             profilePath = etcPath + "/etc/config.ini";
         Properties profile = Profile.getProfile(profilePath);
         sce.getServletContext().setAttribute("profile", profile);
-        if(os.startsWith("win"))
+        if(!SysTool.isLinux())
             emojiPath = sysPath + "\\pic\\emoji";
         else
             emojiPath = sysPath + "/pic/emoji";

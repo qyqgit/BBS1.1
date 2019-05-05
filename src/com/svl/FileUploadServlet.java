@@ -19,6 +19,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.obj.Media;
+import com.obj.SysTool;
 import com.obj.User;
 
 /**
@@ -50,49 +51,52 @@ public class FileUploadServlet extends HttpServlet {
         Properties profile = (Properties)getServletContext().getAttribute("profile");
         int fileSizeMax = Integer.parseInt(profile.getProperty("file_size_max"));
         int uploadSizeMax = Integer.parseInt(profile.getProperty("upload_size_max"));
-        //1.´´½¨ÎÄ¼þÉÏ´«¹¤³§Àà
+        //1.ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         DiskFileItemFactory fac = new DiskFileItemFactory();
-        //2.´´½¨ÎÄ¼þÉÏ´«ºËÐÄÀà¶ÔÏó
+        //2.ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         ServletFileUpload upload = new ServletFileUpload(fac);
-        //¡¾Ò»¡¢ÉèÖÃµ¥¸öÎÄ¼þ×î´ó50M¡¿
+        //ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½50Mï¿½ï¿½
         upload.setFileSizeMax(fileSizeMax*1024*1024);//50M
-        //¡¾¶þ¡¢ÉèÖÃ×ÜÎÄ¼þ´óÐ¡£º100M¡¿
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½100Mï¿½ï¿½
         upload.setSizeMax(uploadSizeMax*1024*1024); //100M
 
-        //ÅÐ¶Ï£¬µ±Ç°±íµ¥ÊÇ·ñÎªÎÄ¼þÉÏ´«±íµ¥
+        //ï¿½Ð¶Ï£ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Ç·ï¿½Îªï¿½Ä¼ï¿½ï¿½Ï´ï¿½ï¿½ï¿½
         if (ServletFileUpload.isMultipartContent(request)){
 
             try {
-                //3.°ÑÇëÇóÊý¾Ý×ª»»ÎªFileItem¶ÔÏóµÄ¼¯ºÏ
+                //3.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ÎªFileItemï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½
                 List<FileItem> list = upload.parseRequest(request);
-                //±éÀú£¬µÃµ½Ã¿Ò»¸öÉÏ´«Ïî
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½Ã¿Ò»ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½
                 for (FileItem item : list){
-                    //ÅÐ¶Ï£ºÊÇÆÕÍ¨±íµ¥Ïî£¬»¹ÊÇÎÄ¼þÉÏ´«±íµ¥Ïî
+                    //ï¿½Ð¶Ï£ï¿½ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½î£¬ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½
                     if (item.isFormField()){
-                        //ÆÕÍ¨±íµ¥x
-                        String fieldName = item.getFieldName();//»ñÈ¡ÔªËØÃû³Æ
-                        String value = item.getString("UTF-8"); //»ñÈ¡ÔªËØÖµ
+                        //ï¿½ï¿½Í¨ï¿½ï¿½x
+                        String fieldName = item.getFieldName();//ï¿½ï¿½È¡Ôªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                        String value = item.getString("UTF-8"); //ï¿½ï¿½È¡Ôªï¿½ï¿½Öµ
                         System.out.println(fieldName+" : "+value);
 
                     }else {
-                        //ÎÄ¼þÉÏ´«±íµ¥
-                        String fileName = item.getName(); //ÉÏ´«µÄÎÄ¼þÃû³Æ
+                        //ï¿½Ä¼ï¿½ï¿½Ï´ï¿½ï¿½ï¿½
+                        String fileName = item.getName(); //ï¿½Ï´ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
                         String[] a = fileName.split("\\\\");
                         fileName = a[a.length-1];
                         /**
-                         * ¡¾ËÄ¡¢ÎÄ¼þÖØÃû¡¿
-                         * ¶ÔÓÚ²»Í¬µÄÓÃ»§µÄtest.txtÎÄ¼þ£¬²»Ï£Íû¸²¸Ç£¬
-                         * ºóÌ¨´¦Àí£º¸øÓÃ»§Ìí¼ÓÒ»¸öÎ¨Ò»±ê¼Ç£¡
+                         * ï¿½ï¿½ï¿½Ä¡ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+                         * ï¿½ï¿½ï¿½Ú²ï¿½Í¬ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½test.txtï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ï¿½Ç£ï¿½
+                         * ï¿½ï¿½Ì¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Î¨Ò»ï¿½ï¿½Ç£ï¿½
                          */
-                        //a.Ëæ»úÉú³ÉÒ»¸öÎ¨Ò»±ê¼Ç
+                        //a.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Î¨Ò»ï¿½ï¿½ï¿½
                         String id = UUID.randomUUID().toString();
-                        //ÓëÎÄ¼þÃûÆ´½Ó
+                        //ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Æ´ï¿½ï¿½
                         fileName = id +"_"+ fileName;
-                        //¡¾Èý¡¢ÉÏ´«µ½Ö¸¶¨Ä¿Â¼£º»ñÈ¡ÉÏ´«Ä¿Â¼Â·¾¶¡¿
+                        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Ä¿Â¼ï¿½ï¿½ï¿½ï¿½È¡ï¿½Ï´ï¿½Ä¿Â¼Â·ï¿½ï¿½ï¿½ï¿½
                         String realPath = getServletContext().getRealPath("/");
                         File tempFile = new File(realPath);
-                        realPath =  tempFile.getParent() + "\\" + profile.getProperty("media_path") + "\\" + user.getId() + "\\";
-                        //´´½¨ÎÄ¼þ¶ÔÏó
+                        if(!SysTool.isLinux())
+                            realPath =  tempFile.getParent() + "\\" + profile.getProperty("media_path_win") + "\\" + user.getId() + "\\";
+                        else
+                            realPath = tempFile.getParent() + "/" + profile.getProperty("media_path_linux") + "/" + user.getId() + "/";
+                        //ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
                         File dir = new File(realPath);
                         if(!dir.exists()) dir.mkdirs();
                         File file = new File(realPath, fileName);
@@ -100,10 +104,17 @@ public class FileUploadServlet extends HttpServlet {
                         item.delete();
                         
                         String url = profile.getProperty("host_url");
-                        String mediaPath = profile.getProperty("media_path");
+                        String mediaPath = null;
+                        if(!SysTool.isLinux())
+                            mediaPath = profile.getProperty("media_path_win");
+                        else
+                            mediaPath = profile.getProperty("media_path_linux");
                         if(mediaPath.startsWith("ROOT"))
                             mediaPath = mediaPath.substring(5);
-                        url = url + "/" + mediaPath.replace("\\", "/");
+                        if(!SysTool.isLinux())
+                            url = url + "/" + mediaPath.replace("\\", "/");
+                        else
+                            url = url + "/" + mediaPath;
                         Media media = new Media(user, a[a.length-1], url + "/" + user.getId() + "/" + fileName,"0");
                         HttpSession session = request.getSession();
                         Connection conn = (Connection)session.getAttribute("conn");
@@ -115,7 +126,7 @@ public class FileUploadServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }else {
-            System.out.println("²»´¦Àí£¡");
+            System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }
