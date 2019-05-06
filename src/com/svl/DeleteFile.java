@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.obj.Media;
+import com.obj.SysTool;
 import com.obj.User;
 
 /**
@@ -45,8 +46,10 @@ public class DeleteFile extends HttpServlet {
         Properties profile = (Properties)getServletContext().getAttribute("profile");
         String realPath = getServletContext().getRealPath("/");
         File tempFile = new File(realPath);
-        realPath = tempFile.getParent() + "\\" + profile.getProperty("media_path") + "\\" + user.getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
-        //创建文件对象
+        if(!SysTool.isLinux())
+            realPath = tempFile.getParent() + "\\" + profile.getProperty("media_path_win") + "\\" + user.getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
+        else
+        	 realPath = tempFile.getParent() + "/" + profile.getProperty("media_path_linux") + "/" + user.getId() + "/" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
         File dir = new File(realPath);
         if(dir.exists()) {
             if(dir.delete())
