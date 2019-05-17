@@ -18,13 +18,13 @@
             
         var reg = /^[0-9]+.?[0-9]*$/;
         if (!(reg.test(document.getElementById(id).value))) {
-          alert("birthday need to be eight number(yyyymmdd or yyyy/mm/dd).");
+          alert("birthday need to be eight numbers(yyyymmdd or yyyy/mm/dd).");
           //document.getElementById(id).focus();
           document.getElementById(id).value = "";
           return;
         }
         if(document.getElementById(id).value.length!=8){
-          alert("birthday need to be eight number(yyyymmdd or yyyy/mm/dd).");
+          alert("birthday need to be eight numbers(yyyymmdd or yyyy/mm/dd).");
           //document.getElementById(id).focus();
           document.getElementById(id).value = "";
           return;

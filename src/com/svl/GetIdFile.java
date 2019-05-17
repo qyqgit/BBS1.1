@@ -37,7 +37,7 @@ public class GetIdFile extends HttpServlet {
         String id = request.getParameter("id");
         response.setContentType(getServletContext().getMimeType("*.txt"));
         response.setHeader("Content-Disposition", "attachment;filename=FISHCC.ORG_" + id + ".txt");
-		InputStream in = new ByteArrayInputStream(("Congratulations,Your fishcc ID is:" + id + "\r\n").getBytes());
+        InputStream in = new ByteArrayInputStream(("Congratulations,Your fishcc ID is:" + id + "\r\n").getBytes());
         OutputStream out = response.getOutputStream();
         int len = 0;
         byte[] buffer = new byte[128];
