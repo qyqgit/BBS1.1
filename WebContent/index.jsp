@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="sys/css/global.css" rel="stylesheet" type="text/css"/>
 <style type="text/css">
 </style>
@@ -62,7 +62,7 @@
                     <c:url value="Home?id=${myPageList.user.id}" var="url"></c:url>
                     <a href="${url }"><c:out value="${myPageList.user.name}"></c:out></a>
                 </td>
-                <td><c:out value="&nbsp;&nbsp;&nbsp;&nbsp" escapeXml="false"/></td>
+                <td><c:out value="&nbsp;&nbsp;&nbsp;&nbsp;" escapeXml="false"/></td>
                 <td>
                     <c:url value="Home?id=${lastSendMessageUserList[loop.index].id}" var="url"></c:url>
                     <a href="${url }"><c:out value="${lastSendMessageUserList[loop.index].name}"></c:out></a>
