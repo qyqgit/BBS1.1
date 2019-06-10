@@ -12,7 +12,7 @@
   function replyFunction(floor,messageId,pageNumber,pageLength,userName,pageId) {
       clearDiv();
       document.getElementById("text").focus();
-      var log = document.execCommand("inserthtml", false, "<a href='MyPageSvl?id="+ pageId +"&replyId="+ messageId +"&pageNumber="+ pageNumber +"&pageLength="+ pageLength +"#"+ floor +"' >Reply</a> "+ userName +"(#"+ floor +"):");
+      var log = document.execCommand("inserthtml", false, "<a href='MyPageSvl?id="+ pageId +"&replyId="+ messageId +"&pageNumber="+ pageNumber +"&pageLength="+ pageLength +"#"+ floor +"' >"+"${applicationScope.codePageMap['STR_REPLY']}"+"</a> "+ userName +"(#"+ floor +"):");
       if(!log) {
           var range = window.getSelection().getRangeAt(0);
           var a = document.createElement("a");
@@ -42,19 +42,19 @@
 </head>
 <body>
     <div id="head">
-        ID:
+        ${applicationScope.codePageMap['STR_ID']}:
         <c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
         <a href="${url }"><c:out value="${sessionScope.user.id}"></c:out></a>
-        Name:
+        ${applicationScope.codePageMap['STR_NAME']}:
         <c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
         <a href="${url }"><c:out value="${sessionScope.user.name}"></c:out></a>
         
-        ${sessionScope.user.id == null?'<a href="Login.jsp">Login</a>':''}
-        ${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
-        ${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
-        ${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
-        <a href="index">Index</a>
-        <span style="float:right;">Sessions:${applicationScope.numMembers}</span>
+        ${sessionScope.user.id == null?'<a href="Login.jsp">'.concat(applicationScope.codePageMap["STR_LOGIN"]).concat("</a>"):''}
+        ${sessionScope.user.id == null?'<a href="Register.jsp">'.concat(applicationScope.codePageMap["STR_REG"]).concat("</a>"):''}
+        ${sessionScope.user.id == null?'':'<a href="Logout">'.concat(applicationScope.codePageMap["STR_LOGOUT"]).concat("</a>")}
+        ${sessionScope.user.id == null?'':'<a href="MyReply">'.concat(applicationScope.codePageMap["STR_REPLY"]).concat('(').concat(sessionScope.count[0]).concat(')</a>')}
+        <a href="index">${applicationScope.codePageMap['STR_INDEX']}</a>
+        <span style="float:right;">${applicationScope.codePageMap['STR_SESSION']}:${applicationScope.numMembers}</span>
     </div>
     <div id="main">
         <h1>${requestScope.myPage.title}</h1>
@@ -86,7 +86,7 @@
                     <c:out value="${messageList.floorNumber }"/>
                 </td>
                 <td width="50px" style="vertical-align:bottom;">
-                    <a href="${messageList.id}" onclick="return replyFunction(${messageList.floorNumber },${messageList.id},${requestScope.pageNumber},${requestScope.eachPageList[0].pageLength},'${messageList.user.name}',${requestScope.pageId })"><c:out value="${messageList.id == null?'':'Reply' }"></c:out></a>
+                    <a href="${messageList.id}" onclick="return replyFunction(${messageList.floorNumber },${messageList.id},${requestScope.pageNumber},${requestScope.eachPageList[0].pageLength},'${messageList.user.name}',${requestScope.pageId })"><c:out value="${messageList.id == null?'':applicationScope.codePageMap['STR_REPLY'] }"></c:out></a>
                 </td>
             </tr>
             <tr><td colspan="5"><hr></td></tr>
@@ -98,12 +98,12 @@
         <%@include file="sys/jsp/each_page.jsp" %>
         <form id="form1" method="post"  action="sendMessage?id=${requestScope.pageId}&pageNumber=${requestScope.pageNumber}&pageLength=${requestScope.eachPageList[0].pageLength}" onsubmit="return inputCheck()">
             <%@include file="sys/jsp/editor.jsp" %>
-            <input type="button"  value="SendMessage" onclick="Submit()"/>
-            <input type="button"  value="Back" onclick="back()"/>
+            <input type="button"  value="${applicationScope.codePageMap['STR_SENDMESSAGE']}" onclick="Submit()"/>
+            <input type="button"  value="${applicationScope.codePageMap['STR_BACK']}" onclick="back()"/>
         </form>
     </div>
     <div id="foot">
-        <span style="float:right;">Connections:${applicationScope.numConn}</span>
+        <span style="float:right;">${applicationScope.codePageMap['STR_CONNECTION']}:${applicationScope.numConn}</span>
     </div>
 </body>
 </html>

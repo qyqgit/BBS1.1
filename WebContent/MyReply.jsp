@@ -26,18 +26,18 @@
 </head>
 <body>
     <div id="head">
-        ID:
+        ${applicationScope.codePageMap['STR_ID']}:
         <c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
         <a href="${url }"><c:out value="${sessionScope.user.id}"></c:out></a>
-        Name:
+        ${applicationScope.codePageMap['STR_NAME']}:
         <c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
         <a href="${url }"><c:out value="${sessionScope.user.name}"></c:out></a>
         
-        ${sessionScope.user.id == null?'<a href="Login.jsp">Login</a>':''}
-        ${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
-        ${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
-        <a href="index">Index</a>
-        <span style="float:right;">Sessions:${applicationScope.numMembers}</span>
+        ${sessionScope.user.id == null?'<a href="Login.jsp">'.concat(applicationScope.codePageMap["STR_LOGIN"]).concat("</a>"):''}
+        ${sessionScope.user.id == null?'<a href="Register.jsp">'.concat(applicationScope.codePageMap["STR_REG"]).concat("</a>"):''}
+        ${sessionScope.user.id == null?'':'<a href="Logout">'.concat(applicationScope.codePageMap["STR_LOGOUT"]).concat("</a>")}
+        <a href="index">${applicationScope.codePageMap['STR_INDEX']}</a>
+        <span style="float:right;">${applicationScope.codePageMap['STR_SESSION']}:${applicationScope.numMembers}</span>
     </div>
     <div id="main">
          <table id="main_tb">
@@ -58,7 +58,7 @@
                     <c:out value="${replyList.floorNumber }"/>
                 </td>
                 <td width="50px" style="vertical-align:bottom;">
-                    <a href="${replyList.id}" onclick="return replyFunction(${replyList.floorNumber },${replyList.myPage.id},${replyList.id })"><c:out value="${replyList.id == null?'':'Search' }"></c:out></a>
+                    <a href="${replyList.id}" onclick="return replyFunction(${replyList.floorNumber },${replyList.myPage.id},${replyList.id })"><c:out value="${replyList.id == null?'':applicationScope.codePageMap['STR_SEARCH'] }"></c:out></a>
                 </td>
             </tr>
             <tr><td colspan="5"><hr></td></tr>
@@ -66,7 +66,7 @@
         </table>
     </div>
     <div id="foot">
-        <span style="float:right;">Connections:${applicationScope.numConn}</span>
+        <span style="float:right;">${applicationScope.codePageMap['STR_CONNECTION']}:${applicationScope.numConn}</span>
     </div>
 </body>
 </html>

@@ -27,29 +27,29 @@
 </head>
 <body>
     <div id="head">
-        ID:
+        ${applicationScope.codePageMap['STR_ID']}:
         <c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
         <a href="${url }"><c:out value="${sessionScope.user.id}"></c:out></a>
-        Name:
+        ${applicationScope.codePageMap['STR_NAME']}:
         <c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
         <a href="${url }"><c:out value="${sessionScope.user.name}"></c:out></a>
         
-        ${sessionScope.user.id == null?'<a href="Login.jsp">Login</a>':''}
-        ${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
-        ${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
-        ${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
-        <span style="float:right;">Sessions:${applicationScope.numMembers}</span>
+        ${sessionScope.user.id == null?'<a href="Login.jsp">'.concat(applicationScope.codePageMap["STR_LOGIN"]).concat("</a>"):''}
+        ${sessionScope.user.id == null?'<a href="Register.jsp">'.concat(applicationScope.codePageMap["STR_REG"]).concat("</a>"):''}
+        ${sessionScope.user.id == null?'':'<a href="Logout">'.concat(applicationScope.codePageMap["STR_LOGOUT"]).concat("</a>")}
+        ${sessionScope.user.id == null?'':'<a href="MyReply">'.concat(applicationScope.codePageMap["STR_REPLY"]).concat('(').concat(sessionScope.count[0]).concat(')</a>')}
+        <span style="float:right;">${applicationScope.codePageMap['STR_SESSION']}:${applicationScope.numMembers}</span>
         <img src="sys/pic/default_head20141014.png">
     </div>
     <br>
     <div id="main">
         <table id="main_tb">
             <tr bgcolor="#EEEEEE">
-                <td>Num</td>
-                <td>Title</td>
-                <td>Author</td>
+                <td>${applicationScope.codePageMap['STR_NUM']}</td>
+                <td>${applicationScope.codePageMap['STR_TITLE']}</td>
+                <td>${applicationScope.codePageMap['STR_AUTHOR']}</td>
                 <td><c:out value="&nbsp;&nbsp;&nbsp;&nbsp;" escapeXml="false"/></td>
-                <td colspan="2">Reply</td>
+                <td colspan="2">${applicationScope.codePageMap['STR_REPLY']}</td>
             </tr>
             <c:forEach var="myPageList" items="${requestScope.myPageList }" varStatus="loop">
             <tr <c:if test="${loop.count%2==0}">bgcolor="#FFFFFF"</c:if>>
@@ -82,11 +82,11 @@
             <br>
             <br>
             <%@include file="sys/jsp/editor.jsp" %>
-            <input type="button"  value="SendPage" onclick="Submit()"/>
+            <input type="button"  value="${applicationScope.codePageMap['STR_SENDPAGE']}" onclick="Submit()"/>
         </form>
     </div>
     <div id="foot">
-        <span style="float:right;">Connections:${applicationScope.numConn}</span>
+        <span style="float:right;">${applicationScope.codePageMap['STR_CONNECTION']}:${applicationScope.numConn}</span>
     </div>
 </body>
 </html>

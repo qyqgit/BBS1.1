@@ -116,30 +116,30 @@
 </head>
 <body>
     <div id="head">
-        ID:
+        ${applicationScope.codePageMap['STR_ID']}:
         <c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
         <a href="${url }"><c:out value="${sessionScope.user.id}"></c:out></a>
-        Name:
+        ${applicationScope.codePageMap['STR_NAME']}:
         <c:url value="Home?id=${sessionScope.user.id}" var="url"></c:url>
         <a href="${url }"><c:out value="${sessionScope.user.name}"></c:out></a>
         
-        ${sessionScope.user.id == null?'<a href="Login.jsp">Login</a>':''}
-        ${sessionScope.user.id == null?'<a href="Register.jsp">Register</a>':''}
-        ${sessionScope.user.id == null?'':'<a href="Logout">Logout</a>'}
-        ${sessionScope.user.id == null?'':'<a href="MyReply'.concat('">Reply('.concat(sessionScope.count[0]).concat(')</a>'))}
-        <a href="index">Index</a>
-        <span style="float:right;">Sessions:${applicationScope.numMembers}</span>
+        ${sessionScope.user.id == null?'<a href="Login.jsp">'.concat(applicationScope.codePageMap["STR_LOGIN"]).concat("</a>"):''}
+        ${sessionScope.user.id == null?'<a href="Register.jsp">'.concat(applicationScope.codePageMap["STR_REG"]).concat("</a>"):''}
+        ${sessionScope.user.id == null?'':'<a href="Logout">'.concat(applicationScope.codePageMap["STR_LOGOUT"]).concat("</a>")}
+        ${sessionScope.user.id == null?'':'<a href="MyReply">'.concat(applicationScope.codePageMap["STR_REPLY"]).concat('(').concat(sessionScope.count[0]).concat(')</a>')}
+        <a href="index">${applicationScope.codePageMap['STR_INDEX']}</a>
+        <span style="float:right;">${applicationScope.codePageMap['STR_SESSION']}:${applicationScope.numMembers}</span>
     </div>
     <br>
     <div id="main">
         <table id="viewTable">
             <tr bgcolor="#EEEEEE">
-                <td>ID</td>
-                <td>Name</td>
-                <td>Password</td>
-                <td>Age</td>
-                <td>Sex</td>
-                <td>Date</td>
+                <td>${applicationScope.codePageMap['STR_ID']}</td>
+                <td>${applicationScope.codePageMap['STR_NAME']}</td>
+                <td>${applicationScope.codePageMap['STR_PASSWORD']}</td>
+                <td>${applicationScope.codePageMap['STR_BIRTHDAY']}</td>
+                <td>${applicationScope.codePageMap['STR_SEX']}</td>
+                <td>${applicationScope.codePageMap['STR_DATE']}</td>
             </tr>
             <tr>
                 <td>${requestScope.user.id }</td>
@@ -153,12 +153,12 @@
         <form id="editForm" name="editForm"   method="post"  action="Home?id=${sessionScope.user.id}&submit=1">
             <table id="editTable" style="display:none">
                 <tr bgcolor="#EEEEEE">
-                    <td>ID</td>
-                    <td>Name</td>
-                    <td>Password</td>
-                    <td>Age</td>
-                    <td>Sex</td>
-                    <td>Date</td>
+                    <td>${applicationScope.codePageMap['STR_ID']}</td>
+                    <td>${applicationScope.codePageMap['STR_NAME']}</td>
+                    <td>${applicationScope.codePageMap['STR_PASSWORD']}</td>
+                    <td>${applicationScope.codePageMap['STR_BIRTHDAY']}</td>
+                    <td>${applicationScope.codePageMap['STR_SEX']}</td>
+                    <td>${applicationScope.codePageMap['STR_DATE']}</td>
                 </tr>
                 <tr>
                     <td>${sessionScope.user.id }</td>
@@ -166,9 +166,9 @@
                     <td><input id="password" name="password" type="password" value="5f4dcc3b5aa765d61d8327deb882cf99"></td>
                     <td><input id="birthday" name="birthday" type="text" value="${sessionScope.user.age }" onBlur="formatDate('birthday')"></td>
                     <td><input id="sex" type="hidden" value="${sessionScope.user.sex }" />
-                        <input id="null" name="sex" type="radio" value="2"/>null
-                        <input id="boy" name="sex" type="radio" value="1"/>boy
-                        <input id="girl" name="sex" type="radio" value="0"/>girl
+                        <input id="null" name="sex" type="radio" value="2"/>${applicationScope.codePageMap['STR_NULL']}
+                        <input id="boy" name="sex" type="radio" value="1"/>${applicationScope.codePageMap['STR_BOY']}
+                        <input id="girl" name="sex" type="radio" value="0"/>${applicationScope.codePageMap['STR_GIRL']}
                     </td>
                     <td>${sessionScope.user.date }</td>
                 </tr>
@@ -178,17 +178,17 @@
                   <table>
                   <tr><td>Old Password:</td><td><input type="password" name="oldPassword" id="oldPassword" value="" /></td></tr>
                   <tr>
-                  <td align="center"><button type="button" onclick='formSubmit()'>Commit</button></td>
-                  <td align="center"><button type="button" onclick='clearSubmit()'>Clear</button></td>
+                  <td align="center"><button type="button" onclick='formSubmit()'>${applicationScope.codePageMap['STR_COMMIT']}</button></td>
+                  <td align="center"><button type="button" onclick='clearSubmit()'>${applicationScope.codePageMap['STR_CLEAR']}</button></td>
                   </tr>
                   </table>
                 </div>
             </div>
             
             <table>
-            <c:set value="<input id='editLink'  type='button' value='Edit' onclick='editLinkFun()'/>" var="editUrl"></c:set>
-            <c:set value="<input id='clearLink' type='button' style='display:none;' value='Clear' onclick='clearLinkFun()'/>" var="clearUrl"></c:set>
-            <c:set value="<input id='submitLink' type='button' style='display:none;' value='Submit' onclick='preSubmit()'/>" var="submitUrl"></c:set>
+            <c:set value="<input id='editLink'  type='button' value=${applicationScope.codePageMap['STR_EDIT']} onclick='editLinkFun()'/>" var="editUrl"></c:set>
+            <c:set value="<input id='clearLink' type='button' style='display:none;' value=${applicationScope.codePageMap['STR_CLEAR']} onclick='clearLinkFun()'/>" var="clearUrl"></c:set>
+            <c:set value="<input id='submitLink' type='button' style='display:none;' value=${applicationScope.codePageMap['STR_SUBMIT']} onclick='preSubmit()'/>" var="submitUrl"></c:set>
                 <tr>
                 <td>${sessionScope.user.id == requestScope.user.id ? editUrl:''}</td>
                 <td>${sessionScope.user.id == requestScope.user.id ? clearUrl:''}</td>
@@ -199,12 +199,12 @@
         <br>
         <table id="main_tb">
                 <tr bgcolor="#EEEEEE">
-                    <td>ID</td>
-                    <td>Name</td>
-                    <td>Download</td>
-                    <td>Date</td>
-                    <td>URL</td>
-                    <td>${sessionScope.user.id == requestScope.user.id ? 'Delete':''}</td>
+                    <td>${applicationScope.codePageMap['STR_ID']}</td>
+                    <td>${applicationScope.codePageMap['STR_NAME']}</td>
+                    <td>${applicationScope.codePageMap['STR_DOWNLOAD']}</td>
+                    <td>${applicationScope.codePageMap['STR_DATE']}</td>
+                    <td>${applicationScope.codePageMap['STR_URL']}</td>
+                    <td>${sessionScope.user.id == requestScope.user.id ? applicationScope.codePageMap['STR_DELETE']:''}</td>
                 </tr>
                 <c:forEach var="mediaList" items="${requestScope.mediaList }" >
                 <tr>
@@ -212,15 +212,15 @@
                     <td style="max-width:550px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><c:out value="${mediaList.name }"/></td>
                     <td>
                         <c:url value="${mediaList.url}" var="url"></c:url>
-                        <a href="${url }"><c:out value="Download"></c:out></a>
+                        <a href="${url }">${applicationScope.codePageMap['STR_DOWNLOAD']}</a>
                     </td>
                     <td style="white-space:nowrap;"><c:out value="${mediaList.date }"/></td>
                     <td>
                         <input style="width:1px;position:absolute;z-index:-1;opacity:0.0;" id="_${mediaList.id }" type="text" value="${mediaList.url}">
-                        <button class="btn" data-clipboard-action="copy" data-clipboard-target="#_${mediaList.id }" onclick="encodeUrl('_${mediaList.id }','${mediaList.url}')">URL</button>
+                        <button class="btn" data-clipboard-action="copy" data-clipboard-target="#_${mediaList.id }" onclick="encodeUrl('_${mediaList.id }','${mediaList.url}')">${applicationScope.codePageMap['STR_COPYURL']}</button>
                     </td>
                     <td>
-                    <c:set value = '<a href="deleteFile?id=${mediaList.id}" >Delete</a>' var = "delete"></c:set>
+                    <c:set value = '<a href="deleteFile?id=${mediaList.id}" >${applicationScope.codePageMap["STR_DELETE"]}</a>' var = "delete"></c:set>
                     <c:out value="${sessionScope.user.id == requestScope.user.id ? delete:''}" escapeXml="false"/>
                     </td>
                 </tr>
@@ -232,11 +232,11 @@
         <% User user = (User)(request.getAttribute("user")); %>
         <% pageContext.setAttribute("paraValue", user.getId()); %>
         <%@include file="sys/jsp/each_page.jsp" %>
-        <c:set value ='<form action="FileUploadServlet" method="post" enctype="multipart/form-data" onsubmit="return uploadCheck()"><input id="file" type="file" name="file" accept="/*"><input type="submit" value="Upload"></form>' var = "upload"></c:set>
+        <c:set value ='<form action="FileUploadServlet" method="post" enctype="multipart/form-data" onsubmit="return uploadCheck()"><input id="file" type="file" name="file" accept="/*"><input type="submit" value=${applicationScope.codePageMap["STR_UPLOAD"]}></form>' var = "upload"></c:set>
         ${sessionScope.user.id == requestScope.user.id ? upload:''}
     </div>
     <div id="foot">
-        <span style="float:right;">Connections:${applicationScope.numConn}</span>
+        <span style="float:right;">${applicationScope.codePageMap['STR_CONNECTION']}:${applicationScope.numConn}</span>
     </div>
 </body>
 </html>

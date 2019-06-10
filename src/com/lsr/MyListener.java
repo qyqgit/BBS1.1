@@ -3,7 +3,11 @@ package com.lsr;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
+
 
 import com.obj.Database;
 import com.obj.Emoji;
@@ -100,6 +105,7 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         String sysPath = sce.getServletContext().getRealPath("/sys");
         String profilePath = null;
         String emojiPath = null;
+        String codePagePath = null;
         if(!SysTool.isLinux())
             profilePath = etcPath + "\\etc\\config.ini";
         else
@@ -113,6 +119,17 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         ArrayList<Emoji> emojiList = new ArrayList<Emoji>();
         if(Emoji.getEmojiList(emojiPath, emojiList))
             sce.getServletContext().setAttribute("emojiList", emojiList);
+        if(!SysTool.isLinux())
+        	codePagePath = sysPath + "\\codepg\\" + profile.getProperty("language");
+        else
+        	codePagePath = sysPath + "/codepg/" + profile.getProperty("language");
+        Map<String, String> codePageMap = new HashMap<String, String>();
+        Properties codePage = Profile.getProfile(codePagePath);
+        Set<Entry<Object, Object>> entrySet = codePage.entrySet();
+        for (Entry<Object, Object> entry : entrySet)
+        	codePageMap.put((String) entry.getKey(), (String) entry.getValue());
+        //Map<String, String> codePageMap = new HashMap<String, String>((Map)Profile.getProfile(codePagePath));
+        sce.getServletContext().setAttribute("codePageMap", codePageMap);
     }
     
     /**

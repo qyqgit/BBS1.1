@@ -21,20 +21,24 @@
     <form   name="register"   method="post"  action="register" onsubmit="return inputCheck()">    
         <table border="1">    
         <tr>    
-           <td>name</td>    
+           <td>${applicationScope.codePageMap['STR_NAME']}</td>    
            <td><input id="name" name="name" type="text" maxlength="8"/></td>           
         </tr>    
         <tr>    
-           <td>password</td>    
+           <td>${applicationScope.codePageMap['STR_PASSWORD']}</td>    
            <td><input id="password" name="password" type="password" maxlength="12"/></td>    
         </tr>    
         <tr>    
-           <td>birthday</td>    
+           <td>${applicationScope.codePageMap['STR_BIRTHDAY']}</td>    
            <td><input id="birthday" name="birthday" type="text" value="" onBlur="formatDate('birthday')" /></td>    
         </tr>    
         <tr>    
-           <td>sex</td>    
-           <td><input name="sex" type="radio" value="2" checked="checked"/>null<input name="sex" type="radio" value="1"/>boy<input name="sex" type="radio" value="0"/>girl</td>    
+           <td>${applicationScope.codePageMap['STR_SEX']}</td>    
+           <td>
+	           <input name="sex" type="radio" value="2" checked="checked"/>${applicationScope.codePageMap['STR_NULL']}
+	           <input name="sex" type="radio" value="1"/>${applicationScope.codePageMap['STR_BOY']}
+	           <input name="sex" type="radio" value="0"/>${applicationScope.codePageMap['STR_GIRL']}
+           </td>    
         </tr>    
         <tr>    
            <td></td>    

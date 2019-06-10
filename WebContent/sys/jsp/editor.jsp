@@ -50,18 +50,18 @@
     <div id="box">
         <div id="cont">
           <table>
-          <tr><td>Name:</td><td><input type="text" name="linkName" id="linkName" value="" style="width:300px"/></td></tr>
-          <tr><td>Value:</td><td><input type="text" name="linkValue" id="linkValue" value="" style="width:300px"/></td></tr>
+          <tr><td>${applicationScope.codePageMap['STR_NAME']}:</td><td><input type="text" name="linkName" id="linkName" value="" style="width:300px"/></td></tr>
+          <tr><td>${applicationScope.codePageMap['STR_LINK']}:</td><td><input type="text" name="linkValue" id="linkValue" value="" style="width:300px"/></td></tr>
           <tr>
-          <td align="center"><button type="button" onclick='insertLink()'>Commit</button></td>
-          <td align="center"><button type="button" onclick='clearLink()'>Clear</button></td>
+          <td align="center"><button type="button" onclick='insertLink()'>${applicationScope.codePageMap['STR_COMMIT']}</button></td>
+          <td align="center"><button type="button" onclick='clearLink()'>${applicationScope.codePageMap['STR_CLEAR']}</button></td>
           </tr>
           </table>
         </div>
     </div>
-    <input type="button"  value="Emoji" onclick="addEmoji()"/>
-    <input type="button"  value="Link" onclick="preInsertLink()"/>
-    <input type="button"  value="Audio" onclick="insertAudio()"/>
-    <input type="button"  value="Video" onclick="insertVideo()"/>
-    <input type="button"  value="Image" onclick="insertImage()"/>
-    <input type="reset"  value="Clear" onclick="clearDiv()"/>
+    <input type="button"  value="${applicationScope.codePageMap['STR_EMOJI']}" onclick="addEmoji()"/>
+    <input type="button"  value="${applicationScope.codePageMap['STR_LINK']}" onclick="preInsertLink()"/>
+    <input type="button"  value="${applicationScope.codePageMap['STR_AUDIO']}" onclick="insertAudio()"/>
+    <input type="button"  value="${applicationScope.codePageMap['STR_VIDEO']}" onclick="insertVideo()"/>
+    <input type="button"  value="${applicationScope.codePageMap['STR_IMAGE']}" onclick="insertImage()"/>
+    <input type="reset"  value="${applicationScope.codePageMap['STR_CLEAR']}" onclick="clearDiv()"/>

@@ -45,11 +45,11 @@
     <form name="login"   method="post"  action="login">    
         <table border="1">    
         <tr>    
-           <td>Id</td>    
+           <td>${applicationScope.codePageMap['STR_ID']}</td>    
            <td><input id="userId" name="id" type="text" value="" maxlength="8"/></td>           
         </tr>    
         <tr>    
-           <td>Password</td>    
+           <td>${applicationScope.codePageMap['STR_PASSWORD']}</td>    
            <td><input name="password" type="password" maxlength="12"/></td>    
         </tr>    
         <tr id="passcode" style="display:none;">    
@@ -58,7 +58,7 @@
         </tr>
         <tr>    
            <td></td>    
-           <td><input type="submit"  value="Login"/></td>    
+           <td><input type="submit"  value="${applicationScope.codePageMap['STR_LOGIN']}"/></td>    
         </tr>    
         </table>    
     </form>
