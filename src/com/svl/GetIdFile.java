@@ -42,6 +42,7 @@ public class GetIdFile extends HttpServlet {
             out.write(buffer, 0, len);
         }
         in.close();
+        out.close();
         //response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
