@@ -1,10 +1,22 @@
 package com.obj;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 public class Media {
     private String id;
@@ -451,4 +463,86 @@ public class Media {
         } 
         return false;
     }
+	public static boolean uploadMedia(HttpServletRequest request, Properties profile) throws IOException {	
+		User user = (User)request.getSession().getAttribute("user");
+        Media media = new Media(user);
+        int fileSizeMax = Integer.parseInt(profile.getProperty("file_size_max"));
+        int uploadSizeMax = Integer.parseInt(profile.getProperty("upload_size_max"));
+        DiskFileItemFactory fac = new DiskFileItemFactory();
+        ServletFileUpload upload = new ServletFileUpload(fac);
+        upload.setFileSizeMax(fileSizeMax * 1024 * 1024);//50M
+        upload.setSizeMax(uploadSizeMax * 1024 * 1024); //100M
+        if (ServletFileUpload.isMultipartContent(request)){
+            try {
+                List<FileItem> list = upload.parseRequest(request);
+                for (FileItem item : list){
+                    if (item.isFormField()){
+                        String fieldName = item.getFieldName();
+                        String value = item.getString("UTF-8");
+                        System.out.println(fieldName + " : " + value);
+
+                    }else {
+                        String fileName = item.getName();
+                        String[] splitName = fileName.split("\\\\");
+                        fileName = splitName[splitName.length-1];
+                        String id = UUID.randomUUID().toString();
+                        fileName = fileName.substring(0,fileName.lastIndexOf(".")) + "_" + id + fileName.substring(fileName.lastIndexOf("."));
+                        String realPath = request.getServletContext().getRealPath("/");
+                        File tempFile = new File(realPath);
+                        if(!SysTool.isLinux())
+                            realPath =  tempFile.getParent() + "\\" + profile.getProperty("media_path_win") + "\\" + user.getId() + "\\";
+                        else
+                            realPath = tempFile.getParent() + "/" + profile.getProperty("media_path_linux") + "/" + user.getId() + "/";
+                        File dir = new File(realPath);
+                        if(!dir.exists()) dir.mkdirs();
+                        File file = new File(realPath, fileName);
+                        item.write(file);
+                        item.delete();
+
+                        String mediaPath = null;
+                        if(!SysTool.isLinux())
+                            mediaPath = profile.getProperty("media_path_win");
+                        else
+                            mediaPath = profile.getProperty("media_path_linux");
+                        if(mediaPath.startsWith("ROOT"))
+                            mediaPath = mediaPath.substring(5);
+                        String url = profile.getProperty("host_url");
+                        if(!SysTool.isLinux())
+                            url = url + "/" + mediaPath.replace("\\", "/");
+                        else
+                            url = url + "/" + mediaPath;
+                        media.setName(splitName[splitName.length-1]);
+                        media.setUrl(url + "/" + user.getId() + "/" + fileName);
+                        media.setType("0");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            HttpSession session = request.getSession();
+            Connection conn = (Connection)session.getAttribute("conn");
+            Media.insertMedia(media, conn);
+        }else {
+            System.out.println("do nothing!");
+            return false;
+        }
+        return true;
+	}
+	public static boolean deleteMediaFile(String realPath, Media media, Connection conn, Properties profile) {
+        File tempFile = new File(realPath);
+        if(!SysTool.isLinux())
+            realPath = tempFile.getParent() + "\\" + profile.getProperty("media_path_win") + "\\" + media.getUser().getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
+        else
+            realPath = tempFile.getParent() + "/" + profile.getProperty("media_path_linux") + "/" + media.getUser().getId() + "/" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
+        File dir = new File(realPath);
+        if(dir.exists()) {
+            if(dir.delete()) {
+                Media.deleteMedia(media.getId(), conn);
+                return true;
+            }
+            return false;
+        }
+		return false;
+	}
 }

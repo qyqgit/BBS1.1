@@ -1,6 +1,5 @@
 package com.svl;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Properties;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.obj.Media;
-import com.obj.SysTool;
 import com.obj.User;
 
 /**
@@ -35,27 +33,18 @@ public class DeleteFile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         String mediaId = request.getParameter("id");
-        Connection conn = (Connection) request.getSession().getAttribute("conn");
         Media media = new Media(mediaId);
+        Connection conn = (Connection) request.getSession().getAttribute("conn");
         Media.getMedia(media, conn);
         User user = (User)request.getSession().getAttribute("user");
         if(!user.getId().equals(media.getUser().getId())) {
             response.sendRedirect("Home?id=" + media.getUser().getId());
             return;
         }
+        String realPath = request.getServletContext().getRealPath("/");
         Properties profile = (Properties)getServletContext().getAttribute("profile");
-        String realPath = getServletContext().getRealPath("/");
-        File tempFile = new File(realPath);
-        if(!SysTool.isLinux())
-            realPath = tempFile.getParent() + "\\" + profile.getProperty("media_path_win") + "\\" + user.getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
-        else
-            realPath = tempFile.getParent() + "/" + profile.getProperty("media_path_linux") + "/" + user.getId() + "/" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
-        File dir = new File(realPath);
-        if(dir.exists()) {
-            if(dir.delete())
-                Media.deleteMedia(mediaId, conn);
-        }
-        response.sendRedirect("Home?id=" + user.getId());
+        if(Media.deleteMediaFile(realPath, media, conn, profile))
+            response.sendRedirect("Home?id=" + user.getId());
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 

@@ -49,16 +49,20 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
     public void sessionCreated(HttpSessionEvent se)  { 
          // TODO Auto-generated method stub
         System.out.println("sessionCreated");
-        numMembers++;
-        se.getSession().getServletContext().setAttribute("numMembers", numMembers);
+        synchronized(this) {
+            numMembers++;
+            se.getSession().getServletContext().setAttribute("numMembers", numMembers);
+        }
         //se.getSession().setMaxInactiveInterval(10);
         if(se.getSession().getAttribute("conn") == null) {
             Properties profile = (Properties)se.getSession().getServletContext().getAttribute("profile");
             Connection conn = Database.getProfileConn(profile);
             if(conn!=null) {
                 se.getSession().setAttribute("conn", conn);
-                numConn++;
-                se.getSession().getServletContext().setAttribute("numConn", numConn);
+                synchronized(this) {
+                    numConn++;
+                    se.getSession().getServletContext().setAttribute("numConn", numConn);
+                }
                 System.out.println(conn + " created");
             }
         }
@@ -70,16 +74,23 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
     public void sessionDestroyed(HttpSessionEvent se)  { 
          // TODO Auto-generated method stub
         System.out.println("sessionDestroyed");
-        numMembers--;
-        se.getSession().getServletContext().setAttribute("numMembers", numMembers);
-        
-        HttpSession session = se.getSession();
-        Connection conn = (Connection)session.getAttribute("conn");
+        HttpSession session = null;
+        Connection conn     = null;
+        synchronized(this) {
+            numMembers--;
+            se.getSession().getServletContext().setAttribute("numMembers", numMembers);
+        }
+        session = se.getSession();
+        assert(session != null);
+        conn = (Connection)session.getAttribute("conn");
+        assert(conn != null);
         try {
             if(conn!=null) {
                 conn.close();
-                numConn--;
-                se.getSession().getServletContext().setAttribute("numConn", numConn);
+                synchronized(this) {
+                    numConn--;
+                    se.getSession().getServletContext().setAttribute("numConn", numConn);
+                }
                 System.out.println(conn + " closed");
             } else
             System.out.println(conn + " is null");
@@ -120,16 +131,18 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         if(Emoji.getEmojiList(emojiPath, emojiList))
             sce.getServletContext().setAttribute("emojiList", emojiList);
         if(!SysTool.isLinux())
-        	codePagePath = sysPath + "\\codepg\\" + profile.getProperty("language");
+            codePagePath = sysPath + "\\codepg\\" + profile.getProperty("language");
         else
-        	codePagePath = sysPath + "/codepg/" + profile.getProperty("language");
+            codePagePath = sysPath + "/codepg/" + profile.getProperty("language");
         Map<String, String> codePageMap = new HashMap<String, String>();
         Properties codePage = Profile.getProfile(codePagePath);
         Set<Entry<Object, Object>> entrySet = codePage.entrySet();
         for (Entry<Object, Object> entry : entrySet)
-        	codePageMap.put((String) entry.getKey(), (String) entry.getValue());
+            codePageMap.put((String) entry.getKey(), (String) entry.getValue());
         //Map<String, String> codePageMap = new HashMap<String, String>((Map)Profile.getProfile(codePagePath));
         sce.getServletContext().setAttribute("codePageMap", codePageMap);
+        HashMap<String, Connection> connMap = new HashMap<String, Connection>();
+        sce.getServletContext().setAttribute("connMap", connMap);
     }
     
     /**
