@@ -38,7 +38,7 @@ public class FileUploadServlet extends HttpServlet {
             return;
         };
         Properties profile = (Properties)request.getServletContext().getAttribute("profile");
-        if(Media.uploadMedia(request, profile))
+        if(Media.uploadMediaFile(request, profile))
             response.sendRedirect("Home?id=" + user.getId());
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }

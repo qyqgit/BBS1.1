@@ -463,7 +463,7 @@ public class Media {
         } 
         return false;
     }
-	public static boolean uploadMedia(HttpServletRequest request, Properties profile) throws IOException {	
+	public static boolean uploadMediaFile(HttpServletRequest request, Properties profile) throws IOException {	
 		User user = (User)request.getSession().getAttribute("user");
         Media media = new Media(user);
         int fileSizeMax = Integer.parseInt(profile.getProperty("file_size_max"));
@@ -543,6 +543,6 @@ public class Media {
             }
             return false;
         }
-		return false;
+	    return false;
 	}
 }
