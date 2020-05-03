@@ -54,11 +54,13 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
             se.getSession().getServletContext().setAttribute("numMembers", numMembers);
         }
         //se.getSession().setMaxInactiveInterval(10);
-        if(se.getSession().getAttribute("conn") == null) {
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)se.getSession().getServletContext().getAttribute("connMap");
+        Connection conn = connMap.get(se.getSession().getId());
+        if(conn == null) {
             Properties profile = (Properties)se.getSession().getServletContext().getAttribute("profile");
-            Connection conn = Database.getProfileConn(profile);
-            if(conn!=null) {
-                se.getSession().setAttribute("conn", conn);
+            conn = Database.getProfileConn(profile);
+            if(conn != null) {
+                connMap.put(se.getSession().getId(), conn);
                 synchronized(this) {
                     numConn++;
                     se.getSession().getServletContext().setAttribute("numConn", numConn);
@@ -82,10 +84,11 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         }
         session = se.getSession();
         assert(session != null);
-        conn = (Connection)session.getAttribute("conn");
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)session.getServletContext().getAttribute("connMap");
+        conn = connMap.get(session.getId());
         assert(conn != null);
         try {
-            if(conn!=null) {
+            if(conn != null) {
                 conn.close();
                 synchronized(this) {
                     numConn--;
@@ -110,7 +113,7 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
     /**
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
-    public void contextInitialized(ServletContextEvent sce)  { 
+    public void contextInitialized(ServletContextEvent sce)  {
          // TODO Auto-generated method stub
         String etcPath = sce.getServletContext().getRealPath("/WEB-INF");
         String sysPath = sce.getServletContext().getRealPath("/sys");
@@ -160,7 +163,8 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         HttpServletRequest request = (HttpServletRequest)sre.getServletRequest();
         User user = (User)request.getSession().getAttribute("user");
         if(user != null) {
-            Connection conn = (Connection)request.getSession().getAttribute("conn");
+            HashMap<String, Connection> connMap = (HashMap<String, Connection>)request.getSession().getServletContext().getAttribute("connMap");
+            Connection conn = connMap.get(request.getSession().getId());
             int count[] = {0};
             Message.getReplyCountEx(count, user, conn);
             request.getSession().setAttribute("count", count);

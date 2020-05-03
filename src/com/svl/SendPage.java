@@ -2,6 +2,8 @@ package com.svl;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +35,8 @@ public class SendPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
         HttpSession session = request.getSession();
-        Connection conn = (Connection)session.getAttribute("conn");
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)session.getServletContext().getAttribute("connMap");
+        Connection conn = connMap.get(session.getId());
         User user = (User)session.getAttribute("user");
         MyPage myPage = new MyPage(
                 request.getParameter("title"),

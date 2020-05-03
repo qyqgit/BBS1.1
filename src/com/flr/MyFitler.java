@@ -2,6 +2,7 @@ package com.flr;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.servlet.Filter;
@@ -48,7 +49,8 @@ public class MyFitler implements Filter {
             HttpSession session = req.getSession();
             User user = (User)session.getAttribute("user");
             MyLog myLog = new MyLog(req.getRemoteAddr(), user, req.getRequestURI() + "?" + req.getQueryString());
-            Connection conn = (Connection)session.getAttribute("conn");
+            HashMap<String, Connection> connMap = (HashMap<String, Connection>)session.getServletContext().getAttribute("connMap");
+            Connection conn = connMap.get(session.getId());
             MyLog.insertMyLog(myLog, conn);
         }
         

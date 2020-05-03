@@ -2,6 +2,8 @@ package com.svl;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.HashMap;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +36,8 @@ public class Login extends HttpServlet {
         // TODO Auto-generated method stub
         int passCodeNeed = 1;
         HttpSession session = request.getSession();
-        Connection conn = (Connection)session.getAttribute("conn");
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)session.getServletContext().getAttribute("connMap");
+        Connection conn = connMap.get(session.getId());
         User user = new User(request.getParameter("id"));
         if(session.getAttribute("passCodeNeed")== null) {
             if(User.getUser(user, conn) && user.getPassword().equals(request.getParameter("password")) && "0".equals(user.getInvalid())) {
@@ -68,7 +71,8 @@ public class Login extends HttpServlet {
         session.removeAttribute("passCodeNeed");
         session.setAttribute("user", user);
         MyLog myLog = new MyLog(request.getRemoteAddr(), user, request.getRequestURI() + "?" + request.getQueryString());
-        Connection conn = (Connection)session.getAttribute("conn");
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)session.getServletContext().getAttribute("connMap");
+        Connection conn = connMap.get(session.getId());
         MyLog.insertMyLog(myLog, conn);
         response.sendRedirect("index");
     }

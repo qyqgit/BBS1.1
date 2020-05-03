@@ -2,6 +2,7 @@ package com.svl;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,7 +37,8 @@ public class AdminLogin extends HttpServlet {
         // TODO Auto-generated method stub
         int passCodeNeed = 1;
         HttpSession session = request.getSession();
-        Connection conn = (Connection)session.getAttribute("conn");
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)session.getServletContext().getAttribute("connMap");
+        Connection conn = connMap.get(session.getId());
         Admin admin = new Admin(request.getParameter("id"));
         if(session.getAttribute("passCodeNeed")== null) {
             if(Admin.getAdmin(admin, conn) && admin.getPassword().equals(request.getParameter("password")) && "0".equals(admin.getInvalid())) {
@@ -70,7 +72,8 @@ public class AdminLogin extends HttpServlet {
         session.removeAttribute("passCodeNeed");
         session.setAttribute("admin", admin);
         MyLog myLog = new MyLog(request.getRemoteAddr(), (User)admin, request.getRequestURI() + "?" + request.getQueryString());
-        Connection conn = (Connection)session.getAttribute("conn");
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)session.getServletContext().getAttribute("connMap");
+        Connection conn = connMap.get(session.getId());
         MyLog.insertMyLog(myLog, conn);
         response.sendRedirect("Admin.jsp");
     }

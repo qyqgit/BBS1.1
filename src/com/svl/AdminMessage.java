@@ -3,6 +3,7 @@ package com.svl;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -34,7 +35,8 @@ public class AdminMessage extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        Connection conn = (Connection)request.getSession().getAttribute("conn");
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)request.getSession().getServletContext().getAttribute("connMap");
+        Connection conn = connMap.get(request.getSession().getId());
         if("invalid".equalsIgnoreCase(request.getParameter("method"))) {
             Message.setMessageInvalid(request.getParameter("id"), conn);
         } else if("valid".equalsIgnoreCase(request.getParameter("method"))) {

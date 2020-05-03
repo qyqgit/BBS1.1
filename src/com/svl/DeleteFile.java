@@ -2,6 +2,7 @@ package com.svl;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.servlet.ServletException;
@@ -34,7 +35,8 @@ public class DeleteFile extends HttpServlet {
         // TODO Auto-generated method stub
         String mediaId = request.getParameter("id");
         Media media = new Media(mediaId);
-        Connection conn = (Connection) request.getSession().getAttribute("conn");
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)request.getSession().getServletContext().getAttribute("connMap");
+        Connection conn = connMap.get(request.getSession().getId());
         Media.getMedia(media, conn);
         User user = (User)request.getSession().getAttribute("user");
         if(!user.getId().equals(media.getUser().getId())) {

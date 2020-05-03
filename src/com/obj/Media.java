@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
@@ -521,7 +522,8 @@ public class Media {
                 return false;
             }
             HttpSession session = request.getSession();
-            Connection conn = (Connection)session.getAttribute("conn");
+            HashMap<String, Connection> connMap = (HashMap<String, Connection>)session.getServletContext().getAttribute("connMap");
+            Connection conn = connMap.get(session.getId());
             Media.insertMedia(media, conn);
         }else {
             System.out.println("do nothing!");
@@ -543,6 +545,6 @@ public class Media {
             }
             return false;
         }
-	    return false;
+        return false;
 	}
 }

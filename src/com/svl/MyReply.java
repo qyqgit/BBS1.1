@@ -3,6 +3,7 @@ package com.svl;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +34,8 @@ public class MyReply extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // TODO Auto-generated method stub
-        Connection conn = (Connection)request.getSession().getAttribute("conn");
+        HashMap<String, Connection> connMap = (HashMap<String, Connection>)request.getSession().getServletContext().getAttribute("connMap");
+        Connection conn = connMap.get(request.getSession().getId());
         ArrayList<Message> replyList = new ArrayList<Message>();
         User user = (User)request.getSession().getAttribute("user");
         Message.getReplyListEx(user.getId(), replyList, conn);
