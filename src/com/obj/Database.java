@@ -43,14 +43,15 @@ public class Database {
         String password = Database.getPassword();
         conn = null;
         try {
-
             Class.forName(driver);
-            conn = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
+        }
+        try {
+            conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return conn;
@@ -62,14 +63,15 @@ public class Database {
         String password = profile.getProperty("db_password");
         conn = null;
         try {
-            
             Class.forName(driver);
-            conn = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
+        }
+        try {
+            conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return conn;

@@ -33,9 +33,6 @@ import com.obj.User;
  */
 @WebListener
 public class MyListener implements ServletContextListener, HttpSessionListener, ServletRequestListener {
-    private static int numMembers;
-    private static int numConn;
-
     /**
      * Default constructor. 
      */
@@ -46,24 +43,14 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
     /**
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
-    public void sessionCreated(HttpSessionEvent se)  { 
+    public void sessionCreated(HttpSessionEvent se)  {
          // TODO Auto-generated method stub
-        System.out.println("sessionCreated");
-        synchronized(this) {
-            numMembers++;
-            se.getSession().getServletContext().setAttribute("numMembers", numMembers);
-        }
-        //se.getSession().setMaxInactiveInterval(10);
+        se.getSession().setMaxInactiveInterval(10);
         if(se.getSession().getAttribute("conn") == null) {
             Properties profile = (Properties)se.getSession().getServletContext().getAttribute("profile");
             Connection conn = Database.getProfileConn(profile);
             if(conn!=null) {
                 se.getSession().setAttribute("conn", conn);
-                synchronized(this) {
-                    numConn++;
-                    se.getSession().getServletContext().setAttribute("numConn", numConn);
-                }
-                System.out.println(conn + " created");
             }
         }
     }
@@ -73,27 +60,13 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
      */
     public void sessionDestroyed(HttpSessionEvent se)  { 
          // TODO Auto-generated method stub
-        System.out.println("sessionDestroyed");
-        HttpSession session = null;
-        Connection conn     = null;
-        synchronized(this) {
-            numMembers--;
-            se.getSession().getServletContext().setAttribute("numMembers", numMembers);
-        }
-        session = se.getSession();
-        assert(session != null);
-        conn = (Connection)session.getAttribute("conn");
-        assert(conn != null);
+        HttpSession session = se.getSession();;
+        Connection conn = (Connection)session.getAttribute("conn");
+        if(conn == null)
+            System.out.println("conn lost");
         try {
-            if(conn!=null) {
-                conn.close();
-                synchronized(this) {
-                    numConn--;
-                    se.getSession().getServletContext().setAttribute("numConn", numConn);
-                }
-                System.out.println(conn + " closed");
-            } else
-            System.out.println(conn + " is null");
+            conn.close();
+            System.out.println("conn closed");
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -112,6 +85,7 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
      */
     public void contextInitialized(ServletContextEvent sce)  { 
          // TODO Auto-generated method stub
+        int maxConnections = 0;
         String etcPath = sce.getServletContext().getRealPath("/WEB-INF");
         String sysPath = sce.getServletContext().getRealPath("/sys");
         String profilePath = null;
@@ -141,8 +115,16 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
             codePageMap.put((String) entry.getKey(), (String) entry.getValue());
         //Map<String, String> codePageMap = new HashMap<String, String>((Map)Profile.getProfile(codePagePath));
         sce.getServletContext().setAttribute("codePageMap", codePageMap);
-        HashMap<String, Connection> connMap = new HashMap<String, Connection>();
-        sce.getServletContext().setAttribute("connMap", connMap);
+        Connection conn = Database.getProfileConn(profile);
+        maxConnections = Integer.parseInt(profile.getProperty("db_max_connections"));
+        SysTool.setMaxConnections(conn, maxConnections);
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
     }
     
     /**
@@ -159,12 +141,16 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
          // TODO Auto-generated method stub
         HttpServletRequest request = (HttpServletRequest)sre.getServletRequest();
         User user = (User)request.getSession().getAttribute("user");
+        Connection conn = (Connection)request.getSession().getAttribute("conn");
         if(user != null) {
-            Connection conn = (Connection)request.getSession().getAttribute("conn");
             int count[] = {0};
             Message.getReplyCountEx(count, user, conn);
             request.getSession().setAttribute("count", count);
         }
+        int numMembers = SysTool.activeSessions(request);
+        int numConn = SysTool.acitveConnections(conn);
+        sre.getServletContext().setAttribute("numMembers", numMembers);
+        sre.getServletContext().setAttribute("numConn", numConn);
     }
     
 }
