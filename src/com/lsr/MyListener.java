@@ -44,8 +44,8 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent se)  {
-         // TODO Auto-generated method stub
-        se.getSession().setMaxInactiveInterval(10);
+        // TODO Auto-generated method stub
+        //se.getSession().setMaxInactiveInterval(10);
         if(se.getSession().getAttribute("conn") == null) {
             Properties profile = (Properties)se.getSession().getServletContext().getAttribute("profile");
             Connection conn = Database.getProfileConn(profile);
