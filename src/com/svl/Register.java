@@ -38,8 +38,8 @@ public class Register extends HttpServlet {
                         request.getParameter("password"),
                         request.getParameter("birthday"),
                         request.getParameter("sex"));
-        if(User.insertUser(user, conn)) {
-            User.getLastRegisterdUserId(user, conn);
+        if(User.insertUser(user, conn)) {//???
+            User.getLastRegisterdUserId(user, conn);//???
             response.sendRedirect("Login.jsp?userId=" + user.getId());
         }
         else

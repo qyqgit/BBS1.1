@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,6 +71,14 @@ public class Login extends HttpServlet {
         MyLog myLog = new MyLog(request.getRemoteAddr(), user, request.getRequestURI() + "?" + request.getQueryString());
         Connection conn = (Connection)session.getAttribute("conn");
         MyLog.insertMyLog(myLog, conn);
+        Cookie ck = new Cookie("TOKEN", session.getId());
+        ck.setMaxAge(3600 * 24 * 31);
+        ck.setHttpOnly(true);
+        //ck.setSecure(true);
+        response.addCookie(ck);
+        user.setToken(session.getId());
+        user.setIpAddress(request.getRemoteAddr());
+        User.updateUserTokenAndIp(user, conn);
         response.sendRedirect("index");
     }
 

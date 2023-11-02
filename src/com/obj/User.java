@@ -14,6 +14,8 @@ public class User {
     private String sex;
     private String date;
     private String invalid;
+    private String token;
+    private String ipAddress;
     public String getId() {
         return id;
     }
@@ -58,7 +60,19 @@ public class User {
     public void setInvalid(String invalid) {
         this.invalid = invalid;
     }
-    public User(String id, String name, String password, String age, String sex, String date, String invalid) {
+    public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public String getIpAddress() {
+		return ipAddress;
+	}
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
+	public User(String id, String name, String password, String age, String sex, String date, String invalid) {
         super();
         this.id = id;
         this.name = name;
@@ -164,7 +178,7 @@ public class User {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = conn.prepareStatement("select id,name,password,birthday,sex,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date,invalid from user where id = ?");
+            pstmt = conn.prepareStatement("select id,name,password,birthday,sex,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date,invalid,token,ipAddress from user where id = ?");
             pstmt.setString(1, user.getId());
             rs = pstmt.executeQuery();
 
@@ -176,6 +190,47 @@ public class User {
                 user.setSex(rs.getString("sex"));
                 user.setDate(rs.getString("date"));
                 user.setInvalid(rs.getString("invalid"));
+                user.setToken(rs.getString("token"));
+                user.setIpAddress(rs.getString("ipAddress"));
+                return true;
+            }
+            return false;
+            
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            try {
+                if(pstmt!=null)pstmt.close();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+            try {
+                if(rs!=null)rs.close();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+    public static boolean getUserByToken(User user,Connection conn) {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = conn.prepareStatement("select id,name,password,birthday,sex,from_unixtime(unix_timestamp(date),'%Y-%m-%d %H:%i') as date,invalid,token,ipAddress from user where token = ?");
+            pstmt.setString(1, user.getToken());
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                user.setId(rs.getString("id"));
+                user.setName(rs.getString("name"));
+                user.setPassword(rs.getString("password"));
+                user.setAge(rs.getString("birthday"));
+                user.setSex(rs.getString("sex"));
+                user.setDate(rs.getString("date"));
+                user.setInvalid(rs.getString("invalid"));
+                user.setToken(rs.getString("token"));
+                user.setIpAddress(rs.getString("ipAddress"));
                 return true;
             }
             return false;
@@ -292,6 +347,48 @@ public class User {
             }
         }
         return false;
+    }
+    public static boolean updateUserTokenAndIp(User user, Connection conn) {
+    	PreparedStatement pstmt = null;
+    	try {
+			pstmt = conn.prepareStatement("update user set token=?,ipAddress=? where id=?");
+			pstmt.setString(1, user.getToken());
+			pstmt.setString(2, user.getIpAddress());
+			pstmt.setString(3, user.getId());
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+                if(pstmt!=null)pstmt.close();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+		}
+		return false;
+    }
+    public static boolean invalidUserTokenAndIp(User user, Connection conn) {
+    	PreparedStatement pstmt = null;
+    	try {
+			pstmt = conn.prepareStatement("update user set token=?,ipAddress=? where id=?");
+			pstmt.setString(1, "");
+			pstmt.setString(2, "");
+			pstmt.setString(3, user.getId());
+			pstmt.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+                if(pstmt!=null)pstmt.close();
+            } catch(SQLException e) {
+                e.printStackTrace();
+            }
+		}
+		return false;
     }
     public static boolean getLastRegisterdUserId(User user, Connection conn) {
         PreparedStatement pstmt = null;

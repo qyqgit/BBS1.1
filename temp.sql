@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-08-28 17:51:35
+Date: 2023-11-01 08:45:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -167,22 +167,15 @@ CREATE TABLE `user` (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `password` varchar(255) NOT NULL,
   `birthday` date DEFAULT NULL,
-  `sex` int(1) DEFAULT NULL,
+  `sex` tinyint(1) DEFAULT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `invalid` tinyint(1) DEFAULT '0',
+  `token` char(32) DEFAULT NULL,
+  `ipAddress` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1086 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1000', '', '1234', '2018-02-22', '1', '2018-05-21 20:50:07', '0');
-INSERT INTO `user` VALUES ('1037', '的', 'hong123', '1992-11-26', '0', '2018-05-21 21:39:16', '0');
-INSERT INTO `user` VALUES ('1057', '士大夫', '123', null, '2', '2018-05-24 14:38:24', '0');
-INSERT INTO `user` VALUES ('1066', '1', '1', null, '2', '2018-05-25 14:10:38', '0');
-INSERT INTO `user` VALUES ('1070', '士大夫', '123', '1992-11-26', '2', '2018-05-29 11:27:26', '0');
-INSERT INTO `user` VALUES ('1076', '电话卡', '202cb962ac59075b964b07152d234b70', '2018-08-08', '0', '2018-06-16 17:13:37', '0');
-INSERT INTO `user` VALUES ('1077', '哈哈', '202cb962ac59075b964b07152d234b70', null, '2', '2018-06-16 19:48:33', '0');
-INSERT INTO `user` VALUES ('1078', '音乐', '202cb962ac59075b964b07152d234b70', '2008-11-22', '2', '2018-06-16 20:59:04', '0');
-INSERT INTO `user` VALUES ('1080', '音乐播', '202cb962ac59075b964b07152d234b70', null, '2', '2018-06-16 21:01:27', '0');
-INSERT INTO `user` VALUES ('1082', '十分', '202cb962ac59075b964b07152d234b70', null, '2', '2018-07-10 14:59:24', '0');
+

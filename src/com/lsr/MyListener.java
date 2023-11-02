@@ -14,6 +14,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRequestEvent;
 import javax.servlet.ServletRequestListener;
 import javax.servlet.annotation.WebListener;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -142,6 +143,33 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         HttpServletRequest request = (HttpServletRequest)sre.getServletRequest();
         User user = (User)request.getSession().getAttribute("user");
         Connection conn = (Connection)request.getSession().getAttribute("conn");
+        if(user == null) {
+        	user = new User("");
+        	Cookie[] cookies = request.getCookies();
+        	if(cookies != null) {
+        		for(Cookie cookie : cookies) {
+            		if(cookie.getName().equalsIgnoreCase("TOKEN"))
+            			user.setToken(cookie.getValue());
+            	}
+            	if(User.getUserByToken(user, conn)) {
+            		String userIp = user.getIpAddress();
+            		String remoteIp = request.getRemoteAddr();
+            		if(userIp.length() <= 15 && remoteIp.length() <= 15) {//ipv4 xxx.xxx.xxx.xxx
+            			System.out.println("ipv4");
+            			userIp = userIp.substring(0, userIp.lastIndexOf('.'));
+            			remoteIp = remoteIp.substring(0, remoteIp.lastIndexOf('.'));
+            			System.out.println(userIp);
+            			System.out.println(remoteIp);
+            			if(userIp.compareTo(remoteIp) == 0)
+            				request.getSession().setAttribute("user", user);
+            			
+            		}
+            	}
+            	else
+            		user = null;
+        	}else
+        		user = null;
+        }
         if(user != null) {
             int count[] = {0};
             Message.getReplyCountEx(count, user, conn);
