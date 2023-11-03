@@ -131,12 +131,7 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -163,16 +158,8 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -201,16 +188,8 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -240,16 +219,8 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -278,16 +249,8 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -310,18 +273,8 @@ public class MyPage {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -340,18 +293,8 @@ public class MyPage {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -370,18 +313,8 @@ public class MyPage {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -397,11 +330,7 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -418,11 +347,7 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -437,11 +362,7 @@ public class MyPage {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }

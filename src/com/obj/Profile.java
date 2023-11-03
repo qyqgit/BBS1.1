@@ -28,11 +28,11 @@ public class Profile{
                 }
             }
             if(reader != null){
-            	try{
-            		reader.close();
-            	}catch(Exception e){
-            		e.printStackTrace();
-            	}
+                try{
+                    reader.close();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         }
         return properties;

@@ -38,11 +38,7 @@ public class Admin extends User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -68,16 +64,8 @@ public class Admin extends User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -99,11 +87,7 @@ public class Admin extends User {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             } finally {
-                try {
-                    if(pstmt!=null)pstmt.close();
-                }catch(SQLException e) {
-                    e.printStackTrace();
-                }
+                Database.closePreparedStatement(pstmt);
             }
             return false;
         }
@@ -120,11 +104,7 @@ public class Admin extends User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -152,16 +132,8 @@ public class Admin extends User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -180,18 +152,8 @@ public class Admin extends User {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -207,11 +169,7 @@ public class Admin extends User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -228,11 +186,7 @@ public class Admin extends User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -247,11 +201,7 @@ public class Admin extends User {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }

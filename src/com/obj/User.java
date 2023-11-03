@@ -61,18 +61,18 @@ public class User {
         this.invalid = invalid;
     }
     public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
-	}
-	public String getIpAddress() {
-		return ipAddress;
-	}
-	public void setIpAddress(String ipAddress) {
-		this.ipAddress = ipAddress;
-	}
-	public User(String id, String name, String password, String age, String sex, String date, String invalid) {
+        return token;
+    }
+    public void setToken(String token) {
+        this.token = token;
+    }
+    public String getIpAddress() {
+        return ipAddress;
+    }
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+    public User(String id, String name, String password, String age, String sex, String date, String invalid) {
         super();
         this.id = id;
         this.name = name;
@@ -143,11 +143,7 @@ public class User {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             } finally {
-                try {
-                    if(pstmt!=null)pstmt.close();
-                }catch(SQLException e) {
-                    e.printStackTrace();
-                }
+                Database.closePreparedStatement(pstmt);
             }
             return false;
         }
@@ -165,11 +161,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         return false;
         
@@ -200,16 +192,8 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -239,16 +223,8 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -273,11 +249,7 @@ public class User {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 } finally {
-                    try {
-                        if(pstmt!=null)pstmt.close();
-                    }catch(SQLException e) {
-                        e.printStackTrace();
-                    }
+                    Database.closePreparedStatement(pstmt);
                 }
                 return false;
             }
@@ -295,11 +267,7 @@ public class User {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             } finally {
-                try {
-                    if(pstmt!=null)pstmt.close();
-                }catch(SQLException e) {
-                    e.printStackTrace();
-                }
+                Database.closePreparedStatement(pstmt);
             }
             return false;
         }
@@ -317,11 +285,7 @@ public class User {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             } finally {
-                try {
-                    if(pstmt!=null)pstmt.close();
-                }catch(SQLException e) {
-                    e.printStackTrace();
-                }
+                Database.closePreparedStatement(pstmt);
             }
             return false;
         }
@@ -340,55 +304,43 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
     public static boolean updateUserTokenAndIp(User user, Connection conn) {
-    	PreparedStatement pstmt = null;
-    	try {
-			pstmt = conn.prepareStatement("update user set token=?,ipAddress=? where id=?");
-			pstmt.setString(1, user.getToken());
-			pstmt.setString(2, user.getIpAddress());
-			pstmt.setString(3, user.getId());
-			pstmt.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
-		}
-		return false;
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement("update user set token=?,ipAddress=? where id=?");
+            pstmt.setString(1, user.getToken());
+            pstmt.setString(2, user.getIpAddress());
+            pstmt.setString(3, user.getId());
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            Database.closePreparedStatement(pstmt);
+        }
+        return false;
     }
     public static boolean invalidUserTokenAndIp(User user, Connection conn) {
-    	PreparedStatement pstmt = null;
-    	try {
-			pstmt = conn.prepareStatement("update user set token=?,ipAddress=? where id=?");
-			pstmt.setString(1, "");
-			pstmt.setString(2, "");
-			pstmt.setString(3, user.getId());
-			pstmt.executeUpdate();
-			return true;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
-		}
-		return false;
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement("update user set token=?,ipAddress=? where id=?");
+            pstmt.setString(1, "");
+            pstmt.setString(2, "");
+            pstmt.setString(3, user.getId());
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            Database.closePreparedStatement(pstmt);
+        }
+        return false;
     }
     public static boolean getLastRegisterdUserId(User user, Connection conn) {
         PreparedStatement pstmt = null;
@@ -405,16 +357,8 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -437,16 +381,8 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -471,16 +407,8 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -505,16 +433,8 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -544,16 +464,8 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -572,18 +484,8 @@ public class User {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -599,11 +501,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -620,11 +518,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -639,11 +533,7 @@ public class User {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }

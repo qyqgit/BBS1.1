@@ -7,16 +7,14 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 public class SysTool {
     public static boolean isLinux() {
         return System.getProperty("os.name").toLowerCase().indexOf("linux") >= 0; 
     }
     public static int activeSessions(HttpServletRequest request) {
-    	int activeSessions = 0;
-    	if (request instanceof RequestFacade) {
+        int activeSessions = 0;
+        if (request instanceof RequestFacade) {
             Field requestField = null;
             try {
                 requestField = request.getClass().getDeclaredField("request");
@@ -36,8 +34,8 @@ public class SysTool {
             Manager manager = context.getManager();
             activeSessions = manager.getActiveSessions();
             return activeSessions;
-    	}
-    	return activeSessions;
+        }
+        return activeSessions;
     }
     public static int acitveConnections(Connection conn) {
         int activeConnections = 0;
@@ -53,18 +51,8 @@ public class SysTool {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return activeConnections;
     }
@@ -82,18 +70,8 @@ public class SysTool {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return maxConnections;
     }
@@ -108,18 +86,8 @@ public class SysTool {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }

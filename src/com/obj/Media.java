@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -118,12 +117,7 @@ public class Media {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     
@@ -148,16 +142,8 @@ public class Media {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -184,16 +170,8 @@ public class Media {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -222,16 +200,8 @@ public class Media {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -260,16 +230,8 @@ public class Media {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -298,16 +260,8 @@ public class Media {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -327,18 +281,8 @@ public class Media {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -358,18 +302,8 @@ public class Media {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -388,18 +322,8 @@ public class Media {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+        	Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -415,11 +339,7 @@ public class Media {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -436,11 +356,7 @@ public class Media {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -455,16 +371,12 @@ public class Media {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
-	public static boolean uploadMediaFile(HttpServletRequest request, Properties profile) throws IOException {	
-		User user = (User)request.getSession().getAttribute("user");
+    public static boolean uploadMediaFile(HttpServletRequest request, Properties profile) throws IOException {    
+        User user = (User)request.getSession().getAttribute("user");
         Media media = new Media(user);
         int fileSizeMax = Integer.parseInt(profile.getProperty("file_size_max"));
         int uploadSizeMax = Integer.parseInt(profile.getProperty("upload_size_max"));
@@ -485,8 +397,12 @@ public class Media {
                         String fileName = item.getName();
                         String[] splitName = fileName.split("\\\\");
                         fileName = splitName[splitName.length-1];
-                        String id = UUID.randomUUID().toString();
-                        fileName = fileName.substring(0,fileName.lastIndexOf(".")) + "_" + id + fileName.substring(fileName.lastIndexOf("."));
+                        String uuid = UUID.randomUUID().toString();
+                        String newFileName = null;
+                        if(fileName.lastIndexOf('.') != -1)
+                            newFileName = fileName.substring(0,fileName.lastIndexOf('.')) + "_" + uuid + fileName.substring(fileName.lastIndexOf('.'));
+                        else
+                            newFileName = fileName + "_" + uuid;
                         String realPath = request.getServletContext().getRealPath("/");
                         File tempFile = new File(realPath);
                         if(!SysTool.isLinux())
@@ -495,7 +411,7 @@ public class Media {
                             realPath = tempFile.getParent() + "/" + profile.getProperty("media_path_linux") + "/" + user.getId() + "/";
                         File dir = new File(realPath);
                         if(!dir.exists()) dir.mkdirs();
-                        File file = new File(realPath, fileName);
+                        File file = new File(realPath, newFileName);
                         item.write(file);
                         item.delete();
 
@@ -511,8 +427,8 @@ public class Media {
                             url = url + "/" + mediaPath.replace("\\", "/");
                         else
                             url = url + "/" + mediaPath;
-                        media.setName(splitName[splitName.length-1]);
-                        media.setUrl(url + "/" + user.getId() + "/" + fileName);
+                        media.setName(fileName);
+                        media.setUrl(url + "/" + user.getId() + "/" + newFileName);
                         media.setType("0");
                     }
                 }
@@ -528,8 +444,8 @@ public class Media {
             return false;
         }
         return true;
-	}
-	public static boolean deleteMediaFile(String realPath, Media media, Connection conn, Properties profile) {
+    }
+    public static boolean deleteMediaFile(String realPath, Media media, Connection conn, Properties profile) {
         File tempFile = new File(realPath);
         if(!SysTool.isLinux())
             realPath = tempFile.getParent() + "\\" + profile.getProperty("media_path_win") + "\\" + media.getUser().getId() + "\\" + media.getUrl().substring(media.getUrl().lastIndexOf("/") + 1);
@@ -543,6 +459,6 @@ public class Media {
             }
             return false;
         }
-	    return false;
-	}
+        return false;
+    }
 }

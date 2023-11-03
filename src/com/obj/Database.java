@@ -2,6 +2,8 @@ package com.obj;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -10,7 +12,6 @@ public class Database {
     private static String url = "jdbc:mysql://127.0.0.1:3306/temp";
     private static String user = "root";
     private static String password = "qin123";
-    private static Connection conn;
     
     public static String getDriver() {
         return driver;
@@ -41,7 +42,6 @@ public class Database {
         String url = Database.getUrl();
         String user = Database.getUser();
         String password = Database.getPassword();
-        conn = null;
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -49,19 +49,18 @@ public class Database {
             e.printStackTrace();
         }
         try {
-            conn = DriverManager.getConnection(url, user, password);
+            return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return conn;
+        return null;
     }
     public static Connection getProfileConn(Properties profile) {
         String driver = profile.getProperty("db_driver");
         String url = profile.getProperty("db_url");
         String user = profile.getProperty("db_user");
         String password = profile.getProperty("db_password");
-        conn = null;
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -69,17 +68,50 @@ public class Database {
             e.printStackTrace();
         }
         try {
-            conn = DriverManager.getConnection(url, user, password);
+            return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return conn;
+        return null;
     }
-    public static void setConn(Connection conn) {
-        Database.conn = conn;
+    public static boolean closeResultSet(ResultSet rs) {
+        if(rs != null) {
+            try {
+                rs.close();
+                return true;
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return false;
+        
+    }
+    public static boolean closePreparedStatement(PreparedStatement pstmt) {
+        if(pstmt != null) {
+            try {
+                pstmt.close();
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return false;
+        
+    }
+    public static boolean closeConnection(Connection conn) {
+        if(conn != null) {
+            try {
+                conn.close();
+                return true;
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }else
+            System.out.println("conn null");
+        return false;
     }
     
-    
-
 }

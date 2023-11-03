@@ -149,6 +149,7 @@ public class Message {
             while (rs.next()) {
                 messageNumber = rs.getString("messageNumber");
             }
+            pstmt.close();
             
             pstmt = conn.prepareStatement("insert into message(replyId,userid,text,pageId,floorNumber,haveRead) values (?,?,?,?,?,?)");
             pstmt.setString(1, message.getReplyId());
@@ -158,6 +159,7 @@ public class Message {
             pstmt.setString(5, Integer.parseInt(messageNumber) + 1 + "");
             pstmt.setString(6, message.getRead());
             pstmt.executeUpdate();
+            pstmt.close();
             
             pstmt = conn.prepareStatement("update mypage set messageNumber=messageNumber+1 where id = ?");
             pstmt.setString(1, message.getMyPage().getId());
@@ -177,16 +179,8 @@ public class Message {
             }
             e.printStackTrace();
         } finally {
-            try {
-                if(rs != null) rs.close();
-            } catch(SQLException  e){
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt != null) pstmt.close();
-            } catch(SQLException  e){
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -213,16 +207,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -235,7 +221,6 @@ public class Message {
             pstmt.setString(2, userId);
             pstmt.setString(3, userId);
             rs = pstmt.executeQuery();
-            
             while (rs.next()) {
                 Message message = new Message(
                         rs.getString("id"),
@@ -247,6 +232,8 @@ public class Message {
                         );
                 replyList.add(message);
             }
+            pstmt.close();
+
             pstmt = conn.prepareStatement("update message inner join (select message.id from (select mypage.id from mypage where userid = ? )as table1,message where pageid = table1.id and userid != ? and haveread != 1  union select message.id from (select id from message where userid = ? )as table1,message where replyid = table1.id and haveread != 1 )as table2 on message.id = table2.id set message.haveread = 1;");
             pstmt.setString(1, userId);
             pstmt.setString(2, userId);
@@ -256,16 +243,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -278,7 +257,6 @@ public class Message {
             pstmt.setString(2, userId);
             pstmt.setString(3, userId);
             rs = pstmt.executeQuery();
-            
             while (rs.next()) {
                 Message message = new Message(
                         rs.getString("id"),
@@ -290,6 +268,8 @@ public class Message {
                         );
                 replyList.add(message);
             }
+            pstmt.close();
+
             pstmt = conn.prepareStatement("update message inner join (select message.id from (select mypage.id from mypage where userid = ? )as table1,message where pageid = table1.id and userid != ? and haveread != 1 and message.invalid !=1 union select message.id from (select id from message where userid = ? )as table1,message where replyid = table1.id and haveread != 1 and message.invalid !=1 )as table2 on message.id = table2.id set message.haveread = 1;");
             pstmt.setString(1, userId);
             pstmt.setString(2, userId);
@@ -299,16 +279,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -337,16 +309,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -375,16 +339,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -413,16 +369,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(rs!=null)rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }
@@ -447,18 +395,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -478,18 +416,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -509,18 +437,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -539,18 +457,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -570,18 +478,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -601,18 +499,8 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
-            try {
-                if(rs!=null)rs.close();
-            }catch(SQLException e)
-            {
-                e.printStackTrace();
-            }
+            Database.closeResultSet(rs);
+            Database.closePreparedStatement(pstmt);
         }
         return false;
     }
@@ -628,11 +516,7 @@ public class Message {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -649,11 +533,7 @@ public class Message {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch(SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         }
         
         return false;
@@ -668,11 +548,7 @@ public class Message {
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
-            try {
-                if(pstmt!=null)pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Database.closePreparedStatement(pstmt);
         } 
         return false;
     }

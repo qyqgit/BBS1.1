@@ -1,7 +1,6 @@
 package com.lsr;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,17 +63,9 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         HttpSession session = se.getSession();;
         Connection conn = (Connection)session.getAttribute("conn");
         if(conn == null)
-            System.out.println("conn lost");
-        else {
-        	try {
-                conn.close();
-                System.out.println("conn closed");
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        
+            System.out.println("conn null");
+        else
+            Database.closeConnection(conn);
     }
 
     /**
@@ -121,12 +112,9 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         sce.getServletContext().setAttribute("codePageMap", codePageMap);
         Connection conn = Database.getProfileConn(profile);
         maxConnections = Integer.parseInt(profile.getProperty("db_max_connections"));
-        SysTool.setMaxConnections(conn, maxConnections);
-        try {
-            conn.close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if(conn != null) {
+            SysTool.setMaxConnections(conn, maxConnections);
+            Database.closeConnection(conn);
         }
         
     }
@@ -147,39 +135,38 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         User user = (User)request.getSession().getAttribute("user");
         Connection conn = (Connection)request.getSession().getAttribute("conn");
         if(user == null) {
-        	user = new User("");
-        	Cookie[] cookies = request.getCookies();
-        	if(cookies != null) {
-        		for(Cookie cookie : cookies) {
-            		if(cookie.getName().equalsIgnoreCase("TOKEN"))
-            			user.setToken(cookie.getValue());
-            	}
-            	if(User.getUserByToken(user, conn)) {
-            		String userIp = user.getIpAddress();
-            		String remoteIp = request.getRemoteAddr();
-            		if(userIp.indexOf(':') ==-1 && remoteIp.indexOf(':') == -1) {//ipv4
-            			System.out.println("ipv4");
-            			System.out.println(userIp);
-            			System.out.println(remoteIp);
-            			userIp = userIp.substring(0, userIp.lastIndexOf('.'));
-            			remoteIp = remoteIp.substring(0, remoteIp.lastIndexOf('.'));
-            			if(userIp.compareTo(remoteIp) == 0)
-            				request.getSession().setAttribute("user", user);
-            			
-            		}else {//ipv6
-            			System.out.println("ipv6");
-            			System.out.println(userIp);
-            			System.out.println(remoteIp);
-            			userIp = userIp.substring(0, userIp.lastIndexOf(':'));
-            			remoteIp = remoteIp.substring(0, remoteIp.lastIndexOf(':'));
-            			if(userIp.compareTo(remoteIp) == 0)
-            				request.getSession().setAttribute("user", user);
-            		}
-            	}
-            	else
-            		user = null;
-        	}else
-        		user = null;
+            user = new User("");
+            Cookie[] cookies = request.getCookies();
+            if(cookies != null) {
+                for(Cookie cookie : cookies) {
+                    if(cookie.getName().equalsIgnoreCase("TOKEN"))
+                        user.setToken(cookie.getValue());
+                }
+                if(User.getUserByToken(user, conn)) {
+                    String userIp = user.getIpAddress();
+                    String remoteIp = request.getRemoteAddr();
+                    if(userIp.indexOf(':') ==-1 && remoteIp.indexOf(':') == -1) {//ipv4
+                        System.out.println("ipv4");
+                        System.out.println(userIp);
+                        System.out.println(remoteIp);
+                        userIp = userIp.substring(0, userIp.lastIndexOf('.'));
+                        remoteIp = remoteIp.substring(0, remoteIp.lastIndexOf('.'));
+                        if(userIp.compareTo(remoteIp) == 0)
+                            request.getSession().setAttribute("user", user);
+                    }else {//ipv6
+                        System.out.println("ipv6");
+                        System.out.println(userIp);
+                        System.out.println(remoteIp);
+                        userIp = userIp.substring(0, userIp.lastIndexOf(':'));
+                        remoteIp = remoteIp.substring(0, remoteIp.lastIndexOf(':'));
+                        if(userIp.compareTo(remoteIp) == 0)
+                            request.getSession().setAttribute("user", user);
+                    }
+                }
+                else
+                    user = null;
+            }else
+                user = null;
         }
         if(user != null) {
             int count[] = {0};
