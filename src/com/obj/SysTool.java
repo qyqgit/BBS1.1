@@ -51,7 +51,7 @@ public class SysTool {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return activeConnections;
@@ -70,7 +70,7 @@ public class SysTool {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return maxConnections;
@@ -86,7 +86,7 @@ public class SysTool {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;

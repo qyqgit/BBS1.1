@@ -104,13 +104,16 @@ public class Database {
         if(conn != null) {
             try {
                 conn.close();
+                System.out.println("conn close");
                 return true;
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        }else
-            System.out.println("conn null");
+        }else {
+            String method = Thread.currentThread().getStackTrace()[1].getMethodName();
+            System.out.println("conn null " + method);
+        }
         return false;
     }
     

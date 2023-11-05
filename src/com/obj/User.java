@@ -192,7 +192,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -223,7 +223,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -357,7 +357,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -381,7 +381,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -407,7 +407,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -433,7 +433,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -464,7 +464,7 @@ public class User {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -484,7 +484,7 @@ public class User {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;

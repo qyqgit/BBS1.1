@@ -1,5 +1,6 @@
 package com.lsr;
 
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,8 +63,10 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
          // TODO Auto-generated method stub
         HttpSession session = se.getSession();;
         Connection conn = (Connection)session.getAttribute("conn");
-        if(conn == null)
-            System.out.println("conn null");
+        if(conn == null) {
+            Method method = getClass().getEnclosingMethod();
+            System.out.println("conn null " + method.getName());
+        }
         else
             Database.closeConnection(conn);
     }
@@ -115,6 +118,9 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
         if(conn != null) {
             SysTool.setMaxConnections(conn, maxConnections);
             Database.closeConnection(conn);
+        }else {
+            Method method = getClass().getEnclosingMethod();
+            System.out.println("conn null " + method.getName());
         }
         
     }
@@ -145,21 +151,17 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
                 if(User.getUserByToken(user, conn)) {
                     String userIp = user.getIpAddress();
                     String remoteIp = request.getRemoteAddr();
+                    System.out.println(userIp);
+                    System.out.println(remoteIp);
                     if(userIp.indexOf(':') ==-1 && remoteIp.indexOf(':') == -1) {//ipv4
-                        System.out.println("ipv4");
-                        System.out.println(userIp);
-                        System.out.println(remoteIp);
-                        userIp = userIp.substring(0, userIp.lastIndexOf('.'));
-                        remoteIp = remoteIp.substring(0, remoteIp.lastIndexOf('.'));
-                        if(userIp.compareTo(remoteIp) == 0)
+                        String userIps[] = userIp.split("\\.");
+                        String remoteIps[] = remoteIp.split("\\.");
+                        if(userIps[0].compareTo(remoteIps[0]) == 0 && userIps[1].compareTo(remoteIps[1]) == 0)
                             request.getSession().setAttribute("user", user);
-                    }else {//ipv6
-                        System.out.println("ipv6");
-                        System.out.println(userIp);
-                        System.out.println(remoteIp);
-                        userIp = userIp.substring(0, userIp.lastIndexOf(':'));
-                        remoteIp = remoteIp.substring(0, remoteIp.lastIndexOf(':'));
-                        if(userIp.compareTo(remoteIp) == 0)
+                    }else {//ipv6 ???
+                        String userIps[] = userIp.split(":");
+                        String remoteIps[] = remoteIp.split(":");
+                        if(userIps[0].compareTo(remoteIps[0]) == 0 && userIps[1].compareTo(remoteIps[1]) == 0)
                             request.getSession().setAttribute("user", user);
                     }
                 }

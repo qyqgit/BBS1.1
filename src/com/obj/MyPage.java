@@ -3,7 +3,6 @@ package com.obj;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class MyPage {
@@ -158,7 +157,7 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -188,7 +187,7 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -219,7 +218,7 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -249,7 +248,7 @@ public class MyPage {
             // TODO Auto-generated catch block
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -273,7 +272,7 @@ public class MyPage {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -293,7 +292,7 @@ public class MyPage {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
@@ -313,7 +312,7 @@ public class MyPage {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-        	Database.closeResultSet(rs);
+            Database.closeResultSet(rs);
             Database.closePreparedStatement(pstmt);
         }
         return false;
