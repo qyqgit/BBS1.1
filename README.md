@@ -1,7 +1,9 @@
-### 1.功能预览
+### 1.下载链接
+https://github.com/qyqgit/BBS1.1/releases
+
+### 2.功能预览
 #### 1.1发帖
 <img width="1623" height="293" alt="image" src="https://github.com/user-attachments/assets/11741951-5b2b-4587-bba2-ea21422c562e" />
-
 
 #### 1.2评论
 <img width="1569" height="960" alt="image" src="https://github.com/user-attachments/assets/b3be57a2-94b8-413f-8c38-f45dc73b8f57" />
@@ -15,9 +17,6 @@
 #### 1.5管理员界面
 <img width="1545" height="303" alt="image" src="https://github.com/user-attachments/assets/0deb7111-3e45-4963-868e-d5466ca2ecb1" />
 
-
-### 2.下载链接
-https://github.com/qyqgit/BBS1.1/releases
 ### 3.基础配置流程(Ubuntu 16.04.7)  
 #### 3.1先使用free命令查看内存使用情况
 
@@ -57,8 +56,6 @@ root@ubuntu:~# apt upgrade
 root@ubuntu:~# apt install default-jre
 ```
 
-
-
 #### 3.4安装配置MySql(5.7.33-0ubuntu0.16.04.1 (Ubuntu))
 
 ```
@@ -70,7 +67,6 @@ C:\Users\Gitful>scp E:\Web\temp.sql root@47.80.6.78:/root
 root@47.80.6.78's password:
 temp.sql                                                                              100% 9754   151.2KB/s   00:00
 ```
-
 创建数据库:
 ```
 root@ubuntu:~# mysql -uroot -p
