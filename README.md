@@ -118,5 +118,48 @@ root@ubuntu:~# mv ROOT.war apache-tomcat-9.0.112/webapps/
 浏览器打开出现此页面代表应用配置完成。
 <img width="1916" height="913" alt="image" src="https://github.com/user-attachments/assets/db0d6d39-4d47-43d2-a6c8-88cbaec1f9dc" />
 ### 4.增强配置、启用HTTPS
+使用certbot获取证书:
+```
+root@iZmj7coook9uk1ivj42fprZ:~# apt install certbot
+root@iZmj7coook9uk1ivj42fprZ:~# certbot certonly --webroot -v
+```
+配置tomcat开启HTTPS:
+```
+root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/conf/server.xml
+    <Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="443"
+               maxParameterCount="1000"
+               />
+    <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+               maxThreads="150" SSLEnabled="true"
+               maxParameterCount="1000"
+               >
+        <SSLHostConfig>
+            <Certificate certificateKeyFile="conf/privkey.pem"
+                         certificateFile="conf/fullchain.pem"
+                         type="RSA" />
+        </SSLHostConfig>
+    </Connector>
+root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/conf/web.xml
+    <login-config> 
+        <!-- Authorization setting for SSL -->  
+        <auth-method>CLIENT-CERT</auth-method>  
+        <realm-name>Client Cert Users-only Area</realm-name>  
+    </login-config>
+    <security-constraint>  
+        <!-- Authorization setting for SSL -->  
+        <web-resource-collection >  
+            <web-resource-name >SSL</web-resource-name>  
+            <url-pattern>/*</url-pattern>  
+        </web-resource-collection>  
+        <user-data-constraint>  
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>  
+        </user-data-constraint>  
+    </security-constraint>
+```
 ### 5.修改配置文件
-
+修改host_url的值：
+```
+root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/webapps/ROOT/WEB-INF/etc/config.ini
+```
