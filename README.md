@@ -123,6 +123,22 @@ root@ubuntu:~# mv ROOT.war apache-tomcat-9.0.112/webapps/
 root@iZmj7coook9uk1ivj42fprZ:~# apt install certbot
 root@iZmj7coook9uk1ivj42fprZ:~# certbot certonly --webroot -v
 ```
+成功的话会获得两个pem文件:
+```
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at:
+   /etc/letsencrypt/live/www.fishcc.org/fullchain.pem
+   Your key file has been saved at:
+   /etc/letsencrypt/live/www.fishcc.org/privkey.pem
+   Your cert will expire on 2026-03-03. To obtain a new or tweaked
+   version of this certificate in the future, simply run certbot
+   again. To non-interactively renew *all* of your certificates, run
+   "certbot renew"
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+```
 配置tomcat开启HTTPS:
 ```
 root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/conf/server.xml
@@ -158,8 +174,9 @@ root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/conf/web.xml
         </user-data-constraint>  
     </security-constraint>
 ```
-### 5.修改配置文件
+### 5.修改应用程序的配置文件
 修改host_url的值：
 ```
 root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/webapps/ROOT/WEB-INF/etc/config.ini
 ```
+下载链接出错时，可以考虑检查该值。
