@@ -196,3 +196,12 @@ root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/webapps/ROOT/WEB-INF/e
 root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/webapps/ROOT/WEB-INF/etc/config.ini
 ```
 数据库连接出错时，可以考虑检查该值。
+### 6.同步代码Git(2.44.0.windows.1)
+下载代码:
+```
+$ git pull git@github.com:qyqgit/BBS1.1.git
+```
+上传代码:
+```
+$ git push git@github.com:qyqgit/BBS1.1.git master
+```
