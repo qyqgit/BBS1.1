@@ -17,7 +17,7 @@ https://github.com/qyqgit/BBS1.1/releases
 #### 1.5管理员界面
 <img width="1545" height="303" alt="image" src="https://github.com/user-attachments/assets/0deb7111-3e45-4963-868e-d5466ca2ecb1" />
 
-### 3.基础配置流程(Ubuntu 16.04.7)  
+### 3.基础配置流程(Ubuntu 16.04.7 64bit)  
 #### 3.1先使用free命令查看内存使用情况
 
 ```
@@ -57,7 +57,6 @@ root@ubuntu:~# apt install default-jre
 ```
 
 #### 3.4安装配置MySql(5.7.33-0ubuntu0.16.04.1 (Ubuntu))
-
 ```
 root@ubuntu:~# apt install mysql-server
 ```
@@ -118,7 +117,7 @@ root@ubuntu:~# mv ROOT.war apache-tomcat-9.0.112/webapps/
 浏览器打开出现此页面代表应用配置完成。
 <img width="1916" height="913" alt="image" src="https://github.com/user-attachments/assets/db0d6d39-4d47-43d2-a6c8-88cbaec1f9dc" />
 ### 4.增强配置、启用HTTPS
-使用certbot获取证书:
+使用certbot(0.27.0)获取证书:
 ```
 root@iZmj7coook9uk1ivj42fprZ:~# apt install certbot
 root@iZmj7coook9uk1ivj42fprZ:~# certbot certonly --webroot -v
@@ -174,9 +173,26 @@ root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/conf/web.xml
         </user-data-constraint>  
     </security-constraint>
 ```
+可能需要的配置:
+#### 设置端口转发
+```
+root@iZmj7coook9uk1ivj42fprZ:~# iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+root@iZmj7coook9uk1ivj42fprZ:~# iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443
+```
+#### 设置随机数源
+```
+root@iZmj7coook9uk1ivj42fprZ:~# vim /etc/java-8-openjdk/security/java.security
+#securerandom.source=file:/dev/urandom
+```
 ### 5.修改应用程序的配置文件
 修改host_url的值：
 ```
 root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/webapps/ROOT/WEB-INF/etc/config.ini
 ```
-下载链接出错时，可以考虑检查该值。
+下载链接出错时，可以考虑检查该值。 
+
+修改db_password的值:
+```
+root@iZmj7coook9uk1ivj42fprZ:~# vim apache-tomcat-9.0.112/webapps/ROOT/WEB-INF/etc/config.ini
+```
+数据库连接出错时，可以考虑检查该值。
