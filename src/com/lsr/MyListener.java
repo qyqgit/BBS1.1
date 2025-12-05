@@ -151,8 +151,8 @@ public class MyListener implements ServletContextListener, HttpSessionListener, 
                 if(User.getUserByToken(user, conn)) {
                     String userIp = user.getIpAddress();
                     String remoteIp = request.getRemoteAddr();
-                    System.out.println(userIp);
-                    System.out.println(remoteIp);
+                    System.out.println("userIp:" + userIp);
+                    System.out.println("remoteIp:" + remoteIp);
                     if(userIp.indexOf(':') ==-1 && remoteIp.indexOf(':') == -1) {//ipv4
                         String userIps[] = userIp.split("\\.");
                         String remoteIps[] = remoteIp.split("\\.");

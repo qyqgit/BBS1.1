@@ -17,7 +17,7 @@ public class Profile{
             properties.load(reader);
         }catch(Exception e){
             e.printStackTrace();
-            System.out.println("∂¡»°≈‰÷√–≈œ¢ ß∞‹£°");
+            System.out.println("read config fail.");
             System.out.println("profilePath:" + profilePath);
         }finally{
             if(in != null){

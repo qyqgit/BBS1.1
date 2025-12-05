@@ -49,7 +49,8 @@
                 <td>${applicationScope.codePageMap['STR_TITLE']}</td>
                 <td>${applicationScope.codePageMap['STR_AUTHOR']}</td>
                 <td><c:out value="&nbsp;&nbsp;&nbsp;&nbsp;" escapeXml="false"/></td>
-                <td colspan="2">${applicationScope.codePageMap['STR_REPLY']}</td>
+                <td colspan="1">${applicationScope.codePageMap['STR_LATEST_REPLY']}</td>
+                <td>${applicationScope.codePageMap['STR_REPLY_TIME']}</td>
             </tr>
             <c:forEach var="myPageList" items="${requestScope.myPageList }" varStatus="loop">
             <tr <c:if test="${loop.count%2==0}">bgcolor="#FFFFFF"</c:if>>

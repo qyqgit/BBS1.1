@@ -104,9 +104,9 @@ public class Database {
         if(conn != null) {
             try {
                 conn.close();
-                System.out.println("conn close");
                 return true;
             } catch (SQLException e) {
+                System.out.println("conn close fail.");
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
