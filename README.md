@@ -184,6 +184,10 @@ root@iZmj7coook9uk1ivj42fprZ:~# iptables -t nat -A PREROUTING -p tcp --dport 443
 root@iZmj7coook9uk1ivj42fprZ:~# vim /etc/java-8-openjdk/security/java.security
 #securerandom.source=file:/dev/urandom
 ```
+### 设置OOM分数
+```
+root@iZmj7coook9uk1ivj42fprZ:~# echo -17 > /proc/pid/oom_adj
+```
 ### 5.修改应用程序的配置文件
 修改host_url的值：
 ```
