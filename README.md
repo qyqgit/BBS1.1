@@ -188,6 +188,15 @@ root@iZmj7coook9uk1ivj42fprZ:~# vim /etc/java-8-openjdk/security/java.security
 ```
 root@iZmj7coook9uk1ivj42fprZ:~# echo -17 > /proc/pid/oom_adj
 ```
+#### 设置mysql可以打开的文件数量
+```
+root@iZmj7coook9uk1ivj42fprZ:~# vim /lib/systemd/system/mysql.service
+
+[Service]
+LimitNOFILE=4096
+
+root@iZmj7coook9uk1ivj42fprZ:~# cat /proc/pid/limits
+```
 ### 5.修改应用程序的配置文件
 修改host_url的值：
 ```
