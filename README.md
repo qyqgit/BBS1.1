@@ -116,7 +116,7 @@ root@ubuntu:~# mv ROOT.war apache-tomcat-9.0.112/webapps/
 
 浏览器打开出现此页面代表应用配置完成。
 <img width="1916" height="913" alt="image" src="https://github.com/user-attachments/assets/db0d6d39-4d47-43d2-a6c8-88cbaec1f9dc" />
-### 4.增强配置、启用HTTPS
+### 4.增强配置、启用HTTPS、高并发
 使用certbot(0.27.0)获取证书:
 ```
 root@iZmj7coook9uk1ivj42fprZ:~# apt install certbot
@@ -188,14 +188,36 @@ root@iZmj7coook9uk1ivj42fprZ:~# vim /etc/java-8-openjdk/security/java.security
 ```
 root@iZmj7coook9uk1ivj42fprZ:~# echo -17 > /proc/pid/oom_adj
 ```
-#### 设置mysql可以打开的文件数量
+#### 设置mysql可以打开的文件数、进程数、信号数
 ```
 root@iZmj7coook9uk1ivj42fprZ:~# vim /lib/systemd/system/mysql.service
 
 [Service]
 LimitNOFILE=4096
+LimitNPROC=4096
+LimitSIGPENDING=4096
 
 root@iZmj7coook9uk1ivj42fprZ:~# cat /proc/pid/limits
+```
+#### 设置mysql最大连接数
+```
+mysql> set global max_connections=10000;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show variables like '%connections%';
++----------------------+-------+
+| Variable_name        | Value |
++----------------------+-------+
+| max_connections      | 10000 |
+| max_user_connections | 0     |
++----------------------+-------+
+2 rows in set (0.02 sec)
+
+mysql>
+```
+#### 设置tomcat堆内存大小
+```
+root@iZmj7coook9uk1ivj42fprZ:~# export CATALINA_OPTS="-Xms512m -Xmx1024m -XX:PermSize=256m -XX:MaxPermSize=512m"
 ```
 ### 5.修改应用程序的配置文件
 修改host_url的值：
